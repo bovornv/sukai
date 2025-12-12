@@ -1,0 +1,49 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+*.env
+.env.save
+
+# Files with secrets
+*ENV_VARS*
+*deploy-commands*
+*DEPLOY_COMMANDS*
+
+# Backup files
+*.backup
+*.bak
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+build/
+*.tgz
+
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+

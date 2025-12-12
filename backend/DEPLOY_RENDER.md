@@ -14,7 +14,7 @@
    - **Root Directory**: `backend`
 
 6. Add Environment Variables:
-   - `SUPABASE_URL` = `https://uuuqpiaclmleclsylfqh.supabase.co`
+   - `SUPABASE_URL` = `YOUR_SUPABASE_URL`
    - `SUPABASE_ANON_KEY` = (your anon key)
    - `SUPABASE_SERVICE_ROLE_KEY` = (your service role key)
    - `PORT` = `3000`

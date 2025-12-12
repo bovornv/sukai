@@ -18,9 +18,9 @@ When prompted:
 Railway CLI v4 uses `--set` flag:
 
 ```bash
-railway variables --set "SUPABASE_URL=https://uuuqpiaclmleclsylfqh.supabase.co" \
-  --set "SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dXFwaWFjbG1sZWNsc3lsZnFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1MjE0NDQsImV4cCI6MjA4MTA5NzQ0NH0.l1Zk76YxZsYOfsdAESZ0wA6D6nGu8G0UwxREkafOmec" \
-  --set "SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dXFwaWFjbG1sZWNsc3lsZnFoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTUyMTQ0NCwiZXhwIjoyMDgxMDk3NDQ0fQ.k4V_Di3qrnGY6QimlBCOrEVAe7OgsKVjYOGf3Y4z5pg" \
+railway variables --set "SUPABASE_URL=YOUR_SUPABASE_URL" \
+  --set "SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY" \
+  --set "SUPABASE_SERVICE_ROLE_KEY=YOUR_SUPABASE_SERVICE_ROLE_KEY" \
   --set "PORT=3000" \
   --set "NODE_ENV=production"
 ```
@@ -50,7 +50,7 @@ Or check Railway dashboard for the URL.
 ```bash
 cd backend
 railway init
-railway variables --set "SUPABASE_URL=https://uuuqpiaclmleclsylfqh.supabase.co" --set "SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dXFwaWFjbG1sZWNsc3lsZnFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1MjE0NDQsImV4cCI6MjA4MTA5NzQ0NH0.l1Zk76YxZsYOfsdAESZ0wA6D6nGu8G0UwxREkafOmec" --set "SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dXFwaWFjbG1sZWNsc3lsZnFoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTUyMTQ0NCwiZXhwIjoyMDgxMDk3NDQ0fQ.k4V_Di3qrnGY6QimlBCOrEVAe7OgsKVjYOGf3Y4z5pg" --set "PORT=3000" --set "NODE_ENV=production"
+railway variables --set "SUPABASE_URL=YOUR_SUPABASE_URL" --set "SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY" --set "SUPABASE_SERVICE_ROLE_KEY=YOUR_SUPABASE_SERVICE_ROLE_KEY" --set "PORT=3000" --set "NODE_ENV=production"
 railway up
 railway domain
 ```

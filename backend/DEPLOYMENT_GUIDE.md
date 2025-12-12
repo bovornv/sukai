@@ -16,7 +16,7 @@ Make sure these are set in your production environment:
 
 ```env
 PORT=3000
-SUPABASE_URL=https://uuuqpiaclmleclsylfqh.supabase.co
+SUPABASE_URL=YOUR_SUPABASE_URL
 SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 ```

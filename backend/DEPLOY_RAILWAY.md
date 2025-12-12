@@ -17,7 +17,7 @@ railway init
 railway link
 
 # Set environment variables
-railway variables set SUPABASE_URL=https://uuuqpiaclmleclsylfqh.supabase.co
+railway variables set SUPABASE_URL=YOUR_SUPABASE_URL
 railway variables set SUPABASE_ANON_KEY=your-anon-key
 railway variables set SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 railway variables set PORT=3000
