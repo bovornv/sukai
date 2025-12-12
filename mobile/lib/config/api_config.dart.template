@@ -1,0 +1,26 @@
+/// API Configuration
+/// Update baseUrl for production deployment
+class ApiConfig {
+  // Development
+  static const String devBaseUrl = 'http://localhost:3000/api';
+  
+  // Production - UPDATE THIS with your Railway URL after deployment
+  // Example: 'https://sukai-backend-production.up.railway.app/api'
+  static const String prodBaseUrl = 'https://YOUR-RAILWAY-URL-HERE/api';
+  
+  // Current environment
+  // Set to true after deploying backend
+  static const bool isProduction = false; // ← Change to true after deployment
+  
+  /// Get the current base URL based on environment
+  static String get baseUrl {
+    return isProduction ? prodBaseUrl : devBaseUrl;
+  }
+  
+  /// Get the full backend URL (without /api)
+  static String get backendUrl {
+    final url = baseUrl.replaceAll('/api', '');
+    return url;
+  }
+}
+

@@ -1,0 +1,32 @@
+#!/bin/bash
+# Complete Railway Deployment Commands
+# Copy and paste these commands one by one
+
+echo "🚀 Railway Deployment Commands"
+echo "=============================="
+echo ""
+echo "Run these commands in order:"
+echo ""
+echo "# 1. Login (opens browser)"
+echo "railway login"
+echo ""
+echo "# 2. Initialize project"
+echo "railway init"
+echo ""
+echo "# 3. Set environment variables"
+echo "railway variables set SUPABASE_URL=https://uuuqpiaclmleclsylfqh.supabase.co"
+echo "railway variables set SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dXFwaWFjbG1sZWNsc3lsZnFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1MjE0NDQsImV4cCI6MjA4MTA5NzQ0NH0.l1Zk76YxZsYOfsdAESZ0wA6D6nGu8G0UwxREkafOmec"
+echo "railway variables set SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dXFwaWFjbG1sZWNsc3lsZnFoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTUyMTQ0NCwiZXhwIjoyMDgxMDk3NDQ0fQ.k4V_Di3qrnGY6QimlBCOrEVAe7OgsKVjYOGf3Y4z5pg"
+echo "railway variables set PORT=3000"
+echo "railway variables set NODE_ENV=production"
+echo ""
+echo "# 4. Deploy"
+echo "railway up"
+echo ""
+echo "# 5. Get your URL"
+echo "railway domain"
+echo ""
+echo "# 6. Test"
+echo "curl https://your-url.railway.app/health"
+echo ""
+

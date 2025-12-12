@@ -1,0 +1,60 @@
+🚀 Railway Deployment - Step by Step
+====================================
+
+STEP 1: Login to Railway
+------------------------
+railway login
+
+(This will open your browser to authenticate)
+
+
+STEP 2: Initialize Project
+---------------------------
+railway init
+
+Choose:
+- "New Project" (if first time)
+- Or select existing project
+
+
+STEP 3: Set Environment Variables
+----------------------------------
+railway variables set SUPABASE_URL=https://uuuqpiaclmleclsylfqh.supabase.co
+railway variables set SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dXFwaWFjbG1sZWNsc3lsZnFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1MjE0NDQsImV4cCI6MjA4MTA5NzQ0NH0.l1Zk76YxZsYOfsdAESZ0wA6D6nGu8G0UwxREkafOmec
+railway variables set SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dXFwaWFjbG1sZWNsc3lsZnFoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTUyMTQ0NCwiZXhwIjoyMDgxMDk3NDQ0fQ.k4V_Di3qrnGY6QimlBCOrEVAe7OgsKVjYOGf3Y4z5pg
+railway variables set PORT=3000
+railway variables set NODE_ENV=production
+
+
+STEP 4: Deploy
+---------------
+railway up
+
+Wait for deployment to complete...
+
+
+STEP 5: Get Your Backend URL
+-----------------------------
+railway domain
+
+Or check Railway dashboard:
+https://railway.app → Your Project → Your Service → Domains
+
+
+STEP 6: Test Your Backend
+--------------------------
+curl https://your-backend-url.railway.app/health
+
+Should return: {"status":"ok","timestamp":"..."}
+
+
+STEP 7: Update Mobile App
+--------------------------
+Edit: mobile/lib/config/api_config.dart
+
+Change:
+- prodBaseUrl = 'https://your-backend-url.railway.app/api'
+- isProduction = true
+
+Then rebuild Flutter app!
+
