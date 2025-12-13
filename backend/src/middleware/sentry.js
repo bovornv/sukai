@@ -7,29 +7,34 @@
  * 2. Create project for Node.js
  * 3. Get DSN from project settings
  * 4. Set SENTRY_DSN in environment variables
+ * 
+ * Note: Sentry is optional. If not installed, this module will work without errors.
  */
 
-let Sentry;
+let Sentry = null;
 
-try {
-  Sentry = require('@sentry/node');
-} catch (e) {
-  // Sentry not installed - optional
-  console.log('⚠️  Sentry not installed. Error tracking disabled.');
-}
-
-export function initSentry() {
-  if (!Sentry || !process.env.SENTRY_DSN) {
+export async function initSentry() {
+  // Only initialize if SENTRY_DSN is set
+  if (!process.env.SENTRY_DSN) {
     return;
   }
 
-  Sentry.init({
-    dsn: process.env.SENTRY_DSN,
-    environment: process.env.NODE_ENV || 'development',
-    tracesSampleRate: 1.0, // Adjust based on traffic
-  });
-
-  console.log('✅ Sentry initialized');
+  try {
+    // Dynamic import for ES modules (Sentry is optional)
+    const sentryModule = await import('@sentry/node');
+    Sentry = sentryModule.default || sentryModule;
+    
+    Sentry.init({
+      dsn: process.env.SENTRY_DSN,
+      environment: process.env.NODE_ENV || 'development',
+      tracesSampleRate: 1.0, // Adjust based on traffic
+    });
+    
+    console.log('✅ Sentry initialized');
+  } catch (e) {
+    // Sentry not installed - optional, just log and continue
+    console.log('⚠️  Sentry not installed. Error tracking disabled.');
+  }
 }
 
 export function captureException(error, context = {}) {

@@ -9,8 +9,10 @@ import { requestLogger } from './middleware/logger.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { initSentry } from './middleware/sentry.js';
 
-// Initialize Sentry if configured
-initSentry();
+// Initialize Sentry if configured (async, but we don't wait)
+initSentry().catch(() => {
+  // Sentry initialization failed, continue without it
+});
 
 dotenv.config();
 
