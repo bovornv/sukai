@@ -9,12 +9,12 @@ import { requestLogger } from './middleware/logger.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { initSentry } from './middleware/sentry.js';
 
-// Initialize Sentry if configured (async, but we don't wait)
+dotenv.config();
+
+// Initialize Sentry if configured (after dotenv.config() so env vars are loaded)
 initSentry().catch(() => {
   // Sentry initialization failed, continue without it
 });
-
-dotenv.config();
 
 // Validate required environment variables
 const requiredEnvVars = ['SUPABASE_URL', 'SUPABASE_ANON_KEY', 'SUPABASE_SERVICE_ROLE_KEY'];
