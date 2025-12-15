@@ -37,7 +37,7 @@ class _FollowupPageState extends ConsumerState<FollowupPage> {
     }
 
     // Save follow-up data to backend
-    final service = FollowupService(ref: ref as Ref);
+    final service = FollowupService(ref: ref);
     final success = await service.submitCheckin(
       sessionId: widget.sessionId,
       status: _selectedStatus!,

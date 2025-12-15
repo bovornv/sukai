@@ -172,6 +172,10 @@ export async function getDiagnosis({ sessionId, userId = null }) {
         answers: data.answers || {},
         triageLevel: data.triage_level,
       };
+    } else if (error) {
+      console.error('Error loading session from DB:', error);
+      // Fallback to cache
+      session = sessions.get(sessionId);
     }
   } catch (err) {
     console.warn('Failed to load session from DB, trying cache:', err.message);
@@ -180,7 +184,8 @@ export async function getDiagnosis({ sessionId, userId = null }) {
   }
 
   if (!session) {
-    throw new Error('Session not found');
+    console.error('Session not found for sessionId:', sessionId);
+    throw new Error(`Session not found: ${sessionId}`);
   }
 
   // Ensure session has user_id set (in case user logged in during triage)

@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod/riverpod.dart' show Ref;
 import '../config/api_config.dart';
 import '../features/auth/providers/auth_provider.dart';
 
@@ -19,12 +18,12 @@ enum FollowupStatus {
 class FollowupService {
   final Dio _dio;
   final String baseUrl;
-  final Ref? _ref;
+  final WidgetRef? _ref;
   
   FollowupService({
     Dio? dio,
     String? baseUrl,
-    Ref? ref,
+    WidgetRef? ref,
   })  : _dio = dio ?? Dio(),
         baseUrl = baseUrl ?? ApiConfig.baseUrl,
         _ref = ref;
