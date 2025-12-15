@@ -54,13 +54,29 @@ export async function assessSymptom({ sessionId, symptom, previousAnswers, userI
     };
   }
 
-  // Add symptom to session
-  session.symptoms.push(symptom);
+  // Determine if this is an answer to a question or a new symptom
+  // If previousAnswers has new keys and we already have symptoms, it's likely an answer
+  const hasNewAnswers = Object.keys(previousAnswers).some(
+    key => !session.answers[key]
+  );
+  const isAnswer = hasNewAnswers && session.symptoms.length > 0;
+  
+  // Only add as symptom if it's not an answer
+  if (!isAnswer) {
+    session.symptoms.push(symptom);
+  }
+  
+  // Merge answers
   Object.assign(session.answers, previousAnswers);
+
+  // Use the last actual symptom (not the answer) for triage logic
+  const symptomForTriage = session.symptoms.length > 0 
+    ? session.symptoms[session.symptoms.length - 1] 
+    : symptom;
 
   // Run triage logic
   const result = await assessSymptomLogic({
-    symptom,
+    symptom: symptomForTriage,
     previousAnswers: session.answers,
     questionsAsked: session.questionsAsked,
     questionCount: session.questionCount,
@@ -75,9 +91,13 @@ export async function assessSymptom({ sessionId, symptom, previousAnswers, userI
 
   // Save to database
   try {
+    // Always set user_id if provided (even when updating)
+    // This ensures sessions created anonymously get linked to user when they log in
+    const finalUserId = userId && userId !== 'anonymous' ? userId : null;
+    
     const sessionData = {
       session_id: sessionId,
-      user_id: userId && userId !== 'anonymous' ? userId : null,
+      user_id: finalUserId,
       symptoms: session.symptoms,
       answers: session.answers,
       questions_asked: session.questionsAsked,
@@ -88,19 +108,33 @@ export async function assessSymptom({ sessionId, symptom, previousAnswers, userI
 
     if (session.id) {
       // Update existing session
-      await supabaseAdmin
+      // Always update user_id in case user logged in during session
+      const { error: updateError } = await supabaseAdmin
         .from('triage_sessions')
         .update(sessionData)
         .eq('id', session.id);
+
+      if (updateError) {
+        console.error('Failed to update session:', updateError);
+        throw updateError;
+      }
     } else {
       // Insert new session
       const { data, error } = await supabaseAdmin
         .from('triage_sessions')
-        .insert(sessionData)
+        .insert({
+          ...sessionData,
+          created_at: new Date().toISOString(), // Explicitly set created_at
+        })
         .select()
         .single();
 
-      if (!error && data) {
+      if (error) {
+        console.error('Failed to insert session:', error);
+        throw error;
+      }
+
+      if (data) {
         session.id = data.id;
       }
     }
@@ -123,6 +157,7 @@ export async function assessSymptom({ sessionId, symptom, previousAnswers, userI
 export async function getDiagnosis({ sessionId, userId = null }) {
   // Try to load from database first
   let session = null;
+  let sessionData = null;
   try {
     const { data, error } = await supabaseAdmin
       .from('triage_sessions')
@@ -131,6 +166,7 @@ export async function getDiagnosis({ sessionId, userId = null }) {
       .single();
 
     if (!error && data) {
+      sessionData = data;
       session = {
         symptoms: data.symptoms || [],
         answers: data.answers || {},
@@ -147,6 +183,23 @@ export async function getDiagnosis({ sessionId, userId = null }) {
     throw new Error('Session not found');
   }
 
+  // Ensure session has user_id set (in case user logged in during triage)
+  const finalUserId = userId && userId !== 'anonymous' ? userId : null;
+  if (finalUserId && sessionData && (!sessionData.user_id || sessionData.user_id !== finalUserId)) {
+    try {
+      await supabaseAdmin
+        .from('triage_sessions')
+        .update({ 
+          user_id: finalUserId,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('session_id', sessionId);
+      console.log('Updated session user_id for session:', sessionId);
+    } catch (err) {
+      console.warn('Failed to update session user_id:', err.message);
+    }
+  }
+
   const diagnosis = await generateDiagnosis({
     symptoms: session.symptoms,
     answers: session.answers,
@@ -157,7 +210,7 @@ export async function getDiagnosis({ sessionId, userId = null }) {
   try {
     const diagnosisData = {
       session_id: sessionId,
-      user_id: userId && userId !== 'anonymous' ? userId : null,
+      user_id: finalUserId,
       triage_level: diagnosis.triage_level,
       summary: diagnosis.summary,
       recommendations: diagnosis.recommendations,

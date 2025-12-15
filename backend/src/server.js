@@ -43,6 +43,10 @@ app.use('/api/triage', triageRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/billing', billingRoutes);
 
+// Import followup routes dynamically
+import followupRoutes from './routes/followup.js';
+app.use('/api/followup', followupRoutes);
+
 // Error handling (must be last)
 app.use(errorHandler);
 

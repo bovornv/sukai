@@ -2,6 +2,7 @@ import express from 'express';
 import { assessSymptom, getDiagnosis } from '../functions/triage/index.js';
 import { validateTriageAssess } from '../middleware/validation.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
+import { supabase } from '../config/supabase.js';
 
 const router = express.Router();
 
@@ -35,6 +36,29 @@ router.get('/diagnosis', asyncHandler(async (req, res) => {
   });
 
   res.json(result);
+}));
+
+// GET /api/triage/sessions
+// Get user's past triage sessions
+router.get('/sessions', asyncHandler(async (req, res) => {
+  const userId = req.headers['x-user-id'];
+  
+  if (!userId) {
+    return res.status(401).json({ error: 'Authentication required' });
+  }
+  
+  const { data, error } = await supabase
+    .from('triage_sessions')
+    .select('session_id, created_at, updated_at, triage_level, symptoms')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+    .limit(20);
+  
+  if (error) {
+    return res.status(500).json({ error: 'Failed to fetch sessions' });
+  }
+  
+  res.json({ sessions: data || [] });
 }));
 
 export default router;

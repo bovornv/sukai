@@ -9,11 +9,40 @@ import '../../../models/session_models.dart';
 import '../../../models/triage_models.dart';
 import '../providers/sessions_provider.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    // Refresh sessions when page is first loaded
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.invalidate(sessionsProvider);
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Refresh sessions when app comes back to foreground
+    if (state == AppLifecycleState.resumed) {
+      ref.invalidate(sessionsProvider);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
     return Scaffold(
@@ -42,9 +71,13 @@ class HomePage extends ConsumerWidget {
               Card(
                 elevation: 4,
                 child: InkWell(
-                  onTap: () {
+                  onTap: () async {
                     final sessionId = const Uuid().v4();
-                    context.push('/chat?sessionId=$sessionId');
+                    await context.push('/chat?sessionId=$sessionId');
+                    // Refresh sessions when returning from chat
+                    if (mounted) {
+                      ref.invalidate(sessionsProvider);
+                    }
                   },
                   borderRadius: BorderRadius.circular(16),
                   child: Padding(
