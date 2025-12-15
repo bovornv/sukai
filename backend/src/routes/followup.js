@@ -1,5 +1,5 @@
 import express from 'express';
-import { supabase } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
 
 const router = express.Router();
@@ -19,27 +19,32 @@ router.post('/checkin', asyncHandler(async (req, res) => {
   }
   
   // Save follow-up check-in
-  const { data, error } = await supabase
+  // Use supabaseAdmin to bypass RLS (backend doesn't have user's auth token)
+  const { data, error } = await supabaseAdmin
     .from('followup_checkins')
     .insert({
       session_id: session_id,
       user_id: userId || null,
       status: status,
       notes: notes || null,
-      created_at: new Date().toISOString(),
+      // Don't set created_at explicitly - let database default handle it
     })
     .select()
     .single();
   
   if (error) {
     console.error('Error saving follow-up check-in:', error);
-    return res.status(500).json({ error: 'Failed to save check-in' });
+    return res.status(500).json({ 
+      error: 'Failed to save check-in', 
+      details: error.message 
+    });
   }
   
   // Check if escalation needed (status = 'worse')
   if (status === 'worse') {
     // Get original triage level
-    const { data: session } = await supabase
+    // Use supabaseAdmin to bypass RLS
+    const { data: session } = await supabaseAdmin
       .from('triage_sessions')
       .select('triage_level')
       .eq('session_id', session_id)
@@ -65,7 +70,8 @@ router.get('/checkins', asyncHandler(async (req, res) => {
     return res.status(400).json({ error: 'session_id is required' });
   }
   
-  let query = supabase
+  // Use supabaseAdmin to bypass RLS (backend doesn't have user's auth token)
+  let query = supabaseAdmin
     .from('followup_checkins')
     .select('*')
     .eq('session_id', session_id)
@@ -79,7 +85,11 @@ router.get('/checkins', asyncHandler(async (req, res) => {
   const { data, error } = await query;
   
   if (error) {
-    return res.status(500).json({ error: 'Failed to fetch check-ins' });
+    console.error('Error fetching check-ins:', error);
+    return res.status(500).json({ 
+      error: 'Failed to fetch check-ins', 
+      details: error.message 
+    });
   }
   
   res.json({ checkins: data || [] });
