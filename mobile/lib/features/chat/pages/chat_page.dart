@@ -29,26 +29,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _initializeChat();
-      _setupTriageListener();
-    });
-  }
-
-  void _setupTriageListener() {
-    // Listen for triage completion reactively
-    ref.listen<ChatState>(chatProvider, (previous, next) {
-      final triageResponse = next.triageResponse;
-      if (triageResponse != null && 
-          triageResponse.needMoreInfo == false && 
-          triageResponse.nextQuestion == null &&
-          previous?.triageResponse?.needMoreInfo == true) {
-        // Triage just completed, navigate to summary
-        Future.delayed(const Duration(milliseconds: 800), () {
-          if (mounted && !_isLoading) {
-            final sessionId = widget.sessionId ?? next.sessionId;
-            context.push('/summary?sessionId=$sessionId');
-          }
-        });
-      }
     });
   }
 
@@ -120,6 +100,23 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final chatState = ref.watch(chatProvider);
+    
+    // Listen for triage completion reactively (must be in build method)
+    ref.listen<ChatState>(chatProvider, (previous, next) {
+      final triageResponse = next.triageResponse;
+      if (triageResponse != null && 
+          triageResponse.needMoreInfo == false && 
+          triageResponse.nextQuestion == null &&
+          previous?.triageResponse?.needMoreInfo == true) {
+        // Triage just completed, navigate to summary
+        Future.delayed(const Duration(milliseconds: 800), () {
+          if (mounted && !_isLoading) {
+            final sessionId = widget.sessionId ?? next.sessionId;
+            context.push('/summary?sessionId=$sessionId');
+          }
+        });
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(

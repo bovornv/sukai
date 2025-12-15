@@ -2,7 +2,7 @@ import express from 'express';
 import { assessSymptom, getDiagnosis } from '../functions/triage/index.js';
 import { validateTriageAssess } from '../middleware/validation.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
-import { supabase } from '../config/supabase.js';
+import { supabaseAdmin } from '../config/supabase.js';
 
 const router = express.Router();
 
@@ -47,7 +47,8 @@ router.get('/sessions', asyncHandler(async (req, res) => {
     return res.status(401).json({ error: 'Authentication required' });
   }
   
-  const { data, error } = await supabase
+  // Use supabaseAdmin to bypass RLS (backend doesn't have user's auth token)
+  const { data, error } = await supabaseAdmin
     .from('triage_sessions')
     .select('session_id, created_at, updated_at, triage_level, symptoms')
     .eq('user_id', userId)
@@ -55,7 +56,8 @@ router.get('/sessions', asyncHandler(async (req, res) => {
     .limit(20);
   
   if (error) {
-    return res.status(500).json({ error: 'Failed to fetch sessions' });
+    console.error('Error fetching sessions:', error);
+    return res.status(500).json({ error: 'Failed to fetch sessions', details: error.message });
   }
   
   res.json({ sessions: data || [] });
