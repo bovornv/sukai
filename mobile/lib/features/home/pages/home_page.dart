@@ -5,6 +5,9 @@ import 'package:uuid/uuid.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../models/session_models.dart';
+import '../../../models/triage_models.dart';
+import '../providers/sessions_provider.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -70,21 +73,88 @@ class HomePage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 40),
-              // Recent sessions (placeholder)
+              // Recent sessions
               Text(
                 'ประวัติการตรวจ',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 16),
               Expanded(
-                child: Center(
-                  child: Text(
-                    l10n.translate('no_recent_sessions'),
-                    style: const TextStyle(
-                      color: AppTheme.textSecondary,
-                      fontSize: 16,
-                    ),
-                  ),
+                child: Consumer(
+                  builder: (context, ref, child) {
+                    final sessionsAsync = ref.watch(sessionsProvider);
+                    
+                    return sessionsAsync.when(
+                      data: (sessions) {
+                        if (sessions.isEmpty) {
+                          return Center(
+                            child: Text(
+                              l10n.translate('no_recent_sessions'),
+                              style: const TextStyle(
+                                color: AppTheme.textSecondary,
+                                fontSize: 16,
+                              ),
+                            ),
+                          );
+                        }
+                        
+                        return RefreshIndicator(
+                          onRefresh: () async {
+                            ref.invalidate(sessionsProvider);
+                          },
+                          child: ListView.builder(
+                            itemCount: sessions.length,
+                            itemBuilder: (context, index) {
+                              final session = sessions[index];
+                              return Card(
+                                margin: const EdgeInsets.only(bottom: 12),
+                                child: ListTile(
+                                  leading: _getTriageIcon(session.triageLevel),
+                                  title: Text(
+                                    session.symptoms.isNotEmpty 
+                                        ? session.symptoms.first 
+                                        : 'ไม่มีอาการ',
+                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  subtitle: Text(
+                                    '${_formatDate(session.createdAt)} • ${_getTriageLabel(session.triageLevel)}',
+                                  ),
+                                  trailing: const Icon(Icons.chevron_right),
+                                  onTap: () {
+                                    context.push('/summary?sessionId=${session.sessionId}');
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      loading: () => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      error: (error, stack) => Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                            const SizedBox(height: 16),
+                            Text(
+                              'เกิดข้อผิดพลาด: $error',
+                              style: const TextStyle(color: Colors.red),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: () {
+                                ref.invalidate(sessionsProvider);
+                              },
+                              child: const Text('ลองอีกครั้ง'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
@@ -110,5 +180,50 @@ class HomePage extends ConsumerWidget {
         },
       ),
     );
+  }
+  
+  Widget _getTriageIcon(String triageLevel) {
+    switch (triageLevel) {
+      case 'emergency':
+        return const Icon(Icons.warning, color: Colors.red, size: 32);
+      case 'gp':
+        return const Icon(Icons.local_hospital, color: Colors.orange, size: 32);
+      case 'pharmacy':
+        return const Icon(Icons.medication, color: Colors.blue, size: 32);
+      case 'self_care':
+        return const Icon(Icons.home, color: Colors.green, size: 32);
+      default:
+        return const Icon(Icons.help, color: Colors.grey, size: 32);
+    }
+  }
+  
+  String _getTriageLabel(String triageLevel) {
+    switch (triageLevel) {
+      case 'emergency':
+        return 'ฉุกเฉิน';
+      case 'gp':
+        return 'พบแพทย์';
+      case 'pharmacy':
+        return 'ร้านยา';
+      case 'self_care':
+        return 'ดูแลเอง';
+      default:
+        return 'ไม่แน่ใจ';
+    }
+  }
+  
+  String _formatDate(DateTime date) {
+    final now = DateTime.now();
+    final difference = now.difference(date);
+    
+    if (difference.inDays == 0) {
+      return 'วันนี้';
+    } else if (difference.inDays == 1) {
+      return 'เมื่อวาน';
+    } else if (difference.inDays < 7) {
+      return '${difference.inDays} วันที่แล้ว';
+    } else {
+      return '${date.day}/${date.month}/${date.year}';
+    }
   }
 }

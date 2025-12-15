@@ -29,6 +29,26 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _initializeChat();
+      _setupTriageListener();
+    });
+  }
+
+  void _setupTriageListener() {
+    // Listen for triage completion reactively
+    ref.listen<ChatState>(chatProvider, (previous, next) {
+      final triageResponse = next.triageResponse;
+      if (triageResponse != null && 
+          triageResponse.needMoreInfo == false && 
+          triageResponse.nextQuestion == null &&
+          previous?.triageResponse?.needMoreInfo == true) {
+        // Triage just completed, navigate to summary
+        Future.delayed(const Duration(milliseconds: 800), () {
+          if (mounted && !_isLoading) {
+            final sessionId = widget.sessionId ?? next.sessionId;
+            context.push('/summary?sessionId=$sessionId');
+          }
+        });
+      }
     });
   }
 
@@ -51,20 +71,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         _isLoading = false;
       });
       _scrollToBottom();
-    });
-
-    // Check if triage is complete
-    Future.delayed(const Duration(milliseconds: 500), () {
-      final state = ref.read(chatProvider);
-      if (state.triageResponse != null && 
-          state.triageResponse!.needMoreInfo == false) {
-        // Navigate to summary after a short delay
-        Future.delayed(const Duration(seconds: 1), () {
-          if (mounted) {
-            context.push('/summary?sessionId=${widget.sessionId ?? ''}');
-          }
-        });
-      }
+      _checkTriageComplete();
     });
   }
 
@@ -76,6 +83,28 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
+      }
+    });
+  }
+
+  void _checkTriageComplete() {
+    // Check if triage is complete after a delay to allow state to update
+    // Use watch instead of read to reactively check state changes
+    Future.delayed(const Duration(milliseconds: 800), () {
+      if (!mounted) return;
+      
+      final state = ref.read(chatProvider);
+      // Check if triage is complete (no more questions needed)
+      if (state.triageResponse != null && 
+          state.triageResponse!.needMoreInfo == false &&
+          state.triageResponse!.nextQuestion == null) {
+        // Navigate to summary
+        Future.delayed(const Duration(milliseconds: 300), () {
+          if (mounted) {
+            final sessionId = widget.sessionId ?? state.sessionId;
+            context.push('/summary?sessionId=$sessionId');
+          }
+        });
       }
     });
   }

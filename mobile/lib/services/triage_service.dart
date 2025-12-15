@@ -1,17 +1,29 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod/riverpod.dart' show Ref;
 
 import '../config/api_config.dart';
+import '../features/auth/providers/auth_provider.dart';
 import '../models/triage_models.dart';
 
 class TriageService {
   final Dio _dio;
   final String baseUrl;
+  final Ref? _ref;
 
   TriageService({
     Dio? dio,
     String? baseUrl,
+    Ref? ref,
   })  : _dio = dio ?? Dio(),
-        baseUrl = baseUrl ?? ApiConfig.baseUrl;
+        baseUrl = baseUrl ?? ApiConfig.baseUrl,
+        _ref = ref;
+
+  /// Get user ID from auth provider
+  String? _getUserId() {
+    if (_ref == null) return null;
+    return _ref!.read(authProvider).userId;
+  }
 
   /// Submit symptom and get triage response
   /// Returns TriageResponse with need_more_info, next_question, and triage_level
@@ -21,6 +33,12 @@ class TriageService {
     Map<String, dynamic>? previousAnswers,
   }) async {
     try {
+      final headers = <String, String>{};
+      final userId = _getUserId();
+      if (userId != null) {
+        headers['x-user-id'] = userId;
+      }
+
       final response = await _dio.post(
         '$baseUrl/triage/assess',
         data: {
@@ -28,6 +46,7 @@ class TriageService {
           'symptom': symptom,
           'previous_answers': previousAnswers ?? {},
         },
+        options: Options(headers: headers),
       );
 
       return TriageResponse.fromJson(response.data);
@@ -42,9 +61,16 @@ class TriageService {
     required String sessionId,
   }) async {
     try {
+      final headers = <String, String>{};
+      final userId = _getUserId();
+      if (userId != null) {
+        headers['x-user-id'] = userId;
+      }
+
       final response = await _dio.get(
         '$baseUrl/triage/diagnosis',
         queryParameters: {'session_id': sessionId},
+        options: Options(headers: headers),
       );
 
       return DiagnosisResponse.fromJson(response.data);

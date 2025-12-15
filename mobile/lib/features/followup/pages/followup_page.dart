@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod/riverpod.dart' show Ref;
 
 import '../../../app/theme.dart';
 import '../../../l10n/app_localizations.dart';
-
-enum SymptomStatus {
-  better,
-  same,
-  worse,
-}
+import '../../../services/followup_service.dart';
 
 class FollowupPage extends ConsumerStatefulWidget {
   final String sessionId;
@@ -23,7 +19,7 @@ class FollowupPage extends ConsumerStatefulWidget {
 }
 
 class _FollowupPageState extends ConsumerState<FollowupPage> {
-  SymptomStatus? _selectedStatus;
+  FollowupStatus? _selectedStatus;
   final TextEditingController _notesController = TextEditingController();
 
   @override
@@ -32,7 +28,7 @@ class _FollowupPageState extends ConsumerState<FollowupPage> {
     super.dispose();
   }
 
-  void _submitFollowup() {
+  Future<void> _submitFollowup() async {
     if (_selectedStatus == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('กรุณาเลือกสถานะอาการ')),
@@ -40,14 +36,30 @@ class _FollowupPageState extends ConsumerState<FollowupPage> {
       return;
     }
 
-    // Save follow-up data
-    // In production, send to backend
-    
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('บันทึกข้อมูลแล้ว')),
+    // Save follow-up data to backend
+    final service = FollowupService(ref: ref as Ref);
+    final success = await service.submitCheckin(
+      sessionId: widget.sessionId,
+      status: _selectedStatus!,
+      notes: _notesController.text.isEmpty ? null : _notesController.text,
     );
     
-    Navigator.of(context).pop();
+    if (success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('บันทึกข้อมูลแล้ว'),
+          backgroundColor: Colors.green,
+        ),
+      );
+      Navigator.of(context).pop();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   @override
@@ -86,7 +98,7 @@ class _FollowupPageState extends ConsumerState<FollowupPage> {
             // PROBLEM_DRIVEN_IMPLEMENTATION.md: Follow-up UI must be one-tap: ดีขึ้น / เท่าเดิม / แย่ลง
             _buildStatusOption(
               context,
-              SymptomStatus.better,
+              FollowupStatus.better,
               'ดีขึ้น',
               '📈',
               AppTheme.green,
@@ -94,7 +106,7 @@ class _FollowupPageState extends ConsumerState<FollowupPage> {
             const SizedBox(height: 12),
             _buildStatusOption(
               context,
-              SymptomStatus.same,
+              FollowupStatus.same,
               'เท่าเดิม',
               '➡️',
               AppTheme.yellow,
@@ -102,7 +114,7 @@ class _FollowupPageState extends ConsumerState<FollowupPage> {
             const SizedBox(height: 12),
             _buildStatusOption(
               context,
-              SymptomStatus.worse,
+              FollowupStatus.worse,
               'แย่ลง',
               '📉',
               AppTheme.red,
@@ -133,7 +145,7 @@ class _FollowupPageState extends ConsumerState<FollowupPage> {
 
   Widget _buildStatusOption(
     BuildContext context,
-    SymptomStatus status,
+    FollowupStatus status,
     String label,
     String emoji,
     Color color,

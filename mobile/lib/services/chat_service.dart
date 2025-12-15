@@ -1,17 +1,29 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod/riverpod.dart' show Ref;
 
 import '../config/api_config.dart';
+import '../features/auth/providers/auth_provider.dart';
 import '../models/chat_models.dart';
 
 class ChatService {
   final Dio _dio;
   final String baseUrl;
+  final Ref? _ref;
 
   ChatService({
     Dio? dio,
     String? baseUrl,
+    Ref? ref,
   })  : _dio = dio ?? Dio(),
-        baseUrl = baseUrl ?? ApiConfig.baseUrl;
+        baseUrl = baseUrl ?? ApiConfig.baseUrl,
+        _ref = ref;
+
+  /// Get user ID from auth provider
+  String? _getUserId() {
+    if (_ref == null) return null;
+    return _ref!.read(authProvider).userId;
+  }
 
   /// Send chat message to AI doctor
   Future<ChatMessage> sendMessage({
@@ -20,6 +32,12 @@ class ChatService {
     required List<ChatMessage> history,
   }) async {
     try {
+      final headers = <String, String>{};
+      final userId = _getUserId();
+      if (userId != null) {
+        headers['x-user-id'] = userId;
+      }
+
       final response = await _dio.post(
         '$baseUrl/chat/message',
         data: {
@@ -27,6 +45,7 @@ class ChatService {
           'message': message,
           'history': history.map((m) => m.toJson()).toList(),
         },
+        options: Options(headers: headers),
       );
 
       return ChatMessage.fromJson(response.data);
