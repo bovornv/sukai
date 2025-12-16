@@ -109,7 +109,8 @@ function determineTriageLevel(symptom, answers, questionCount) {
   }
 
   // If we have enough info, determine level
-  if (questionCount >= 3 || answers.duration) {
+  // Require at least 4 questions before determining triage (unless emergency)
+  if (questionCount >= 4) {
     const lowerSymptom = symptom.toLowerCase();
 
     // High severity indicators → GP
@@ -187,14 +188,15 @@ export async function assessSymptomLogic({
 
   // Stop conditions (from docs):
   // - emergency detected (already handled above)
-  // - gp/pharmacy threshold reached (clear result)
-  // - confidence ≥ 80% (clear result)
+  // - gp/pharmacy threshold reached (clear result) BUT only after minimum 4 questions
+  // - confidence ≥ 80% (clear result) BUT only after minimum 4 questions
   // PROBLEM_DRIVEN_IMPLEMENTATION.md: Must stop when we have clear triage
+  // REQUIREMENT: Must ask at least 4 questions before completing (unless emergency)
   const shouldStop =
-    triageLevel === 'gp' ||
-    triageLevel === 'pharmacy' ||
-    triageLevel === 'self_care' ||
-    confidence >= 80 ||
+    (triageLevel === 'gp' && questionCount >= 4) ||
+    (triageLevel === 'pharmacy' && questionCount >= 4) ||
+    (triageLevel === 'self_care' && questionCount >= 4) ||
+    (confidence >= 80 && questionCount >= 4) ||
     questionCount >= 6;
 
   if (shouldStop) {
