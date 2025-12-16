@@ -179,32 +179,69 @@ function generateSummary(triageLevel) {
  * NEW: Include severity statement, WHY explanation, follow-up timing, watch signs
  */
 export async function generateDiagnosis({ symptoms, answers, triageLevel }) {
-  // Ensure we never return uncertain without clear guidance
-  const finalTriage = triageLevel === 'uncertain' ? 'gp' : triageLevel;
-  const recommendations = RECOMMENDATIONS_BY_TRIAGE[finalTriage] || RECOMMENDATIONS_BY_TRIAGE.gp;
-  const summary = generateSummary(finalTriage);
+  try {
+    // Ensure we never return uncertain without clear guidance
+    const finalTriage = triageLevel === 'uncertain' ? 'gp' : (triageLevel || 'self_care');
+    const recommendations = RECOMMENDATIONS_BY_TRIAGE[finalTriage] || RECOMMENDATIONS_BY_TRIAGE.gp;
+    const summary = generateSummary(finalTriage);
 
-  // Extract severity and why from summary
-  const summaryLines = summary.split('\n');
-  const severityStatement = summaryLines[0] || '';
-  const whyExplanation = summaryLines[1] || '';
+    // Extract severity and why from summary
+    const summaryLines = summary.split('\n');
+    const severityStatement = summaryLines[0] || '';
+    const whyExplanation = summaryLines[1] || '';
 
-  // PROBLEM_DRIVEN_IMPLEMENTATION.md: All sections must appear, 3-5 items each
-  return {
-    triage_level: finalTriage, // Clear result
-    summary, // Clear next action
-    severity_statement: severityStatement, // 🟢🟡🔴 traffic light
-    why_explanation: whyExplanation, // WHY in 1 sentence
-    recommendations: {
-      home_care: recommendations.home_care,
-      otc_meds: recommendations.otc_meds,
-      when_to_see_doctor: recommendations.when_to_see_doctor, // Clear next action
-      danger_signs: recommendations.danger_signs, // Clear safety boundary
-      additional_advice: recommendations.additional_advice,
-    },
-    follow_up: {
-      timing: finalTriage === 'emergency' ? 'ทันที' : '24–48 ชม.',
-      watch_signs: recommendations.additional_advice.find(item => item.includes('สัญญาณ')) || 'อาการแย่ลง, มีไข้สูง, ปวดมากขึ้น',
-    },
-  };
+    // Safely extract watch signs
+    const additionalAdvice = recommendations.additional_advice || [];
+    const watchSignsItem = Array.isArray(additionalAdvice) 
+      ? additionalAdvice.find(item => typeof item === 'string' && item.includes('สัญญาณ'))
+      : null;
+    const watchSigns = watchSignsItem || 'อาการแย่ลง, มีไข้สูง, ปวดมากขึ้น';
+
+    // Ensure all recommendation arrays exist
+    const safeRecommendations = {
+      home_care: Array.isArray(recommendations.home_care) ? recommendations.home_care : [],
+      otc_meds: Array.isArray(recommendations.otc_meds) ? recommendations.otc_meds : [],
+      when_to_see_doctor: Array.isArray(recommendations.when_to_see_doctor) ? recommendations.when_to_see_doctor : [],
+      danger_signs: Array.isArray(recommendations.danger_signs) ? recommendations.danger_signs : [],
+      additional_advice: Array.isArray(recommendations.additional_advice) ? recommendations.additional_advice : [],
+    };
+
+    // PROBLEM_DRIVEN_IMPLEMENTATION.md: All sections must appear, 3-5 items each
+    return {
+      triage_level: finalTriage, // Clear result
+      summary, // Clear next action
+      severity_statement: severityStatement, // 🟢🟡🔴 traffic light
+      why_explanation: whyExplanation, // WHY in 1 sentence
+      recommendations: safeRecommendations,
+      follow_up: {
+        timing: finalTriage === 'emergency' ? 'ทันที' : '24–48 ชม.',
+        watch_signs: watchSigns,
+      },
+    };
+  } catch (error) {
+    console.error('Error generating diagnosis:', error);
+    // Fallback to safe defaults
+    const fallbackTriage = 'self_care';
+    const fallbackRecs = RECOMMENDATIONS_BY_TRIAGE[fallbackTriage];
+    const fallbackSummary = generateSummary(fallbackTriage);
+    const summaryLines = fallbackSummary.split('\n');
+    
+    return {
+      triage_level: fallbackTriage,
+      summary: fallbackSummary,
+      severity_statement: summaryLines[0] || '🟢 ดูแลตัวเองได้',
+      why_explanation: summaryLines[1] || 'อาการไม่รุนแรง',
+      recommendations: {
+        home_care: fallbackRecs.home_care || [],
+        otc_meds: fallbackRecs.otc_meds || [],
+        when_to_see_doctor: fallbackRecs.when_to_see_doctor || [],
+        danger_signs: fallbackRecs.danger_signs || [],
+        additional_advice: fallbackRecs.additional_advice || [],
+      },
+      follow_up: {
+        timing: '24–48 ชม.',
+        watch_signs: 'อาการแย่ลง, มีไข้สูง, ปวดมากขึ้น',
+      },
+    };
+  }
 }
