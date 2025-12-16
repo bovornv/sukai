@@ -33,6 +33,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       fontFamily: 'NotoSansThai',
+      fontFamilyFallback: const ['sans-serif'], // Fallback for missing characters
       colorScheme: ColorScheme.light(
         primary: primaryYellow,
         secondary: green,
