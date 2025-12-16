@@ -8,6 +8,7 @@ import '../features/home/pages/home_page.dart';
 import '../features/summary/pages/summary_page.dart';
 import '../features/billing/pages/billing_page.dart';
 import '../features/followup/pages/followup_page.dart';
+import '../features/profile/pages/profile_page.dart';
 
 /// App Router with Authentication Guards
 class AppRouter {
@@ -61,6 +62,11 @@ class AppRouter {
           path: '/billing',
           name: 'billing',
           builder: (context, state) => const BillingPage(),
+        ),
+        GoRoute(
+          path: '/profile',
+          name: 'profile',
+          builder: (context, state) => const ProfilePage(),
         ),
         GoRoute(
           path: '/followup',

@@ -1,122 +1,93 @@
 # Deployment Next Steps
 
-## Current Status
+## ✅ Completed
 
-✅ GitHub connected to Railway
-✅ Selected repository: bovornv/ukai
-⚠️ Repository appears empty on GitHub
+1. ✅ Fixed Railway deployment configuration
+   - Updated `railway.toml` with `rootDirectory = "backend"`
+   - Created `backend/nixpacks.toml` for explicit config
 
-## Step 1: Push Code to GitHub (If Needed)
+2. ✅ Fixed Sentry initialization bug
+   - `dotenv.config()` now called before `initSentry()`
 
-If your code isn't on GitHub yet, push it:
+3. ✅ Changes committed locally
 
-```bash
-cd /Users/bovorn/Desktop/aurasea/Projects/sukai
+## 📋 Next Steps
 
-# Initialize git if needed
-git init
+### Step 1: Push to GitHub
 
-# Add all files
-git add .
-
-# Commit
-git commit -m "Initial commit - SukAI backend"
-
-# Add remote (replace with your GitHub repo URL)
-git remote add origin https://github.com/bovornv/ukai.git
-
-# Push to GitHub
-git push -u origin main
-```
-
-Or if you already have a remote:
 ```bash
 git push origin main
 ```
 
-## Step 2: Deploy on Railway
+Railway will automatically detect the push and start a new deployment.
 
-After pushing code to GitHub:
+### Step 2: Monitor Railway Deployment
 
-1. **Go back to Railway dashboard**
-2. **Refresh the page** or click "Deploy" again
-3. Railway will detect your code and start deploying
+1. Go to Railway dashboard: https://railway.app
+2. Click on service **"sukai"**
+3. Check **"Deployments"** tab
+4. Watch for deployment status:
+   - **Building** = In progress (wait)
+   - **Deploying** = Almost done (wait 1-2 min)
+   - **Active** = Success! ✅
 
-## Step 3: Configure Service
+### Step 3: Test Backend
 
-Once Railway creates the service:
-
-1. **Click on the service** that was created
-2. Go to **"Settings"** tab
-3. Set **Root Directory**: `backend`
-4. Set **Start Command**: `npm start` (optional, auto-detected)
-
-## Step 4: Add Environment Variables
-
-In **Settings** → **Variables** tab, click **"New Variable"** for each:
-
-```
-SUPABASE_URL = YOUR_SUPABASE_URL
-SUPABASE_ANON_KEY = YOUR_SUPABASE_ANON_KEY
-SUPABASE_SERVICE_ROLE_KEY = YOUR_SUPABASE_SERVICE_ROLE_KEY
-PORT = 3000
-NODE_ENV = production
-```
-
-## Step 5: Get Your Backend URL
-
-1. Go to **Settings** → **Networking**
-2. Under **"Public Domain"**, Railway will show a URL
-3. Copy it (e.g., `https://ukai-production.up.railway.app`)
-
-## Step 6: Test Your Backend
+After deployment shows **"Active"**:
 
 ```bash
-curl https://your-backend-url.railway.app/health
+curl https://sukai-production.up.railway.app/health
 ```
 
-Should return:
+**Expected response:**
 ```json
-{"status":"ok","timestamp":"..."}
+{"status":"ok","timestamp":"2025-12-13T..."}
 ```
 
-## Step 7: Update Mobile App
-
-Run this command with your Railway URL:
+### Step 4: Rebuild Flutter App
 
 ```bash
-cd backend
-./update-mobile-app.sh https://your-backend-url.railway.app
-```
-
-Or manually edit `mobile/lib/config/api_config.dart`:
-```dart
-static const String prodBaseUrl = 'https://your-backend-url.railway.app/api';
-static const bool isProduction = true;
-```
-
-## Step 8: Rebuild Mobile App
-
-```bash
-cd ../mobile
+cd mobile
 flutter clean
 flutter pub get
 flutter run
 ```
 
+Your mobile app will connect to the production backend!
+
 ## Troubleshooting
 
-**Repository is empty?**
-- Push your code to GitHub first
-- Make sure you're pushing to the correct repository
+### If deployment still fails:
 
-**Deployment fails?**
-- Check Railway logs: Click service → "Deployments" → Latest → View logs
-- Verify environment variables are set correctly
-- Check root directory is set to `backend`
+1. **Check Railway logs:**
+   - Railway → Service "sukai" → Logs
+   - Look for error messages
 
-**Can't find URL?**
-- Go to Settings → Networking
-- Enable "Generate Domain" if not enabled
-- Copy the generated domain
+2. **Verify Root Directory:**
+   - Railway → Service "sukai" → Settings
+   - Ensure "Root Directory" is set to: `backend`
 
+3. **Check Environment Variables:**
+   - Railway → Service "sukai" → Variables
+   - Verify all required variables are set:
+     - `SUPABASE_URL`
+     - `SUPABASE_ANON_KEY`
+     - `SUPABASE_SERVICE_ROLE_KEY`
+     - `PORT=3000`
+     - `NODE_ENV=production`
+
+### If backend returns 404:
+
+- Wait 2-3 more minutes for deployment to complete
+- Check Railway logs for startup messages
+- Verify the service is "Active" in Railway
+
+## Summary
+
+**Current Status:**
+- ✅ Code fixed and committed
+- ⏳ Ready to push to GitHub
+- ⏳ Railway will auto-redeploy
+- ⏳ Then test and rebuild Flutter app
+
+**Total time:** ~5-10 minutes

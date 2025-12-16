@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/app_localizations.dart';
@@ -146,6 +147,31 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           ),
           _buildInputArea(l10n),
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 1,
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'หน้าแรก',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'แชทแพทย์ AI',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'โปรไฟล์',
+          ),
+        ],
+        onTap: (index) {
+          if (index == 0) {
+            context.go('/');
+          } else if (index == 2) {
+            context.push('/profile');
+          }
+        },
       ),
     );
   }

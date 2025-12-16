@@ -223,19 +223,28 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
+        type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'หน้าแรก',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.credit_card),
-            label: 'แผนการใช้งาน',
+            icon: Icon(Icons.chat),
+            label: 'แชทแพทย์ AI',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'โปรไฟล์',
           ),
         ],
         onTap: (index) {
           if (index == 1) {
-            context.push('/billing');
+            // Start new chat session
+            final sessionId = const Uuid().v4();
+            context.push('/chat?sessionId=$sessionId');
+          } else if (index == 2) {
+            context.push('/profile');
           }
         },
       ),
