@@ -91,7 +91,7 @@ class RecommendationsSection extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             ...items.map((item) => Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.only(bottom: 10),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -107,9 +107,12 @@ class RecommendationsSection extends StatelessWidget {
                       Expanded(
                         child: Text(
                           item,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 15,
-                            height: 1.5,
+                            height: item.contains('\n') ? 1.6 : 1.5,
+                            fontWeight: item.contains('วิธีใช้') || item.contains('ข้อควรระวัง') 
+                                ? FontWeight.w500 
+                                : FontWeight.normal,
                           ),
                         ),
                       ),

@@ -80,15 +80,45 @@ class Recommendations {
   }
 }
 
+class FollowUp {
+  final String timing;
+  final String watchSigns;
+
+  const FollowUp({
+    required this.timing,
+    required this.watchSigns,
+  });
+
+  factory FollowUp.fromJson(Map<String, dynamic> json) {
+    return FollowUp(
+      timing: json['timing'] as String? ?? '24–48 ชม.',
+      watchSigns: json['watch_signs'] as String? ?? 'อาการแย่ลง, มีไข้สูง, ปวดมากขึ้น',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'timing': timing,
+      'watch_signs': watchSigns,
+    };
+  }
+}
+
 class DiagnosisResponse {
   final TriageLevel triageLevel;
   final String summary;
   final Recommendations recommendations;
+  final String? severityStatement;
+  final String? whyExplanation;
+  final FollowUp? followUp;
 
   const DiagnosisResponse({
     required this.triageLevel,
     required this.summary,
     required this.recommendations,
+    this.severityStatement,
+    this.whyExplanation,
+    this.followUp,
   });
 
   factory DiagnosisResponse.fromJson(Map<String, dynamic> json) {
@@ -98,6 +128,11 @@ class DiagnosisResponse {
       recommendations: Recommendations.fromJson(
         json['recommendations'] as Map<String, dynamic>,
       ),
+      severityStatement: json['severity_statement'] as String?,
+      whyExplanation: json['why_explanation'] as String?,
+      followUp: json['follow_up'] != null
+          ? FollowUp.fromJson(json['follow_up'] as Map<String, dynamic>)
+          : null,
     );
   }
 
@@ -106,6 +141,9 @@ class DiagnosisResponse {
       'triage_level': triageLevel.value,
       'summary': summary,
       'recommendations': recommendations.toJson(),
+      if (severityStatement != null) 'severity_statement': severityStatement,
+      if (whyExplanation != null) 'why_explanation': whyExplanation,
+      if (followUp != null) 'follow_up': followUp!.toJson(),
     };
   }
 }
