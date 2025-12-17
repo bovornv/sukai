@@ -74,7 +74,7 @@ export async function assessSymptom({ sessionId, symptom, previousAnswers, userI
     ? session.symptoms[session.symptoms.length - 1] 
     : symptom;
 
-  // Run triage logic
+  // Run triage logic (with Thai language normalization)
   const result = await assessSymptomLogic({
     symptom: symptomForTriage,
     previousAnswers: session.answers,
