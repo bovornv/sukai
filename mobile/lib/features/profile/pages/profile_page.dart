@@ -251,10 +251,15 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                             const SnackBar(content: Text('ฟีเจอร์นี้จะเปิดใช้งานเร็วๆ นี้')),
                           );
                         },
-                        icon: const Icon(Icons.edit, size: 18),
-                        label: const Text('แก้ไขข้อมูลสุขภาพ'),
+                        icon: const Icon(Icons.edit, size: 18, color: AppTheme.textPrimary),
+                        label: const Text(
+                          'แก้ไขข้อมูลสุขภาพ',
+                          style: TextStyle(color: AppTheme.textPrimary),
+                        ),
                         style: OutlinedButton.styleFrom(
+                          foregroundColor: AppTheme.textPrimary, // Dark text
                           padding: const EdgeInsets.symmetric(vertical: 12),
+                          side: BorderSide(color: AppTheme.textSecondary.withValues(alpha: 0.3)),
                         ),
                       ),
                     ),

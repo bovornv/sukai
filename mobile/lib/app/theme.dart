@@ -126,6 +126,29 @@ class AppTheme {
           ),
         ),
       ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: textPrimary, // Dark text instead of yellow
+          textStyle: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: textPrimary, // Dark text instead of yellow
+          side: BorderSide(color: textSecondary.withValues(alpha: 0.3)),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          textStyle: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: cardBackground,
         selectedItemColor: navActive,
