@@ -469,6 +469,17 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         height: 1.5,
                       ),
                     ),
+                    const SizedBox(height: 16),
+                    TextButton.icon(
+                      onPressed: () {
+                        context.push('/medical-disclaimer');
+                      },
+                      icon: const Icon(Icons.arrow_forward, size: 18),
+                      label: const Text('อ่านรายละเอียดเพิ่มเติม'),
+                      style: TextButton.styleFrom(
+                        foregroundColor: AppTheme.textPrimary,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -502,9 +513,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       'คำถามที่พบบ่อย (FAQ)',
                       Icons.question_answer,
                       () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('คำถามที่พบบ่อย')),
-                        );
+                        context.push('/faq');
                       },
                     ),
                     const Divider(height: 1),
@@ -513,9 +522,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       'ติดต่อฝ่ายสนับสนุน',
                       Icons.support_agent,
                       () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('ติดต่อฝ่ายสนับสนุน')),
-                        );
+                        context.push('/support');
                       },
                     ),
                     const Divider(height: 1),
@@ -524,9 +531,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       'ส่งความคิดเห็น',
                       Icons.feedback_outlined,
                       () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('ส่งความคิดเห็น')),
-                        );
+                        context.push('/feedback');
                       },
                     ),
                   ],
