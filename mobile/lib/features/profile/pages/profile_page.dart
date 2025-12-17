@@ -121,7 +121,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             Card(
               elevation: 2,
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(24), // More padding for breathing room
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -129,7 +129,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       children: [
                         CircleAvatar(
                           radius: 30,
-                          backgroundColor: AppTheme.primaryYellow,
+                          backgroundColor: AppTheme.textPrimary.withValues(alpha: 0.1), // Subtle background
                           child: Text(
                             user?.email?.substring(0, 1).toUpperCase() ?? 'U',
                             style: const TextStyle(
@@ -196,16 +196,23 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             // Health Profile Section
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(24), // More padding for breathing room
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      '🩺 ข้อมูลสุขภาพ',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      children: [
+                        Icon(Icons.health_and_safety, color: AppTheme.textPrimary, size: 24),
+                        const SizedBox(width: 12),
+                        const Text(
+                          'ข้อมูลสุขภาพ',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.textPrimary,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 16),
                     _buildInfoRow('อายุ', '-'),
@@ -218,13 +225,21 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         color: AppTheme.backgroundColor,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Text(
-                        '💡 ช่วยให้ AI ประเมินแม่นยำขึ้น',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: AppTheme.textSecondary,
-                          fontStyle: FontStyle.italic,
-                        ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.lightbulb_outline, size: 16, color: AppTheme.textSecondary),
+                          const SizedBox(width: 8),
+                          const Expanded(
+                            child: Text(
+                              'ช่วยให้ AI ประเมินแม่นยำขึ้น',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: AppTheme.textSecondary,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -250,17 +265,24 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             const SizedBox(height: 24),
 
             // My Plan Section
-            const Text(
-              '💳 แผนบริการของฉัน',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                Icon(Icons.card_membership, color: AppTheme.textPrimary, size: 24),
+                const SizedBox(width: 12),
+                const Text(
+                  'แผนบริการของฉัน',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.textPrimary,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 16),
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(24), // More padding for breathing room
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -268,27 +290,33 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       const Center(child: CircularProgressIndicator())
                     else ...[
                       if (_currentPlan != null)
-                        Card(
-                          color: AppTheme.primaryYellow.withValues(alpha: 0.2),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.check_circle, color: AppTheme.green),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Text(
-                                    'แผนปัจจุบัน: ${_getPlanName(_currentPlan!)}',
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                  ),
-                                ),
-                              ],
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: AppTheme.green.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: AppTheme.green.withValues(alpha: 0.3),
+                              width: 1,
                             ),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.check_circle, color: AppTheme.green, size: 24),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  'แผนปัจจุบัน: ${_getPlanName(_currentPlan!)}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppTheme.textPrimary,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       const SizedBox(height: 16),
@@ -346,16 +374,23 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             // Privacy & PDPA Section (Serious, hospital-like tone)
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(24), // More padding for breathing room
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      '🔒 ความเป็นส่วนตัว & PDPA',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      children: [
+                        Icon(Icons.shield, color: AppTheme.textPrimary, size: 24),
+                        const SizedBox(width: 12),
+                        const Text(
+                          'ความเป็นส่วนตัว & PDPA',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.textPrimary,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 16),
                     _buildListTile(
@@ -399,20 +434,36 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             // Medical Disclaimer Section (Short, clear, not scary)
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(24), // More padding for breathing room
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      children: [
+                        Icon(Icons.info_outline, color: AppTheme.textPrimary, size: 24),
+                        const SizedBox(width: 12),
+                        const Text(
+                          'ข้อจำกัดทางการแพทย์',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.textPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
                     const Text(
-                      '📄 ข้อจำกัดทางการแพทย์',
+                      'SukAI เป็นเครื่องมือช่วยคัดกรองเบื้องต้นเท่านั้น ไม่สามารถแทนที่การวินิจฉัยจากแพทย์ได้',
                       style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: AppTheme.textPrimary,
+                        height: 1.6,
                       ),
                     ),
                     const SizedBox(height: 12),
                     const Text(
-                      'SukAI เป็นเครื่องมือช่วยประเมินอาการเบื้องต้นเท่านั้น ไม่สามารถแทนที่การวินิจฉัยจากแพทย์ได้ กรุณาปรึกษาแพทย์หากมีอาการรุนแรงหรือไม่แน่ใจ',
+                      'กรุณาปรึกษาแพทย์หากมีอาการรุนแรงหรือไม่แน่ใจ',
                       style: TextStyle(
                         fontSize: 14,
                         color: AppTheme.textSecondary,
@@ -428,22 +479,29 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             // Help Center Section
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(24), // More padding for breathing room
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      '❓ ศูนย์ช่วยเหลือ',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      children: [
+                        Icon(Icons.help_outline, color: AppTheme.textPrimary, size: 24),
+                        const SizedBox(width: 12),
+                        const Text(
+                          'ศูนย์ช่วยเหลือ',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.textPrimary,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 16),
                     _buildListTile(
                       context,
                       'คำถามที่พบบ่อย (FAQ)',
-                      Icons.help_outline,
+                      Icons.question_answer,
                       () {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('คำถามที่พบบ่อย')),
@@ -465,7 +523,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     _buildListTile(
                       context,
                       'ส่งความคิดเห็น',
-                      Icons.feedback,
+                      Icons.feedback_outlined,
                       () {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('ส่งความคิดเห็น')),
@@ -582,14 +640,19 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     VoidCallback onTap,
   ) {
     return ListTile(
-      leading: Icon(icon, color: AppTheme.textSecondary, size: 22),
+      leading: Icon(icon, color: AppTheme.textPrimary, size: 24), // Darker, larger icons
       title: Text(
         title,
-        style: const TextStyle(fontSize: 15),
+        style: const TextStyle(
+          fontSize: 15,
+          color: AppTheme.textPrimary,
+          fontWeight: FontWeight.w500,
+        ),
       ),
-      trailing: const Icon(Icons.chevron_right, size: 20, color: AppTheme.textSecondary),
+      trailing: const Icon(Icons.chevron_right, size: 20, color: AppTheme.textTertiary),
       onTap: onTap,
-      contentPadding: EdgeInsets.zero,
+      contentPadding: const EdgeInsets.symmetric(vertical: 8), // More vertical padding
+      dense: false,
     );
   }
 

@@ -16,6 +16,11 @@ class AppTheme {
   // Primary text: dark gray / near black (not pure black for readability)
   static const Color textPrimary = Color(0xFF1A1A1A);
   static const Color textSecondary = Color(0xFF666666);
+  static const Color textTertiary = Color(0xFF999999);
+  
+  // Navigation colors (high contrast)
+  static const Color navInactive = Color(0xFF999999);
+  static const Color navActive = Color(0xFF1A1A1A);
 
   // Triage level colors (Medical states)
   static Color getTriageColor(String triageLevel) {
@@ -60,40 +65,81 @@ class AppTheme {
           borderRadius: BorderRadius.circular(16),
         ),
       ),
-      textTheme: const TextTheme(
-        displayLarge: TextStyle(
+      textTheme: TextTheme(
+        displayLarge: const TextStyle(
           fontSize: 32,
           fontWeight: FontWeight.bold,
           color: textPrimary,
+          height: 1.3, // Better line height for Thai
         ),
-        displayMedium: TextStyle(
+        displayMedium: const TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
           color: textPrimary,
+          height: 1.4,
         ),
-        bodyLarge: TextStyle(
+        titleLarge: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: textPrimary,
+          height: 1.4,
+        ),
+        titleMedium: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: textPrimary,
+          height: 1.5,
+        ),
+        bodyLarge: const TextStyle(
           fontSize: 18,
           color: textPrimary,
+          height: 1.6, // Increased for readability
         ),
-        bodyMedium: TextStyle(
+        bodyMedium: const TextStyle(
           fontSize: 16,
           color: textPrimary,
+          height: 1.6,
         ),
-        bodySmall: TextStyle(
+        bodySmall: const TextStyle(
           fontSize: 14,
           color: textSecondary,
+          height: 1.5,
+        ),
+        labelMedium: const TextStyle(
+          fontSize: 12,
+          color: textTertiary,
+          height: 1.4,
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryYellow,
           foregroundColor: textPrimary,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14), // More padding
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
           elevation: 2,
+          textStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600, // Medium-bold for better readability
+          ),
         ),
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: cardBackground,
+        selectedItemColor: navActive,
+        unselectedItemColor: navInactive,
+        selectedLabelStyle: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+        ),
+        unselectedLabelStyle: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.normal,
+        ),
+        type: BottomNavigationBarType.fixed,
+        elevation: 8,
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
