@@ -130,40 +130,69 @@ const RECOMMENDATIONS_BY_TRIAGE = {
 };
 
 /**
- * Generate summary based on triage level
- * PROBLEM_DRIVEN_IMPLEMENTATION.md: Must be 2-4 short lines, emoji-based, calm tone
+ * Generate explainable summary based on triage level and clinical reasoning
+ * Doctor-level explanation: WHY this triage level, not just WHAT
  * Must provide: clear triage result, clear next action, clear safety boundary
  * NEW REQUIREMENT: Every diagnosis MUST start with clear severity statement + WHY
  */
-function generateSummary(triageLevel) {
+function generateSummary(triageLevel, symptom = '', answers = {}, riskScore = 0) {
+  const normalizedSymptom = symptom.toLowerCase();
+  
+  // Generate WHY explanation based on clinical reasoning
+  let whyExplanation = '';
+  
+  if (triageLevel === 'emergency') {
+    whyExplanation = 'พบสัญญาณอันตราย (เช่น หายใจลำบาก, เจ็บหน้าอก, หมดสติ) ที่ต้องได้รับการดูแลทันที';
+  } else if (triageLevel === 'gp') {
+    if (riskScore >= 60) {
+      whyExplanation = 'อาการรุนแรงหรือมีปัจจัยเสี่ยงสูง (เช่น อายุ, โรคประจำตัว, อาการแย่ลง) ควรให้แพทย์ตรวจวินิจฉัย';
+    } else if (answers.trend && answers.trend.includes('แย่ลง')) {
+      whyExplanation = 'อาการแย่ลงแม้ดูแลตัวเองแล้ว ควรให้แพทย์ตรวจเพื่อหาสาเหตุ';
+    } else if (answers.self_care_response && answers.self_care_response.includes('ไม่ดีขึ้น')) {
+      whyExplanation = 'ลองดูแลตัวเองแล้วแต่ไม่ดีขึ้น ควรให้แพทย์ประเมินเพื่อหาสาเหตุที่แท้จริง';
+    } else {
+      whyExplanation = 'อาการมีความรุนแรงปานกลางถึงสูง หรือมีปัจจัยเสี่ยง ควรให้แพทย์ตรวจวินิจฉัย';
+    }
+  } else if (triageLevel === 'pharmacy') {
+    if (normalizedSymptom.includes('ไข้') || normalizedSymptom.includes('ปวด')) {
+      whyExplanation = 'อาการไม่รุนแรงมาก แต่ควรใช้ยาช่วยบรรเทาเพื่อให้หายเร็วขึ้น';
+    } else {
+      whyExplanation = 'อาการไม่รุนแรงมาก แต่ควรใช้ยาช่วยบรรเทา';
+    }
+  } else if (triageLevel === 'self_care') {
+    whyExplanation = 'อาการไม่รุนแรงและไม่มีสัญญาณอันตราย สามารถดูแลตัวเองที่บ้านได้';
+  } else {
+    whyExplanation = 'ควรให้แพทย์ประเมินเพิ่มเติมเพื่อความแน่ใจ';
+  }
+  
   const summaries = {
     self_care: {
       severity: '🟢 ดูแลตัวเองได้',
-      why: 'อาการไม่รุนแรงและไม่มีสัญญาณอันตราย',
+      why: whyExplanation || 'อาการไม่รุนแรงและไม่มีสัญญาณอันตราย',
       action: '🏠 ดูแลตัวเองที่บ้านได้',
       followup: '⏰ ติดตามอาการ 24–48 ชม.',
     },
     pharmacy: {
       severity: '🟡 ควรติดตาม / พบเภสัชกร',
-      why: 'อาการไม่รุนแรงมากแต่ควรใช้ยาช่วยบรรเทา',
+      why: whyExplanation || 'อาการไม่รุนแรงมากแต่ควรใช้ยาช่วยบรรเทา',
       action: '💊 ไปร้านยาเพื่อซื้อยาใช้เอง',
       followup: '⏰ หากไม่ดีขึ้นใน 2–3 วัน ควรพบแพทย์',
     },
     gp: {
       severity: '🟡 ควรติดตาม / พบแพทย์',
-      why: 'อาการอาจต้องได้รับการตรวจวินิจฉัยจากแพทย์',
+      why: whyExplanation || 'อาการอาจต้องได้รับการตรวจวินิจฉัยจากแพทย์',
       action: '📅 ควรพบแพทย์ภายใน 1–2 วัน',
       followup: '📌 เตรียมข้อมูลอาการให้พร้อม',
     },
     emergency: {
       severity: '🔴 ฉุกเฉิน',
-      why: 'มีสัญญาณอันตรายที่ต้องได้รับการดูแลทันที',
+      why: whyExplanation || 'มีสัญญาณอันตรายที่ต้องได้รับการดูแลทันที',
       action: '🏥 ไปโรงพยาบาลทันที',
       followup: '⚠️ อย่ารอให้อาการแย่ลง',
     },
     uncertain: {
       severity: '🟡 ควรปรึกษาแพทย์',
-      why: 'ควรให้แพทย์ประเมินเพิ่มเติมเพื่อความแน่ใจ',
+      why: whyExplanation || 'ควรให้แพทย์ประเมินเพิ่มเติมเพื่อความแน่ใจ',
       action: '📅 ควรพบแพทย์เพื่อประเมิน',
       followup: '📝 เตรียมข้อมูลอาการให้พร้อม',
     },
@@ -173,17 +202,19 @@ function generateSummary(triageLevel) {
 }
 
 /**
- * Generate diagnosis response
+ * Generate diagnosis response with clinical reasoning
+ * Doctor-level explainable recommendations
  * PROBLEM_DRIVEN_IMPLEMENTATION.md: Every diagnosis MUST include all sections
  * Must provide: clear triage result, clear next action, clear safety boundary
  * NEW: Include severity statement, WHY explanation, follow-up timing, watch signs
  */
-export async function generateDiagnosis({ symptoms, answers, triageLevel }) {
+export async function generateDiagnosis({ symptoms, answers, triageLevel, riskScore = 0 }) {
   try {
     // Ensure we never return uncertain without clear guidance
     const finalTriage = triageLevel === 'uncertain' ? 'gp' : (triageLevel || 'self_care');
     const recommendations = RECOMMENDATIONS_BY_TRIAGE[finalTriage] || RECOMMENDATIONS_BY_TRIAGE.gp;
-    const summary = generateSummary(finalTriage);
+    const symptomText = Array.isArray(symptoms) ? symptoms.join(' ') : (symptoms || '');
+    const summary = generateSummary(finalTriage, symptomText, answers, riskScore);
 
     // Extract severity and why from summary
     const summaryLines = summary.split('\n');

@@ -1,14 +1,18 @@
 /**
- * Triage assessment logic
- * Follows prompts_clinical_triage_v2.md and PROBLEM_DRIVEN_IMPLEMENTATION.md strictly
- * Problem 1: Must reduce uncertainty - every interaction ends with clear triage, next action, safety boundary
- * Forbidden: vague advice without criteria, "may be multiple things"
+ * Adaptive Clinical Triage Engine
+ * Doctor-level reasoning with risk scoring and conditional questioning
  * 
- * Enhanced with Thai language understanding:
- * - Handles misspellings and slang
- * - Context-based understanding
+ * Key Principles:
+ * - Ask questions that change triage level (not fixed set)
+ * - Use risk scoring instead of binary logic
+ * - Adaptive questioning based on symptom and answers
+ * - Clinical reasoning, not rigid decision tree
+ * 
+ * Enhanced with:
+ * - Thai language understanding (misspellings, slang)
+ * - Context extraction
  * - Smart clarification
- * - Confidence-aware responses
+ * - Anxiety-aware responses
  */
 import {
   normalizeThaiText,
@@ -20,6 +24,12 @@ import {
   triedSelfCare,
   getReassuranceMessage,
 } from './thai_normalizer.js';
+import {
+  calculateRiskScore,
+  determineTriageFromRisk,
+  selectNextQuestion,
+  hasEnoughInfo,
+} from './clinical_reasoning.js';
 
 // Red flag keywords (life-threatening symptoms)
 // These will be normalized before checking
@@ -78,74 +88,18 @@ function checkEmergency(symptom) {
 }
 
 /**
- * Determine next question based on priority and what's already asked
- * Smart clarification: Only ask if not already understood from context
+ * Get next question using adaptive clinical reasoning
+ * Uses risk scoring to determine which questions matter
+ * Only asks questions that would change triage level
  */
-function getNextQuestion(questionsAsked, answers, questionCount, symptomText = '') {
-  // Max 6 questions
-  if (questionCount >= 6) {
-    return null;
-  }
-
-  const normalizedSymptom = normalizeThaiText(symptomText);
-
-  // Priority 1: Duration (if not asked and not extracted from text)
-  if (!questionsAsked.some(q => q.includes('นานเท่าไหร่'))) {
-    if (!answers.duration) {
-      // Try to extract duration from symptom text first
-      const extractedDuration = extractDuration(symptomText);
-      if (extractedDuration) {
-        // Duration found in text, don't ask
-        return null;
-      }
-      return QUESTION_TEMPLATES.duration;
-    }
-  }
-
-  // Priority 2: Severity trend (if not asked and not detected from text)
-  if (!questionsAsked.some(q => q.includes('แย่ลง'))) {
-    if (!answers.severity_trend) {
-      // Check if worsening is mentioned in text
-      if (isWorsening(symptomText)) {
-        // Worsening detected, don't ask
-        return null;
-      }
-      return QUESTION_TEMPLATES.severity_trend;
-    }
-  }
-
-  // Priority 3: Risk group (if not asked)
-  if (!questionsAsked.some(q => q.includes('กลุ่มเสี่ยง'))) {
-    if (!answers.risk_group) {
-      return QUESTION_TEMPLATES.risk_group;
-    }
-  }
-
-  // Priority 4: Self-care response (if not asked and not detected from text)
-  if (!questionsAsked.some(q => q.includes('ดูแลตัวเอง'))) {
-    if (!answers.self_care_response) {
-      // Check if self-care attempts mentioned in text
-      if (triedSelfCare(symptomText)) {
-        // Self-care detected, don't ask
-        return null;
-      }
-      return QUESTION_TEMPLATES.self_care_response;
-    }
-  }
-
-  // Priority 5: Associated symptoms (if not asked)
-  if (!questionsAsked.some(q => q.includes('อาการอื่น'))) {
-    if (!answers.associated_symptoms) {
-      return QUESTION_TEMPLATES.associated_symptoms;
-    }
-  }
-
-  return null;
+function getNextQuestionAdaptive(symptom, answers, questionsAsked, questionCount) {
+  // Use clinical reasoning to select next question
+  return selectNextQuestion(symptom, answers, questionsAsked, questionCount);
 }
 
 /**
- * Determine triage level based on symptoms and answers
- * Uses normalized text and context understanding
+ * Determine triage level using risk scoring
+ * Doctor-level clinical reasoning with risk accumulation
  */
 function determineTriageLevel(symptom, answers, questionCount) {
   // Normalize symptom text first
@@ -156,54 +110,15 @@ function determineTriageLevel(symptom, answers, questionCount) {
     return 'emergency';
   }
 
-  // Extract context from text
-  const detectedSeverity = detectSeverity(symptom);
-  const isWorseningFromText = isWorsening(symptom);
-  const triedSelfCareFromText = triedSelfCare(symptom);
-
-  // If we have enough info, determine level
-  // Require at least 4 questions before determining triage (unless emergency)
-  if (questionCount >= 4) {
-    // High severity indicators → GP
-    if (
-      detectedSeverity === 'high' ||
-      normalizedSymptom.includes('ปวดมาก') ||
-      normalizedSymptom.includes('รุนแรง') ||
-      normalizedSymptom.includes('ไม่ดีขึ้น') ||
-      isWorseningFromText ||
-      (triedSelfCareFromText && isWorseningFromText) || // Tried self-care but not improving
-      (answers.severity_trend && answers.severity_trend.includes('แย่ลง'))
-    ) {
-      return 'gp';
-    }
-
-    // Moderate symptoms → Pharmacy
-    if (
-      normalizedSymptom.includes('ปวด') ||
-      normalizedSymptom.includes('ไข้') ||
-      normalizedSymptom.includes('น้ำมูก') ||
-      normalizedSymptom.includes('ไอ') ||
-      detectedSeverity === 'medium'
-    ) {
-      return 'pharmacy';
-    }
-
-    // Mild symptoms → Self care
-    if (detectedSeverity === 'low') {
-      return 'self_care';
-    }
-
-    // Default based on symptom patterns
-    if (
-      normalizedSymptom.includes('ปวด') ||
-      normalizedSymptom.includes('ไข้') ||
-      normalizedSymptom.includes('น้ำมูก') ||
-      normalizedSymptom.includes('ไอ')
-    ) {
-      return 'pharmacy';
-    }
-
-    return 'self_care';
+  // Calculate risk score using clinical reasoning
+  const riskScore = calculateRiskScore(symptom, answers);
+  
+  // Determine triage from risk score
+  const triageLevel = determineTriageFromRisk(riskScore);
+  
+  // If we have enough info, return triage level
+  if (hasEnoughInfo(riskScore, questionCount, answers)) {
+    return triageLevel;
   }
 
   // Not enough info yet
@@ -319,8 +234,9 @@ export async function assessSymptomLogic({
     };
   }
 
-  // Need more info - get next question (smart clarification, avoids redundant questions)
-  const nextQuestion = getNextQuestion(questionsAsked, enrichedAnswers, questionCount, symptom);
+  // Need more info - get next question using adaptive clinical reasoning
+  // Only asks questions that would change triage level
+  const nextQuestion = getNextQuestionAdaptive(symptom, enrichedAnswers, questionsAsked, questionCount);
 
   // Add reassurance if user is anxious
   let questionWithReassurance = nextQuestion;

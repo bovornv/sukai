@@ -1,5 +1,6 @@
 import { assessSymptomLogic } from './assess.js';
 import { generateDiagnosis } from './diagnosis.js';
+import { calculateRiskScore } from './clinical_reasoning.js';
 import { supabaseAdmin } from '../../config/supabase.js';
 
 // In-memory session cache (fallback if DB fails)
@@ -205,10 +206,17 @@ export async function getDiagnosis({ sessionId, userId = null }) {
     }
   }
 
+  // Calculate risk score for explainable recommendations
+  const symptomText = Array.isArray(session.symptoms) 
+    ? session.symptoms.join(' ') 
+    : (session.symptoms || '');
+  const riskScore = calculateRiskScore(symptomText, session.answers);
+  
   const diagnosis = await generateDiagnosis({
     symptoms: session.symptoms,
     answers: session.answers,
     triageLevel: session.triageLevel || 'self_care',
+    riskScore,
   });
 
   // Save diagnosis to database
