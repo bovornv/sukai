@@ -51,14 +51,23 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
           children: [
             Text(
               l10n.appName,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: AppTheme.textPrimary,
+              ),
             ),
             Text(
               l10n.appTagline,
-              style: const TextStyle(fontSize: 12),
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppTheme.textSecondary,
+              ),
             ),
           ],
         ),
+        backgroundColor: AppTheme.cardBackground, // White background (not yellow)
+        foregroundColor: AppTheme.textPrimary, // Dark text
       ),
       body: SafeArea(
         child: Padding(

@@ -117,48 +117,152 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // User Info Section
-            _buildSection(
-              context,
-              '👤 ข้อมูลผู้ใช้',
-              [
-                _buildInfoRow('อีเมล', user?.email ?? '-'),
-                _buildInfoRow('ชื่อ', user?.userMetadata?['full_name'] ?? '-'),
-              ],
+            // User Card (Trust Center)
+            Card(
+              elevation: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundColor: AppTheme.primaryYellow,
+                          child: Text(
+                            user?.email?.substring(0, 1).toUpperCase() ?? 'U',
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: AppTheme.textPrimary,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                user?.userMetadata?['full_name'] ?? user?.email ?? 'ผู้ใช้',
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                user?.email ?? '-',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: AppTheme.textSecondary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    if (_currentPlan != null) ...[
+                      const SizedBox(height: 12),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: AppTheme.primaryYellow.withValues(alpha: 0.2),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          'แผนปัจจุบัน: ${_getPlanName(_currentPlan!)}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.textPrimary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
             ),
+            const SizedBox(height: 24),
             const SizedBox(height: 24),
 
             // Health Profile Section
-            _buildSection(
-              context,
-              '🩺 ข้อมูลสุขภาพ',
-              [
-                _buildInfoRow('อายุ', '-'),
-                _buildInfoRow('โรคประจำตัว', '-'),
-                _buildInfoRow('แพ้ยา', '-'),
-                const SizedBox(height: 8),
-                TextButton.icon(
-                  onPressed: () {
-                    // TODO: Navigate to health profile edit page
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('ฟีเจอร์นี้จะเปิดใช้งานเร็วๆ นี้')),
-                    );
-                  },
-                  icon: const Icon(Icons.edit),
-                  label: const Text('แก้ไขข้อมูลสุขภาพ'),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      '🩺 ข้อมูลสุขภาพ',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    _buildInfoRow('อายุ', '-'),
+                    _buildInfoRow('โรคประจำตัว', '-'),
+                    _buildInfoRow('แพ้ยา', '-'),
+                    const SizedBox(height: 12),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: AppTheme.backgroundColor,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Text(
+                        '💡 ช่วยให้ AI ประเมินแม่นยำขึ้น',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: AppTheme.textSecondary,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton.icon(
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('ฟีเจอร์นี้จะเปิดใช้งานเร็วๆ นี้')),
+                          );
+                        },
+                        icon: const Icon(Icons.edit, size: 18),
+                        label: const Text('แก้ไขข้อมูลสุขภาพ'),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
             const SizedBox(height: 24),
 
-            // Plan & Billing Section
-            _buildSection(
-              context,
+            // My Plan Section
+            const Text(
               '💳 แผนบริการของฉัน',
-              [
-                if (_isLoading)
-                  const Center(child: CircularProgressIndicator())
-                else ...[
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (_isLoading)
+                      const Center(child: CircularProgressIndicator())
+                    else ...[
                   if (_currentPlan != null)
                     Card(
                       color: AppTheme.primaryYellow.withValues(alpha: 0.2),
@@ -218,108 +322,166 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     'Premium Doctor',
                     '฿299/ครั้ง',
                     [
-                      'ตรวจสอบโดยแพทย์',
-                      'บันทึกจากแพทย์',
-                      'ลำดับความสำคัญ',
-                      'แชร์ครอบครัว (จำกัด)',
+                    'ตรวจสอบโดยแพทย์',
+                    'AI + สรุปจากแพทย์',
+                    'ลำดับความสำคัญ',
+                    'แชร์ครอบครัว (จำกัด)',
                     ],
                     AppTheme.green,
                     _currentPlan == SubscriptionPlan.premiumDoctor,
                   ),
                 ],
-              ],
+              ),
             ),
             const SizedBox(height: 24),
 
-            // Privacy & Legal Section
-            _buildSection(
-              context,
-              '🔒 ความเป็นส่วนตัว & PDPA',
-              [
-                _buildListTile(
-                  context,
-                  'นโยบายความเป็นส่วนตัว',
-                  Icons.privacy_tip,
-                  () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('นโยบายความเป็นส่วนตัว')),
-                    );
-                  },
-                ),
-                _buildListTile(
-                  context,
-                  'ข้อกำหนดการใช้งาน',
-                  Icons.description,
-                  () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('ข้อกำหนดการใช้งาน')),
-                    );
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-
-            // Medical Disclaimer Section
-            _buildSection(
-              context,
-              '📄 ข้อจำกัดทางการแพทย์',
-              [
-                const Text(
-                  'SukAI เป็นเครื่องมือช่วยประเมินอาการเบื้องต้นเท่านั้น ไม่สามารถแทนที่การวินิจฉัยจากแพทย์ได้ กรุณาปรึกษาแพทย์หากมีอาการรุนแรงหรือไม่แน่ใจ',
-                  style: TextStyle(fontSize: 14, color: AppTheme.textSecondary),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-
-            // Help & FAQ Section
-            _buildSection(
-              context,
-              '❓ ศูนย์ช่วยเหลือ',
-              [
-                _buildListTile(
-                  context,
-                  'คำถามที่พบบ่อย (FAQ)',
-                  Icons.help_outline,
-                  () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('คำถามที่พบบ่อย')),
-                    );
-                  },
-                ),
-                _buildListTile(
-                  context,
-                  'ติดต่อฝ่ายสนับสนุน',
-                  Icons.support_agent,
-                  () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('ติดต่อฝ่ายสนับสนุน')),
-                    );
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-
-            // Logout Section
-            _buildSection(
-              context,
-              '🚪 ออกจากระบบ',
-              [
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton.icon(
-                    onPressed: _handleLogout,
-                    icon: const Icon(Icons.logout),
-                    label: const Text('ออกจากระบบ'),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.red,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+            // Privacy & PDPA Section (Serious, hospital-like tone)
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      '🔒 ความเป็นส่วนตัว & PDPA',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 16),
+                    _buildListTile(
+                      context,
+                      'นโยบายความเป็นส่วนตัว',
+                      Icons.privacy_tip,
+                      () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('นโยบายความเป็นส่วนตัว')),
+                        );
+                      },
+                    ),
+                    const Divider(height: 1),
+                    _buildListTile(
+                      context,
+                      'สิทธิ์ในข้อมูลสุขภาพ',
+                      Icons.health_and_safety,
+                      () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('สิทธิ์ในข้อมูลสุขภาพ')),
+                        );
+                      },
+                    ),
+                    const Divider(height: 1),
+                    _buildListTile(
+                      context,
+                      'การปฏิบัติตาม PDPA',
+                      Icons.verified_user,
+                      () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('การปฏิบัติตาม PDPA')),
+                        );
+                      },
+                    ),
+                  ],
                 ),
-              ],
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            // Medical Disclaimer Section (Short, clear, not scary)
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      '📄 ข้อจำกัดทางการแพทย์',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
+                      'SukAI เป็นเครื่องมือช่วยประเมินอาการเบื้องต้นเท่านั้น ไม่สามารถแทนที่การวินิจฉัยจากแพทย์ได้ กรุณาปรึกษาแพทย์หากมีอาการรุนแรงหรือไม่แน่ใจ',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppTheme.textSecondary,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            // Help Center Section
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      '❓ ศูนย์ช่วยเหลือ',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    _buildListTile(
+                      context,
+                      'คำถามที่พบบ่อย (FAQ)',
+                      Icons.help_outline,
+                      () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('คำถามที่พบบ่อย')),
+                        );
+                      },
+                    ),
+                    const Divider(height: 1),
+                    _buildListTile(
+                      context,
+                      'ติดต่อฝ่ายสนับสนุน',
+                      Icons.support_agent,
+                      () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('ติดต่อฝ่ายสนับสนุน')),
+                        );
+                      },
+                    ),
+                    const Divider(height: 1),
+                    _buildListTile(
+                      context,
+                      'ส่งความคิดเห็น',
+                      Icons.feedback,
+                      () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('ส่งความคิดเห็น')),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            // Logout Button
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: _handleLogout,
+                icon: const Icon(Icons.logout),
+                label: const Text('ออกจากระบบ'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppTheme.red,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                ),
+              ),
             ),
             const SizedBox(height: 24),
           ],
@@ -410,9 +572,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     VoidCallback onTap,
   ) {
     return ListTile(
-      leading: Icon(icon, color: AppTheme.primaryYellow),
-      title: Text(title),
-      trailing: const Icon(Icons.chevron_right),
+      leading: Icon(icon, color: AppTheme.textSecondary, size: 22),
+      title: Text(
+        title,
+        style: const TextStyle(fontSize: 15),
+      ),
+      trailing: const Icon(Icons.chevron_right, size: 20, color: AppTheme.textSecondary),
       onTap: onTap,
       contentPadding: EdgeInsets.zero,
     );

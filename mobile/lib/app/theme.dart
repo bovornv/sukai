@@ -1,31 +1,37 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // Kakao-inspired colors
+  // Kakao-inspired colors (Medical-grade, high-contrast)
+  // Yellow = accent only (CTA, highlight) - NOT for text on white
   static const Color primaryYellow = Color(0xFFFFE812);
-  static const Color green = Color(0xFF34C759);
+  static const Color green = Color(0xFF34C759); // 🟢 Safe
+  static const Color amber = Color(0xFFFF9500); // 🟡 Caution
+  static const Color red = Color(0xFFFF3B30); // 🔴 Emergency
   static const Color yellow = Color(0xFFFFCC00);
-  static const Color red = Color(0xFFFF3B30);
-  static const Color backgroundColor = Color(0xFFF5F5F5);
+  
+  // Background: off-white / warm gray
+  static const Color backgroundColor = Color(0xFFFAFAFA);
   static const Color cardBackground = Color(0xFFFFFFFF);
-  static const Color textPrimary = Color(0xFF000000);
+  
+  // Primary text: dark gray / near black (not pure black for readability)
+  static const Color textPrimary = Color(0xFF1A1A1A);
   static const Color textSecondary = Color(0xFF666666);
 
-  // Triage level colors
+  // Triage level colors (Medical states)
   static Color getTriageColor(String triageLevel) {
     switch (triageLevel) {
       case 'self_care':
-        return green;
+        return green; // 🟢 Safe
       case 'pharmacy':
-        return yellow;
+        return amber; // 🟡 Caution
       case 'gp':
-        return yellow;
+        return amber; // 🟡 Caution
       case 'emergency':
-        return red;
+        return red; // 🔴 Emergency
       case 'uncertain':
-        return Colors.orange;
+        return amber; // 🟡 Caution (default to caution for safety)
       default:
-        return primaryYellow;
+        return amber;
     }
   }
 
@@ -42,9 +48,9 @@ class AppTheme {
       ),
       scaffoldBackgroundColor: backgroundColor,
       appBarTheme: const AppBarTheme(
-        backgroundColor: primaryYellow,
-        foregroundColor: textPrimary,
-        elevation: 0,
+        backgroundColor: cardBackground, // White background (not yellow)
+        foregroundColor: textPrimary, // Dark text
+        elevation: 1, // Subtle shadow
         centerTitle: true,
       ),
       cardTheme: CardThemeData(
