@@ -10,16 +10,21 @@
 
 ### 🏥 2. Complete Triage Session (5 min)
 - [ ] Click "เริ่มตรวจอาการ"
-- [ ] Type: `ปวดหัว` → Send
-- [ ] Answer question: `2 วัน` → Send
+- [ ] **Test Adaptive Questioning**: Type: `ปวดหัว 2 วันแล้ว` → Send
+  - [ ] Verify duration question NOT asked (context extracted)
+  - [ ] Verify other questions adapt to symptom
+- [ ] **Test Risk Scoring**: Answer questions and verify triage level changes
 - [ ] Continue until summary appears
+- [ ] **Verify Explainable Recommendations**: Check summary includes WHY explanation
 - [ ] **Result**: ✅ Works / ❌ Broken
 
 ### 📋 3. Verify Summary (2 min)
 - [ ] Check summary shows:
   - Triage level (color-coded)
+  - **WHY explanation** (new: explainable recommendations)
   - Diagnosis summary
   - 5 recommendation sections
+- [ ] Verify WHY matches triage level and risk factors
 - [ ] **Result**: ✅ Works / ❌ Broken
 
 ### 📚 4. Session History (2 min)
@@ -69,6 +74,12 @@
 
 ### Issue: 500 error on API calls
 **Fix**: Check Railway logs, verify environment variables
+
+### Issue: Questions still same every time (NEW)
+**Fix**: Verify adaptive triage engine is deployed. Check `backend/src/functions/triage/clinical_reasoning.js` exists
+
+### Issue: Risk score not accumulating (NEW)
+**Fix**: Check `calculateRiskScore` function in `clinical_reasoning.js`. Verify answer keys match risk factors
 
 ---
 
