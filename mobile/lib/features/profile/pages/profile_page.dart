@@ -346,7 +346,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           'คำแนะนำการใช้ยา',
                           'ติดตามอาการ',
                         ],
-                        AppTheme.yellow,
+                        AppTheme.amber, // Changed from yellow for better contrast
                         _currentPlan == SubscriptionPlan.pro,
                       ),
                       const SizedBox(height: 12),

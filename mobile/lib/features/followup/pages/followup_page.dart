@@ -109,7 +109,7 @@ class _FollowupPageState extends ConsumerState<FollowupPage> {
               FollowupStatus.same,
               'เท่าเดิม',
               '➡️',
-              AppTheme.yellow,
+              AppTheme.amber, // Changed from yellow for better contrast
             ),
             const SizedBox(height: 12),
             _buildStatusOption(

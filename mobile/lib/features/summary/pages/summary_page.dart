@@ -141,15 +141,16 @@ class _SummaryPageState extends ConsumerState<SummaryPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Row(
+                                Row(
                                   children: [
-                                    Icon(Icons.notifications_active, color: AppTheme.primaryYellow),
-                                    SizedBox(width: 8),
-                                    Text(
+                                    Icon(Icons.notifications_active, color: AppTheme.textPrimary, size: 24), // Dark icon for visibility
+                                    const SizedBox(width: 8),
+                                    const Text(
                                       '⏰ ติดตามอาการ',
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
+                                        color: AppTheme.textPrimary, // Dark text
                                       ),
                                     ),
                                   ],

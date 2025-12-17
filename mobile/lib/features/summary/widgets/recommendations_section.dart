@@ -32,7 +32,7 @@ class RecommendationsSection extends StatelessWidget {
           l10n.translate('otc_meds'),
           recommendations.otcMeds,
           Icons.medication,
-          AppTheme.yellow,
+          AppTheme.amber, // Changed from yellow for better contrast
         ),
         const SizedBox(height: 16),
         _buildSection(
@@ -40,7 +40,7 @@ class RecommendationsSection extends StatelessWidget {
           l10n.translate('when_to_see_doctor'),
           recommendations.whenToSeeDoctor,
           Icons.local_hospital,
-          AppTheme.yellow,
+          AppTheme.amber, // Changed from yellow for better contrast
         ),
         const SizedBox(height: 16),
         _buildSection(
@@ -56,7 +56,7 @@ class RecommendationsSection extends StatelessWidget {
           l10n.translate('additional_advice'),
           recommendations.additionalAdvice,
           Icons.lightbulb,
-          AppTheme.primaryYellow,
+          AppTheme.amber, // Changed from primaryYellow for better contrast
         ),
       ],
     );
