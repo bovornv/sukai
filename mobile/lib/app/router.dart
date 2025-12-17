@@ -9,6 +9,13 @@ import '../features/summary/pages/summary_page.dart';
 import '../features/billing/pages/billing_page.dart';
 import '../features/followup/pages/followup_page.dart';
 import '../features/profile/pages/profile_page.dart';
+import '../features/profile/pages/privacy_policy_page.dart';
+import '../features/profile/pages/health_data_rights_page.dart';
+import '../features/profile/pages/pdpa_compliance_page.dart';
+import '../features/profile/pages/medical_disclaimer_page.dart';
+import '../features/profile/pages/faq_page.dart';
+import '../features/profile/pages/support_page.dart';
+import '../features/profile/pages/feedback_page.dart';
 
 /// App Router with Authentication Guards
 class AppRouter {
@@ -75,6 +82,41 @@ class AppRouter {
             final sessionId = state.uri.queryParameters['sessionId'];
             return FollowupPage(sessionId: sessionId ?? '');
           },
+        ),
+        GoRoute(
+          path: '/privacy-policy',
+          name: 'privacy-policy',
+          builder: (context, state) => const PrivacyPolicyPage(),
+        ),
+        GoRoute(
+          path: '/health-data-rights',
+          name: 'health-data-rights',
+          builder: (context, state) => const HealthDataRightsPage(),
+        ),
+        GoRoute(
+          path: '/pdpa-compliance',
+          name: 'pdpa-compliance',
+          builder: (context, state) => const PDPACompliancePage(),
+        ),
+        GoRoute(
+          path: '/medical-disclaimer',
+          name: 'medical-disclaimer',
+          builder: (context, state) => const MedicalDisclaimerPage(),
+        ),
+        GoRoute(
+          path: '/faq',
+          name: 'faq',
+          builder: (context, state) => const FAQPage(),
+        ),
+        GoRoute(
+          path: '/support',
+          name: 'support',
+          builder: (context, state) => const SupportPage(),
+        ),
+        GoRoute(
+          path: '/feedback',
+          name: 'feedback',
+          builder: (context, state) => const FeedbackPage(),
         ),
       ],
     );

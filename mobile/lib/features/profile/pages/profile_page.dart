@@ -403,9 +403,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       'นโยบายความเป็นส่วนตัว',
                       Icons.privacy_tip,
                       () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('นโยบายความเป็นส่วนตัว')),
-                        );
+                        context.push('/privacy-policy');
                       },
                     ),
                     const Divider(height: 1),
@@ -414,9 +412,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       'สิทธิ์ในข้อมูลสุขภาพ',
                       Icons.health_and_safety,
                       () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('สิทธิ์ในข้อมูลสุขภาพ')),
-                        );
+                        context.push('/health-data-rights');
                       },
                     ),
                     const Divider(height: 1),
@@ -425,9 +421,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       'การปฏิบัติตาม PDPA',
                       Icons.verified_user,
                       () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('การปฏิบัติตาม PDPA')),
-                        );
+                        context.push('/pdpa-compliance');
                       },
                     ),
                   ],
