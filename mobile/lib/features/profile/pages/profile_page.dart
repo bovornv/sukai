@@ -263,73 +263,73 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     if (_isLoading)
                       const Center(child: CircularProgressIndicator())
                     else ...[
-                  if (_currentPlan != null)
-                    Card(
-                      color: AppTheme.primaryYellow.withValues(alpha: 0.2),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.check_circle, color: AppTheme.green),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Text(
-                                'แผนปัจจุบัน: ${_getPlanName(_currentPlan!)}',
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                      if (_currentPlan != null)
+                        Card(
+                          color: AppTheme.primaryYellow.withValues(alpha: 0.2),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.check_circle, color: AppTheme.green),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    'แผนปัจจุบัน: ${_getPlanName(_currentPlan!)}',
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
+                      const SizedBox(height: 16),
+                      _buildPlanCard(
+                        context,
+                        SubscriptionPlan.free,
+                        'ฟรี',
+                        '฿0',
+                        [
+                          'ตรวจอาการพื้นฐาน',
+                          'การประเมินเบื้องต้น',
+                          'สรุปผลการประเมิน',
+                          'จำกัด 3 ครั้ง/วัน',
+                        ],
+                        Colors.grey,
+                        _currentPlan == SubscriptionPlan.free,
                       ),
-                    ),
-                  const SizedBox(height: 16),
-                  _buildPlanCard(
-                    context,
-                    SubscriptionPlan.free,
-                    'ฟรี',
-                    '฿0',
-                    [
-                      'ตรวจอาการพื้นฐาน',
-                      'การประเมินเบื้องต้น',
-                      'สรุปผลการประเมิน',
-                      'จำกัด 3 ครั้ง/วัน',
-                    ],
-                    Colors.grey,
-                    _currentPlan == SubscriptionPlan.free,
-                  ),
-                  const SizedBox(height: 12),
-                  _buildPlanCard(
-                    context,
-                    SubscriptionPlan.pro,
-                    'Pro',
-                    '฿99/เดือน',
-                    [
-                      'ตรวจไม่จำกัด',
-                      'คำแนะนำแบบละเอียด',
-                      'คำแนะนำการใช้ยา',
-                      'ติดตามอาการ',
-                    ],
-                    AppTheme.yellow,
-                    _currentPlan == SubscriptionPlan.pro,
-                  ),
-                  const SizedBox(height: 12),
-                  _buildPlanCard(
-                    context,
-                    SubscriptionPlan.premiumDoctor,
-                    'Premium Doctor',
-                    '฿299/ครั้ง',
-                    [
-                    'ตรวจสอบโดยแพทย์',
-                    'AI + สรุปจากแพทย์',
-                    'ลำดับความสำคัญ',
-                    'แชร์ครอบครัว (จำกัด)',
-                    ],
-                    AppTheme.green,
-                    _currentPlan == SubscriptionPlan.premiumDoctor,
-                  ),
+                      const SizedBox(height: 12),
+                      _buildPlanCard(
+                        context,
+                        SubscriptionPlan.pro,
+                        'Pro',
+                        '฿99/เดือน',
+                        [
+                          'ตรวจไม่จำกัด',
+                          'คำแนะนำแบบละเอียด',
+                          'คำแนะนำการใช้ยา',
+                          'ติดตามอาการ',
+                        ],
+                        AppTheme.yellow,
+                        _currentPlan == SubscriptionPlan.pro,
+                      ),
+                      const SizedBox(height: 12),
+                      _buildPlanCard(
+                        context,
+                        SubscriptionPlan.premiumDoctor,
+                        'Premium Doctor',
+                        '฿299/ครั้ง',
+                        [
+                          'ตรวจสอบโดยแพทย์',
+                          'AI + สรุปจากแพทย์',
+                          'ลำดับความสำคัญ',
+                          'แชร์ครอบครัว (จำกัด)',
+                        ],
+                        AppTheme.green,
+                        _currentPlan == SubscriptionPlan.premiumDoctor,
+                      ),
                     ],
                   ],
                 ),
