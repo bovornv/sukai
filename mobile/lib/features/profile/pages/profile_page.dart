@@ -150,6 +150,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
                               ),
                               const SizedBox(height: 4),
                               Text(
@@ -158,6 +160,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                   fontSize: 14,
                                   color: AppTheme.textSecondary,
                                 ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
                               ),
                             ],
                           ),
@@ -279,6 +283,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
                                   ),
                                 ),
                               ],
@@ -560,6 +566,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             child: Text(
               value,
               style: const TextStyle(fontWeight: FontWeight.w500),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
             ),
           ),
         ],
@@ -611,13 +619,17 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
+                const SizedBox(width: 8),
                 Text(
                   price,
                   style: TextStyle(
@@ -639,6 +651,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         child: Text(
                           feature,
                           style: const TextStyle(fontSize: 14),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                         ),
                       ),
                     ],
