@@ -207,17 +207,28 @@ export async function assessSymptomLogic({
   // Cap at 100
   confidence = Math.min(confidence, 100);
 
+  // MANDATORY CONFIDENCE CHECK: Must ask health context before summarizing (unless emergency)
+  // This is a safety requirement - don't summarize without knowing health context
+  const needsHealthContext = !enrichedAnswers.health_context && 
+                             !enrichedAnswers.chronic_disease && 
+                             !enrichedAnswers.medications && 
+                             !enrichedAnswers.allergy &&
+                             triageLevel !== 'emergency' &&
+                             questionCount >= 3;
+  
   // Stop conditions (from docs):
   // - emergency detected (already handled above)
-  // - gp/pharmacy threshold reached (clear result) BUT only after minimum 4 questions
-  // - confidence ≥ 80% (clear result) BUT only after minimum 4 questions
+  // - gp/pharmacy threshold reached (clear result) BUT only after minimum 4 questions AND health context checked
+  // - confidence ≥ 80% (clear result) BUT only after minimum 4 questions AND health context checked
   // PROBLEM_DRIVEN_IMPLEMENTATION.md: Must stop when we have clear triage
   // REQUIREMENT: Must ask at least 4 questions before completing (unless emergency)
+  // NEW REQUIREMENT: Must ask health context check before summarizing (unless emergency)
+  const hasHealthContext = !needsHealthContext;
   const shouldStop =
-    (triageLevel === 'gp' && questionCount >= 4) ||
-    (triageLevel === 'pharmacy' && questionCount >= 4) ||
-    (triageLevel === 'self_care' && questionCount >= 4) ||
-    (confidence >= 80 && questionCount >= 4) ||
+    (triageLevel === 'gp' && questionCount >= 4 && hasHealthContext) ||
+    (triageLevel === 'pharmacy' && questionCount >= 4 && hasHealthContext) ||
+    (triageLevel === 'self_care' && questionCount >= 4 && hasHealthContext) ||
+    (confidence >= 80 && questionCount >= 4 && hasHealthContext) ||
     questionCount >= 6;
 
   if (shouldStop) {
@@ -232,6 +243,22 @@ export async function assessSymptomLogic({
       triageLevel: finalTriage, // Clear result with next action in diagnosis
       reassurance: isAnxiousUser ? getReassuranceMessage() : null,
     };
+  }
+  
+  // If we need health context check, ask it now (before summarizing)
+  if (needsHealthContext) {
+    const healthContextQuestion = 'ข้อมูลด้านสุขภาพหรืออาการสำคัญที่ยังไม่ได้แจ้งไหมคะ? เช่น โรคประจำตัว ยาที่ทานอยู่ การแพ้ยา การตั้งครรภ์ หรืออาการผิดปกติอื่น';
+    const wasAskedHealthContext = Array.isArray(questionsAsked) && 
+      questionsAsked.some(q => typeof q === 'string' && q.includes('ข้อมูลด้านสุขภาพ'));
+    
+    if (!wasAskedHealthContext) {
+      return {
+        needMoreInfo: true,
+        nextQuestion: healthContextQuestion,
+        triageLevel: triageLevel === 'uncertain' ? 'uncertain' : triageLevel,
+        reassurance: isAnxiousUser ? getReassuranceMessage() : null,
+      };
+    }
   }
 
   // Need more info - get next question using adaptive clinical reasoning

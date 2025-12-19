@@ -135,7 +135,7 @@ export const QUESTION_CATEGORIES = {
       {
         key: 'location',
         text: 'ปวดตรงไหนคะ? (เช่น หน้าผาก, ขมับ, ท้ายทอย)',
-        riskFactor: null, // Contextual
+        riskFactor: null, // Contextual - helps differential diagnosis
       },
       {
         key: 'severity',
@@ -145,7 +145,17 @@ export const QUESTION_CATEGORIES = {
       {
         key: 'quality',
         text: 'ปวดแบบไหนคะ? (ปวดจี๊ด / ปวดตื้อ / แน่น / แสบ)',
-        riskFactor: null, // Contextual
+        riskFactor: null, // Contextual - helps differentiate conditions
+      },
+      {
+        key: 'aggravating_factors',
+        text: 'มีอะไรที่ทำให้อาการแย่ลงไหมคะ? (เช่น แสง, เสียง, การเคลื่อนไหว)',
+        riskFactor: null, // Differential diagnosis
+      },
+      {
+        key: 'relieving_factors',
+        text: 'มีอะไรที่ทำให้อาการดีขึ้นไหมคะ? (เช่น การพักผ่อน, ยา, การนวด)',
+        riskFactor: null, // Differential diagnosis
       },
     ],
   },
@@ -178,7 +188,7 @@ export const QUESTION_CATEGORIES = {
     questions: [
       {
         key: 'fever',
-        text: 'มีไข้ร่วมด้วยไหมคะ?',
+        text: 'มีไข้ร่วมด้วยไหมคะ? ถ้ามี ไข้สูงเท่าไหร่คะ?',
         riskFactor: 'associated',
       },
       {
@@ -194,6 +204,16 @@ export const QUESTION_CATEGORIES = {
       {
         key: 'cardiac',
         text: 'มีใจสั่นหรือเจ็บหน้าอกไหมคะ?',
+        riskFactor: 'associated',
+      },
+      {
+        key: 'cough',
+        text: 'มีไอไหมคะ? ถ้ามี ไอแบบไหนคะ? (แห้ง / มีเสมหะ / เสมหะสีอะไร)',
+        riskFactor: 'associated',
+      },
+      {
+        key: 'rash',
+        text: 'มีผื่นหรืออาการทางผิวหนังไหมคะ?',
         riskFactor: 'associated',
       },
     ],
@@ -222,6 +242,24 @@ export const QUESTION_CATEGORIES = {
         key: 'medications',
         text: 'ใช้ยาอะไรอยู่บ้างคะ?',
         riskFactor: null, // Contextual
+      },
+      {
+        key: 'allergy',
+        text: 'แพ้ยาอะไรไหมคะ?',
+        riskFactor: null, // Safety
+      },
+    ],
+  },
+  
+  // Mandatory confidence check - must ask before summarizing (unless emergency)
+  health_context_check: {
+    name: 'Health Context Check',
+    priority: 99, // Highest priority before summary
+    questions: [
+      {
+        key: 'health_context',
+        text: 'ข้อมูลด้านสุขภาพหรืออาการสำคัญที่ยังไม่ได้แจ้งไหมคะ? เช่น โรคประจำตัว ยาที่ทานอยู่ การแพ้ยา การตั้งครรภ์ หรืออาการผิดปกติอื่น',
+        riskFactor: null, // Safety check
       },
     ],
   },
@@ -353,8 +391,34 @@ export function wouldQuestionChangeTriage(currentRiskScore, questionRiskFactor, 
 }
 
 /**
+ * Check if mandatory health context check is needed
+ * Must ask before summarizing (unless emergency)
+ */
+export function needsHealthContextCheck(answers, questionCount, triageLevel) {
+  // Don't ask if emergency
+  if (triageLevel === 'emergency') {
+    return false;
+  }
+  
+  // Don't ask if already answered
+  if (answers.health_context || answers.chronic_disease !== undefined || 
+      answers.medications !== undefined || answers.allergy !== undefined) {
+    return false;
+  }
+  
+  // Ask before summarizing (when we have enough info for triage but need health context)
+  // Typically after 3-4 questions when triage level is becoming clear
+  if (questionCount >= 3 && questionCount < 6) {
+    return true;
+  }
+  
+  return false;
+}
+
+/**
  * Select next question adaptively
  * Based on current risk, symptom, and what's already asked
+ * Uses differential-oriented questioning (helps differentiate conditions)
  * Only asks questions that would change triage level
  */
 export function selectNextQuestion(symptom, answers, questionsAsked, questionCount) {
@@ -365,6 +429,7 @@ export function selectNextQuestion(symptom, answers, questionsAsked, questionCou
   
   const normalizedSymptom = normalizeThaiText(symptom);
   const currentRiskScore = calculateRiskScore(symptom, answers);
+  const currentTriage = determineTriageFromRisk(currentRiskScore);
   
   // Helper: Check if question was already asked
   const wasAsked = (questionText) => {
@@ -376,6 +441,14 @@ export function selectNextQuestion(symptom, answers, questionsAsked, questionCou
       return false;
     });
   };
+  
+  // MANDATORY: Health context check before summarizing (unless emergency)
+  if (needsHealthContextCheck(answers, questionCount, currentTriage)) {
+    const healthContextQuestion = QUESTION_CATEGORIES.health_context_check.questions[0];
+    if (healthContextQuestion && !wasAsked('ข้อมูลด้านสุขภาพ')) {
+      return healthContextQuestion.text;
+    }
+  }
   
   // Priority 1: Red flags (always check first)
   if (!wasAsked('หายใจ') && !wasAsked('เจ็บหน้าอก') && !wasAsked('หมดสติ')) {
@@ -395,13 +468,24 @@ export function selectNextQuestion(symptom, answers, questionsAsked, questionCou
     }
   }
   
-  // Priority 2: Symptom characterization (if not clear)
+  // Priority 2: Symptom characterization (differential-oriented)
+  // Ask symptom-specific questions to differentiate conditions
   if (questionCount < 3 && !answers.severity && !wasAsked('มากแค่ไหน')) {
     const severityQuestion = QUESTION_CATEGORIES.symptom_characterization.questions.find(
       q => q.key === 'severity'
     );
     if (severityQuestion) {
       return severityQuestion.text;
+    }
+  }
+  
+  // Ask quality/character questions for differential diagnosis
+  if (normalizedSymptom.includes('ปวด') && !answers.quality && !wasAsked('ปวดแบบไหน')) {
+    const qualityQuestion = QUESTION_CATEGORIES.symptom_characterization.questions.find(
+      q => q.key === 'quality'
+    );
+    if (qualityQuestion) {
+      return qualityQuestion.text;
     }
   }
   
@@ -423,9 +507,20 @@ export function selectNextQuestion(symptom, answers, questionsAsked, questionCou
     }
   }
   
-  // Priority 4: Associated symptoms (if risk is medium-high)
-  if (currentRiskScore >= RISK_THRESHOLDS.pharmacy && !answers.associated_symptoms) {
+  // Priority 4: Associated symptoms (differential-oriented)
+  // Ask symptom-specific associated symptoms
+  if (currentRiskScore >= RISK_THRESHOLDS.pharmacy) {
     const associatedQuestions = QUESTION_CATEGORIES.associated_symptoms.questions;
+    
+    // If cough mentioned, ask about cough characteristics
+    if (normalizedSymptom.includes('ไอ') && !wasAsked('ไอแบบไหน')) {
+      const coughQuestion = associatedQuestions.find(q => q.key === 'cough');
+      if (coughQuestion) {
+        return coughQuestion.text;
+      }
+    }
+    
+    // Otherwise, ask general associated symptoms
     for (const question of associatedQuestions) {
       if (!wasAsked(question.text)) {
         return question.text;
