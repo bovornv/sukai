@@ -84,19 +84,28 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                 child: InkWell(
                   onTap: () async {
                     // Check health profile before allowing triage
-                    final isComplete = await ref.read(healthProfileCompleteProvider.future);
-                    if (isComplete != true) {
+                    try {
+                      // Invalidate to get fresh data
+                      ref.invalidate(healthProfileCompleteProvider);
+                      final isComplete = await ref.read(healthProfileCompleteProvider.future) as bool;
+                      if (!isComplete) {
+                        if (mounted) {
+                          context.push('/health-profile');
+                        }
+                        return;
+                      }
+                      
+                      final sessionId = const Uuid().v4();
+                      await context.push('/chat?sessionId=$sessionId');
+                      // Refresh sessions when returning from chat
+                      if (mounted) {
+                        ref.invalidate(sessionsProvider);
+                      }
+                    } catch (e) {
+                      // If we can't verify health profile, block access (safety first)
                       if (mounted) {
                         context.push('/health-profile');
                       }
-                      return;
-                    }
-                    
-                    final sessionId = const Uuid().v4();
-                    await context.push('/chat?sessionId=$sessionId');
-                    // Refresh sessions when returning from chat
-                    if (mounted) {
-                      ref.invalidate(sessionsProvider);
                     }
                   },
                   borderRadius: BorderRadius.circular(16),

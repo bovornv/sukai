@@ -119,7 +119,13 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       loading: () => const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       ),
-      error: (_, __) => _buildChatContent(context, chatState, l10n), // Allow on error
+      error: (error, stack) {
+        // Block access if we can't verify health profile (safety first)
+        return HealthProfileGate(
+          featureName: 'แชทแพทย์ AI',
+          child: _buildChatContent(context, chatState, l10n),
+        );
+      },
     );
   }
   
