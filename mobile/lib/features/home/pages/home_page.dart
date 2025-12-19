@@ -8,6 +8,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../models/session_models.dart';
 import '../../../models/triage_models.dart';
 import '../../../widgets/health_profile_gate.dart';
+import '../../profile/providers/health_profile_provider.dart';
 import '../providers/sessions_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -84,7 +85,7 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                   onTap: () async {
                     // Check health profile before allowing triage
                     final isComplete = await ref.read(healthProfileCompleteProvider.future);
-                    if (!isComplete) {
+                    if (isComplete != true) {
                       if (mounted) {
                         context.push('/health-profile');
                       }
