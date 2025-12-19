@@ -219,51 +219,144 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    _buildInfoRow('อายุ', '-'),
-                    _buildInfoRow('โรคประจำตัว', '-'),
-                    _buildInfoRow('แพ้ยา', '-'),
-                    const SizedBox(height: 12),
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: AppTheme.backgroundColor,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.lightbulb_outline, size: 16, color: AppTheme.textSecondary),
-                          const SizedBox(width: 8),
-                          const Expanded(
-                            child: Text(
-                              'ช่วยให้ AI ประเมินแม่นยำขึ้น',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: AppTheme.textSecondary,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    Consumer(
+                      builder: (context, ref, child) {
+                        final profileAsync = ref.watch(healthProfileProvider);
+                        return profileAsync.when(
+                          data: (profile) {
+                            if (profile == null || !profile.isComplete) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.amber.withValues(alpha: 0.1),
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: AppTheme.amber,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.warning_amber_rounded,
+                                            color: AppTheme.amber, size: 20),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: Text(
+                                            'ข้อมูลสุขภาพยังไม่ครบ',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppTheme.textPrimary,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                ],
+                              );
+                            }
+                            
+                            // Format birth date for display (พ.ศ.)
+                            String birthDateDisplay = '-';
+                            if (profile.birthDate != null) {
+                              final date = profile.birthDate!;
+                              birthDateDisplay = '${date.day}/${date.month}/${date.year + 543}';
+                            }
+                            
+                            // Format gender for display
+                            String genderDisplay = '-';
+                            if (profile.gender != null) {
+                              genderDisplay = profile.gender == 'male' ? 'ชาย' : 
+                                  profile.gender == 'female' ? 'หญิง' : 
+                                  profile.gender == 'other' ? 'อื่น ๆ' : '-';
+                            }
+                            
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildInfoRow('เพศ', genderDisplay),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: _buildInfoRow('วันเกิด', birthDateDisplay),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: _buildInfoRow('อายุ', profile.age != null ? '${profile.age} ปี' : '-'),
+                                    ),
+                                  ],
+                                ),
+                                _buildInfoRow('น้ำหนัก', profile.weightKg != null ? '${profile.weightKg!.toStringAsFixed(1)} กก.' : '-'),
+                                _buildInfoRow('ส่วนสูง', profile.heightCm != null ? '${profile.heightCm!.toStringAsFixed(0)} ซม.' : '-'),
+                                if (profile.bmi != null)
+                                  _buildInfoRow('BMI', profile.bmi!.toStringAsFixed(1)),
+                                _buildInfoRow('โรคประจำตัว', profile.chronicDiseases.isEmpty 
+                                    ? 'ไม่มี' 
+                                    : profile.chronicDiseases.join(', ')),
+                                _buildInfoRow('แพ้ยา', profile.drugAllergies.isEmpty 
+                                    ? 'ไม่มี' 
+                                    : profile.drugAllergies.join(', ')),
+                                const SizedBox(height: 12),
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    color: AppTheme.green.withValues(alpha: 0.1),
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: AppTheme.green,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.check_circle,
+                                          color: AppTheme.green, size: 20),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          'ข้อมูลสุขภาพครบถ้วนแล้ว',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppTheme.textPrimary,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                              ],
+                            );
+                          },
+                          loading: () => const Center(child: CircularProgressIndicator()),
+                          error: (_, __) => const SizedBox.shrink(),
+                        );
+                      },
                     ),
-                    const SizedBox(height: 12),
                     SizedBox(
                       width: double.infinity,
-                      child: OutlinedButton.icon(
+                      child: ElevatedButton.icon(
                         onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('ฟีเจอร์นี้จะเปิดใช้งานเร็วๆ นี้')),
-                          );
+                          context.push('/health-profile');
                         },
-                        icon: const Icon(Icons.edit, size: 18, color: AppTheme.textPrimary),
+                        icon: const Icon(Icons.edit, size: 18),
                         label: const Text(
                           'แก้ไขข้อมูลสุขภาพ',
-                          style: TextStyle(color: AppTheme.textPrimary),
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: AppTheme.textPrimary, // Dark text
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppTheme.primaryYellow,
+                          foregroundColor: Colors.black,
                           padding: const EdgeInsets.symmetric(vertical: 12),
-                          side: BorderSide(color: AppTheme.textSecondary.withValues(alpha: 0.3)),
                         ),
                       ),
                     ),
