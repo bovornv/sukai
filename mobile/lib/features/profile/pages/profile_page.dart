@@ -205,12 +205,15 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       children: [
                         Icon(Icons.health_and_safety, color: AppTheme.textPrimary, size: 24),
                         const SizedBox(width: 12),
-                        const Text(
-                          'ข้อมูลสุขภาพ',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: AppTheme.textPrimary,
+                        Expanded(
+                          child: Text(
+                            'ข้อมูลสุขภาพ',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AppTheme.textPrimary,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
@@ -275,12 +278,15 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               children: [
                 Icon(Icons.card_membership, color: AppTheme.textPrimary, size: 24),
                 const SizedBox(width: 12),
-                const Text(
-                  'แผนบริการของฉัน',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
+                Expanded(
+                  child: Text(
+                    'แผนบริการของฉัน',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.textPrimary,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -388,12 +394,15 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       children: [
                         Icon(Icons.shield, color: AppTheme.textPrimary, size: 24),
                         const SizedBox(width: 12),
-                        const Text(
-                          'ความเป็นส่วนตัว & PDPA',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: AppTheme.textPrimary,
+                        Expanded(
+                          child: Text(
+                            'ความเป็นส่วนตัว & PDPA',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AppTheme.textPrimary,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
@@ -498,12 +507,15 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       children: [
                         Icon(Icons.help_outline, color: AppTheme.textPrimary, size: 24),
                         const SizedBox(width: 12),
-                        const Text(
-                          'ศูนย์ช่วยเหลือ',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: AppTheme.textPrimary,
+                        Expanded(
+                          child: Text(
+                            'ศูนย์ช่วยเหลือ',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AppTheme.textPrimary,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
