@@ -200,6 +200,10 @@ class _HealthProfileFormPageState
       final notifier = ref.read(healthProfileNotifierProvider.notifier);
       await notifier.saveProfile(profile);
 
+      // Invalidate health profile providers to refresh the gate check
+      ref.invalidate(healthProfileProvider);
+      ref.invalidate(healthProfileCompleteProvider);
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
