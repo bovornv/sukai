@@ -7,6 +7,7 @@ import '../../../app/theme.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/session_models.dart';
 import '../../../models/triage_models.dart';
+import '../../../widgets/health_profile_gate.dart';
 import '../providers/sessions_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -81,6 +82,15 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                 elevation: 4,
                 child: InkWell(
                   onTap: () async {
+                    // Check health profile before allowing triage
+                    final isComplete = await ref.read(healthProfileCompleteProvider.future);
+                    if (!isComplete) {
+                      if (mounted) {
+                        context.push('/health-profile');
+                      }
+                      return;
+                    }
+                    
                     final sessionId = const Uuid().v4();
                     await context.push('/chat?sessionId=$sessionId');
                     // Refresh sessions when returning from chat

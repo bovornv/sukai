@@ -160,6 +160,7 @@ export async function assessSymptomLogic({
   previousAnswers,
   questionsAsked,
   questionCount,
+  healthProfile = null, // Optional health profile for clinical reasoning
 }) {
   // Normalize symptom text first
   const normalizedSymptom = normalizeThaiText(symptom);

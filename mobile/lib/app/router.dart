@@ -16,6 +16,7 @@ import '../features/profile/pages/medical_disclaimer_page.dart';
 import '../features/profile/pages/faq_page.dart';
 import '../features/profile/pages/support_page.dart';
 import '../features/profile/pages/feedback_page.dart';
+import '../features/profile/pages/health_profile_form_page.dart';
 
 /// App Router with Authentication Guards
 class AppRouter {
@@ -117,6 +118,11 @@ class AppRouter {
           path: '/feedback',
           name: 'feedback',
           builder: (context, state) => const FeedbackPage(),
+        ),
+        GoRoute(
+          path: '/health-profile',
+          name: 'health-profile',
+          builder: (context, state) => const HealthProfileFormPage(),
         ),
       ],
     );

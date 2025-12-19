@@ -7,6 +7,7 @@ import 'package:uuid/uuid.dart';
 import '../../../app/theme.dart';
 import '../../../features/auth/providers/auth_provider.dart';
 import '../../../services/billing_service.dart';
+import '../providers/health_profile_provider.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});

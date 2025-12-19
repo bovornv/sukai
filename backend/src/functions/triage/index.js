@@ -75,12 +75,75 @@ export async function assessSymptom({ sessionId, symptom, previousAnswers, userI
     ? session.symptoms[session.symptoms.length - 1] 
     : symptom;
 
-  // Run triage logic (with Thai language normalization)
+  // Fetch health profile if userId is available
+  let healthProfile = null;
+  if (userId && userId !== 'anonymous') {
+    try {
+      const { data, error } = await supabaseAdmin
+        .from('user_profiles')
+        .select('gender, birth_date, weight_kg, height_cm, chronic_diseases, drug_allergies')
+        .eq('id', userId)
+        .single();
+      
+      if (!error && data) {
+        // Calculate age from birth_date
+        let age = null;
+        if (data.birth_date) {
+          const birthDate = new Date(data.birth_date);
+          const now = new Date();
+          age = now.getFullYear() - birthDate.getFullYear();
+          const monthDiff = now.getMonth() - birthDate.getMonth();
+          if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < birthDate.getDate())) {
+            age--;
+          }
+        }
+        
+        healthProfile = {
+          gender: data.gender,
+          age,
+          weightKg: data.weight_kg,
+          heightCm: data.height_cm,
+          chronicDiseases: data.chronic_diseases || [],
+          drugAllergies: data.drug_allergies || [],
+        };
+      }
+    } catch (err) {
+      console.warn('Failed to load health profile:', err.message);
+      // Continue without health profile
+    }
+  }
+
+  // Merge health profile into answers for clinical reasoning
+  const enrichedAnswers = { ...session.answers };
+  if (healthProfile) {
+    if (healthProfile.age !== null) {
+      enrichedAnswers.age = healthProfile.age;
+      // Set risk group based on age
+      if (healthProfile.age < 2) {
+        enrichedAnswers.risk_group = 'เด็ก (< 2 ปี)';
+      } else if (healthProfile.age > 65) {
+        enrichedAnswers.risk_group = 'ผู้สูงอายุ (> 65 ปี)';
+      }
+    }
+    if (healthProfile.gender) {
+      enrichedAnswers.gender = healthProfile.gender;
+    }
+    if (healthProfile.chronicDiseases && healthProfile.chronicDiseases.length > 0) {
+      enrichedAnswers.chronic_disease = healthProfile.chronicDiseases.join(', ');
+      enrichedAnswers.risk_group = 'โรคประจำตัว';
+    }
+    if (healthProfile.drugAllergies && healthProfile.drugAllergies.length > 0) {
+      enrichedAnswers.allergy = healthProfile.drugAllergies.join(', ');
+    }
+  }
+
+  // Run triage logic (with Thai language normalization and health profile)
   const result = await assessSymptomLogic({
     symptom: symptomForTriage,
-    previousAnswers: session.answers,
+    previousAnswers: enrichedAnswers,
     questionsAsked: session.questionsAsked,
     questionCount: session.questionCount,
+    healthProfile, // Pass health profile for clinical reasoning
   });
 
   // Update session
@@ -206,17 +269,80 @@ export async function getDiagnosis({ sessionId, userId = null }) {
     }
   }
 
+  // Fetch health profile if userId is available
+  let healthProfile = null;
+  if (userId && userId !== 'anonymous') {
+    try {
+      const { data, error } = await supabaseAdmin
+        .from('user_profiles')
+        .select('gender, birth_date, weight_kg, height_cm, chronic_diseases, drug_allergies')
+        .eq('id', userId)
+        .single();
+      
+      if (!error && data) {
+        // Calculate age from birth_date
+        let age = null;
+        if (data.birth_date) {
+          const birthDate = new Date(data.birth_date);
+          const now = new Date();
+          age = now.getFullYear() - birthDate.getFullYear();
+          const monthDiff = now.getMonth() - birthDate.getMonth();
+          if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < birthDate.getDate())) {
+            age--;
+          }
+        }
+        
+        healthProfile = {
+          gender: data.gender,
+          age,
+          weightKg: data.weight_kg,
+          heightCm: data.height_cm,
+          chronicDiseases: data.chronic_diseases || [],
+          drugAllergies: data.drug_allergies || [],
+        };
+      }
+    } catch (err) {
+      console.warn('Failed to load health profile:', err.message);
+      // Continue without health profile
+    }
+  }
+
+  // Merge health profile into answers for clinical reasoning
+  const enrichedAnswers = { ...session.answers };
+  if (healthProfile) {
+    if (healthProfile.age !== null) {
+      enrichedAnswers.age = healthProfile.age;
+      // Set risk group based on age
+      if (healthProfile.age < 2) {
+        enrichedAnswers.risk_group = 'เด็ก (< 2 ปี)';
+      } else if (healthProfile.age > 65) {
+        enrichedAnswers.risk_group = 'ผู้สูงอายุ (> 65 ปี)';
+      }
+    }
+    if (healthProfile.gender) {
+      enrichedAnswers.gender = healthProfile.gender;
+    }
+    if (healthProfile.chronicDiseases && healthProfile.chronicDiseases.length > 0) {
+      enrichedAnswers.chronic_disease = healthProfile.chronicDiseases.join(', ');
+      enrichedAnswers.risk_group = 'โรคประจำตัว';
+    }
+    if (healthProfile.drugAllergies && healthProfile.drugAllergies.length > 0) {
+      enrichedAnswers.allergy = healthProfile.drugAllergies.join(', ');
+    }
+  }
+
   // Calculate risk score for explainable recommendations
   const symptomText = Array.isArray(session.symptoms) 
     ? session.symptoms.join(' ') 
     : (session.symptoms || '');
-  const riskScore = calculateRiskScore(symptomText, session.answers);
+  const riskScore = calculateRiskScore(symptomText, enrichedAnswers);
   
   const diagnosis = await generateDiagnosis({
     symptoms: session.symptoms,
-    answers: session.answers,
+    answers: enrichedAnswers,
     triageLevel: session.triageLevel || 'self_care',
     riskScore,
+    healthProfile, // Pass health profile for medication recommendations
   });
 
   // Save diagnosis to database

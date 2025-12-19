@@ -6,6 +6,8 @@ import 'package:uuid/uuid.dart';
 import '../../../app/theme.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/chat_models.dart';
+import '../../../widgets/health_profile_gate.dart';
+import '../../profile/providers/health_profile_provider.dart';
 import '../providers/chat_provider.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
@@ -101,7 +103,27 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final chatState = ref.watch(chatProvider);
+    final isCompleteAsync = ref.watch(healthProfileCompleteProvider);
     
+    // Gate: Check health profile before allowing chat
+    return isCompleteAsync.when(
+      data: (isComplete) {
+        if (!isComplete) {
+          return HealthProfileGate(
+            featureName: 'แชทแพทย์ AI',
+            child: _buildChatContent(context, chatState, l10n),
+          );
+        }
+        return _buildChatContent(context, chatState, l10n);
+      },
+      loading: () => const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      ),
+      error: (_, __) => _buildChatContent(context, chatState, l10n), // Allow on error
+    );
+  }
+  
+  Widget _buildChatContent(BuildContext context, ChatState chatState, AppLocalizations l10n) {
     // Listen for triage completion reactively (must be in build method)
     ref.listen<ChatState>(chatProvider, (previous, next) {
       final triageResponse = next.triageResponse;
