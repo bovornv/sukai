@@ -81,24 +81,56 @@ class _HealthProfileFormPageState
   }
 
   Future<void> _selectBirthDate() async {
+    if (!mounted) return;
+    
     final now = DateTime.now();
-    final firstDate = DateTime(now.year - 120); // 120 years ago
+    // Convert to พศ for display
+    final firstDateBE = now.year - 120 + 543; // 120 years ago in พศ
+    final lastDateBE = now.year + 543; // Current year in พศ
+    
+    // For date picker, we'll use AD dates but display in พศ
+    final firstDate = DateTime(now.year - 120);
     final lastDate = now;
+    
+    // Convert current _birthDate from AD to พศ for initial display
+    DateTime? initialDate;
+    if (_birthDate != null) {
+      initialDate = _birthDate;
+    } else {
+      initialDate = DateTime(now.year - 30, 1, 1);
+    }
 
     final picked = await showDatePicker(
       context: context,
-      initialDate: _birthDate ?? DateTime(now.year - 30, 1, 1),
+      initialDate: initialDate,
       firstDate: firstDate,
       lastDate: lastDate,
       locale: const Locale('th', 'TH'),
-      helpText: 'เลือกวันเดือนปีเกิด',
+      helpText: 'เลือกวันเดือนปีเกิด (พ.ศ.)',
       cancelText: 'ยกเลิก',
       confirmText: 'ยืนยัน',
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            datePickerTheme: DatePickerThemeData(
+              headerHelpStyle: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          child: Localizations.override(
+            context: context,
+            locale: const Locale('th', 'TH'),
+            child: child!,
+          ),
+        );
+      },
     );
 
-    if (picked != null) {
+    if (picked != null && mounted) {
       setState(() {
-        _birthDate = picked;
+        _birthDate = picked; // Store as AD date (database expects AD)
       });
     }
   }
@@ -162,6 +194,9 @@ class _HealthProfileFormPageState
         drugAllergies: _drugAllergies,
       );
 
+      // Check mounted before using notifier
+      if (!mounted) return;
+      
       final notifier = ref.read(healthProfileNotifierProvider.notifier);
       await notifier.saveProfile(profile);
 
@@ -172,7 +207,9 @@ class _HealthProfileFormPageState
             backgroundColor: Colors.green,
           ),
         );
-        context.pop();
+        if (mounted) {
+          context.pop();
+        }
       }
     } catch (e) {
       if (mounted) {
@@ -283,10 +320,12 @@ class _HealthProfileFormPageState
                     labelText: 'วันเดือนปีเกิด (พ.ศ.) *',
                     border: OutlineInputBorder(),
                     suffixIcon: Icon(Icons.calendar_today),
+                    helperText: 'ปฏิทินแสดง ค.ศ. แต่จะบันทึกเป็น พ.ศ.',
+                    helperMaxLines: 2,
                   ),
                   child: Text(
                     _birthDate != null
-                        ? '${_birthDate!.day}/${_birthDate!.month}/${_birthDate!.year + 543}'
+                        ? '${_birthDate!.day}/${_birthDate!.month}/${_birthDate!.year + 543} (พ.ศ.)'
                         : 'กรุณาเลือกวันเดือนปีเกิด',
                     style: TextStyle(
                       color: _birthDate != null
