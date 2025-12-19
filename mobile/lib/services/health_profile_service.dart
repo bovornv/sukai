@@ -14,12 +14,13 @@ class HealthProfileService {
           .from('user_profiles')
           .select()
           .eq('id', userId)
-          .single();
+          .maybeSingle(); // Use maybeSingle to handle no rows gracefully
 
       if (response == null) return null;
       return HealthProfile.fromJson(response);
     } catch (e) {
       print('Error fetching health profile: $e');
+      // Return null if error (profile doesn't exist or can't be fetched)
       return null;
     }
   }
