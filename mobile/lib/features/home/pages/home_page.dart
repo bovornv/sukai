@@ -85,10 +85,12 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                   onTap: () async {
                     // Check health profile before allowing triage
                     try {
-                      // Invalidate to get fresh data
+                      // Always invalidate to get fresh data before checking
                       ref.invalidate(healthProfileCompleteProvider);
+                      await Future.delayed(const Duration(milliseconds: 100)); // Small delay for invalidation
                       final isComplete = await ref.read(healthProfileCompleteProvider.future) as bool;
-                      if (!isComplete) {
+                      
+                      if (isComplete != true) {
                         if (mounted) {
                           context.push('/health-profile');
                         }

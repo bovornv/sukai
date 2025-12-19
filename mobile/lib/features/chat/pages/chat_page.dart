@@ -108,7 +108,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     // Gate: Check health profile before allowing chat
     return isCompleteAsync.when(
       data: (isComplete) {
-        if (!isComplete) {
+        // Always block if not complete (safety first)
+        if (isComplete != true) {
           return HealthProfileGate(
             featureName: 'แชทแพทย์ AI',
             child: _buildChatContent(context, chatState, l10n),

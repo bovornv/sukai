@@ -45,8 +45,18 @@ class HealthProfileService {
 
   /// Check if health profile is complete
   Future<bool> isHealthProfileComplete(String userId) async {
-    final profile = await getHealthProfile(userId);
-    return profile?.isComplete ?? false;
+    try {
+      final profile = await getHealthProfile(userId);
+      final isComplete = profile?.isComplete ?? false;
+      print('Health profile check for $userId: profile=${profile != null}, isComplete=$isComplete');
+      if (profile != null) {
+        print('Profile details: fullName=${profile.fullName}, gender=${profile.gender}, birthDate=${profile.birthDate}, weightKg=${profile.weightKg}, heightCm=${profile.heightCm}');
+      }
+      return isComplete;
+    } catch (e) {
+      print('Error checking health profile completeness: $e');
+      return false; // Block access on error (safety first)
+    }
   }
 }
 
