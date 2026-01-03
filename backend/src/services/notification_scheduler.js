@@ -281,13 +281,15 @@ export async function getUserPendingNotifications(userId) {
   try {
     const now = new Date().toISOString();
     
+    // For web app: Show notifications that are ready and not responded/dismissed
+    // sent_at doesn't matter - it's just for tracking push notifications
     const { data, error } = await supabaseAdmin
       .from('followup_notifications')
       .select('*')
       .eq('user_id', userId)
       .lte('scheduled_at', now)
-      .is('sent_at', null)
-      .eq('dismissed', false)
+      .is('responded_at', null)  // Not responded yet
+      .eq('dismissed', false)     // Not dismissed
       .order('scheduled_at', { ascending: true });
     
     if (error) {
