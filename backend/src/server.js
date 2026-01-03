@@ -1,9 +1,25 @@
 import express from 'express';
 import dotenv from 'dotenv';
 
+// Legacy routes (for backward compatibility)
 import triageRoutes from './routes/triage.js';
 import chatRoutes from './routes/chat.js';
 import billingRoutes from './routes/billing.js';
+import followupRoutes from './routes/followup.js';
+import notificationRoutes from './routes/notifications.js';
+import deviceTokenRoutes from './routes/device_tokens.js';
+
+// New PUBLIC/PRIVATE/INTERNAL routes
+import publicRoutes from './routes/public/index.js';
+import privateTriageRoutes from './routes/private/triage.js';
+import privateChatRoutes from './routes/private/chat.js';
+import privateBillingRoutes from './routes/private/billing.js';
+import privateFollowupRoutes from './routes/private/followup.js';
+import privateNotificationRoutes from './routes/private/notifications.js';
+import privateDeviceTokenRoutes from './routes/private/device_tokens.js';
+import internalNotificationRoutes from './routes/internal/notifications.js';
+import internalAnalyticsRoutes from './routes/internal/analytics.js';
+
 import { requestLogger } from './middleware/logger.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { initSentry } from './middleware/sentry.js';
@@ -27,14 +43,19 @@ if (missingVars.length > 0) {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// CORS Configuration - Global setup for all routes
-// Allow localhost (any port) and production domains
-const getAllowedOrigin = (origin) => {
+// CORS Configuration - Different rules for PUBLIC vs PRIVATE APIs
+const getAllowedOrigin = (origin, isPublic = false) => {
   // Allow requests with no origin (like mobile apps or curl requests)
   if (!origin) {
-    return null; // No CORS headers needed for same-origin requests
+    return null;
   }
   
+  // PUBLIC APIs: Open CORS (any origin allowed)
+  if (isPublic) {
+    return origin; // Allow all origins for public APIs
+  }
+  
+  // PRIVATE APIs: Restricted CORS (only allowed origins)
   // Allow localhost with any port (for Flutter Web development)
   if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
     return origin;
@@ -55,35 +76,39 @@ const getAllowedOrigin = (origin) => {
   return origin;
 };
 
-// Global CORS middleware - handles all requests including OPTIONS preflight
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  const allowedOrigin = getAllowedOrigin(origin);
-  
-  // Handle OPTIONS (preflight) requests
-  if (req.method === 'OPTIONS') {
-    if (allowedOrigin) {
-      res.header('Access-Control-Allow-Origin', allowedOrigin);
-      res.header('Access-Control-Allow-Credentials', 'true');
-      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
-      res.header('Access-Control-Max-Age', '86400'); // 24 hours
+// CORS middleware factory - different rules for PUBLIC vs PRIVATE
+const corsMiddleware = (isPublic = false) => {
+  return (req, res, next) => {
+    const origin = req.headers.origin;
+    const allowedOrigin = getAllowedOrigin(origin, isPublic);
+    
+    // Handle OPTIONS (preflight) requests
+    if (req.method === 'OPTIONS') {
+      if (allowedOrigin) {
+        res.header('Access-Control-Allow-Origin', allowedOrigin);
+        res.header('Access-Control-Allow-Credentials', isPublic ? 'false' : 'true');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
+        res.header('Access-Control-Max-Age', '86400'); // 24 hours
+        return res.sendStatus(200);
+      }
       return res.sendStatus(200);
     }
-    // If origin not allowed, still respond to OPTIONS (but without CORS headers)
-    return res.sendStatus(200);
-  }
-  
-  // For all other requests, set CORS headers
-  if (allowedOrigin) {
-    res.header('Access-Control-Allow-Origin', allowedOrigin);
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
-  }
-  
-  next();
-});
+    
+    // For all other requests, set CORS headers
+    if (allowedOrigin) {
+      res.header('Access-Control-Allow-Origin', allowedOrigin);
+      res.header('Access-Control-Allow-Credentials', isPublic ? 'false' : 'true');
+      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
+    }
+    
+    next();
+  };
+};
+
+// Apply default CORS (for PRIVATE APIs) - will be overridden by route-specific middleware
+app.use(corsMiddleware(false));
 
 app.use(express.json());
 app.use(requestLogger);
@@ -93,35 +118,41 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// API Routes
-app.use('/api/triage', triageRoutes);
-app.use('/api/chat', chatRoutes);
-app.use('/api/billing', billingRoutes);
+// ============================================================================
+// API Routes - Separated into PUBLIC, PRIVATE, and INTERNAL
+// ============================================================================
 
-// Import followup routes dynamically
-import followupRoutes from './routes/followup.js';
-app.use('/api/followup', followupRoutes);
+// PUBLIC APIs - Open CORS, no authentication required
+app.use('/api/public', corsMiddleware(true), publicRoutes);
+console.log('✅ Public API routes registered at /api/public');
 
-// Notification routes
-import notificationRoutes from './routes/notifications.js';
-app.use('/api/notifications', notificationRoutes);
-console.log('✅ Notification routes registered at /api/notifications');
+// PRIVATE APIs - Restricted CORS, authentication required
+app.use('/api/private/triage', corsMiddleware(false), privateTriageRoutes);
+app.use('/api/private/chat', corsMiddleware(false), privateChatRoutes);
+app.use('/api/private/billing', corsMiddleware(false), privateBillingRoutes);
+app.use('/api/private/followup', corsMiddleware(false), privateFollowupRoutes);
+app.use('/api/private/notifications', corsMiddleware(false), privateNotificationRoutes);
+app.use('/api/private/device-tokens', corsMiddleware(false), privateDeviceTokenRoutes);
+console.log('✅ Private API routes registered at /api/private/*');
 
-// Device token routes
-import deviceTokenRoutes from './routes/device_tokens.js';
-app.use('/api/device-tokens', deviceTokenRoutes);
+// INTERNAL APIs - For cron jobs and admin operations
+app.use('/api/internal/notifications', corsMiddleware(false), internalNotificationRoutes);
+app.use('/api/internal/analytics', corsMiddleware(false), internalAnalyticsRoutes);
+console.log('✅ Internal API routes registered at /api/internal/*');
 
-// Analytics routes (temporarily disabled - not critical for notification system)
-// Uncomment when analytics dependencies are fully set up
-// (async () => {
-//   try {
-//     const analyticsRoutes = await import('./routes/analytics.js');
-//     app.use('/api/analytics', analyticsRoutes.default);
-//     console.log('✅ Analytics routes registered at /api/analytics');
-//   } catch (error) {
-//     console.warn('⚠️  Analytics routes not available:', error.message);
-//   }
-// })();
+// ============================================================================
+// Legacy Routes (DEPRECATED - for backward compatibility during migration)
+// ============================================================================
+// These routes will be removed after frontend migration is complete
+// TODO: Remove after frontend is updated to use /api/private/* paths
+
+app.use('/api/triage', corsMiddleware(false), triageRoutes);
+app.use('/api/chat', corsMiddleware(false), chatRoutes);
+app.use('/api/billing', corsMiddleware(false), billingRoutes);
+app.use('/api/followup', corsMiddleware(false), followupRoutes);
+app.use('/api/notifications', corsMiddleware(false), notificationRoutes);
+app.use('/api/device-tokens', corsMiddleware(false), deviceTokenRoutes);
+console.log('⚠️  Legacy routes still active (will be removed after migration)');
 
 // Optional: Enable node-cron for in-process scheduling (development)
 // For production, use Railway Cron Jobs instead
