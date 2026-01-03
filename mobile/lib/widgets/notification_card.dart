@@ -154,7 +154,7 @@ class _NotificationCardState extends ConsumerState<NotificationCard> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                ref.read(languageProvider) == 'th'
+                ref.read(languageProvider).languageCode == 'th'
                   ? 'กรุณาไปพบแพทย์เพื่อรับการดูแลที่เหมาะสม'
                   : 'Please see a doctor for appropriate care',
               ),
@@ -170,7 +170,7 @@ class _NotificationCardState extends ConsumerState<NotificationCard> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              ref.read(languageProvider) == 'th'
+              ref.read(languageProvider).languageCode == 'th'
                 ? 'เกิดข้อผิดพลาด กรุณาลองอีกครั้ง'
                 : 'An error occurred. Please try again',
             ),
@@ -182,7 +182,7 @@ class _NotificationCardState extends ConsumerState<NotificationCard> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              ref.read(languageProvider) == 'th'
+              ref.read(languageProvider).languageCode == 'th'
                 ? 'เกิดข้อผิดพลาด กรุณาลองอีกครั้ง'
                 : 'An error occurred. Please try again',
             ),
@@ -226,7 +226,7 @@ class _NotificationCardState extends ConsumerState<NotificationCard> {
 
   @override
   Widget build(BuildContext context) {
-    final isThai = ref.watch(languageProvider) == 'th';
+    final isThai = ref.watch(languageProvider).languageCode == 'th';
     final l10n = AppLocalizations.of(context);
     
     // If already responded, show a simple confirmation card
