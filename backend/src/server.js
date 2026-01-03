@@ -28,8 +28,45 @@ if (missingVars.length > 0) {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// CORS Configuration
+// Allow localhost for development and production domains
+const allowedOrigins = [
+  'http://localhost',
+  'http://127.0.0.1',
+  'https://sukai-production.up.railway.app',
+  // Add your production web app domain here when deployed
+  // 'https://your-web-app-domain.com',
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin is allowed
+    const isAllowed = allowedOrigins.some(allowed => {
+      // For localhost, match any port
+      if (allowed.startsWith('http://localhost') || allowed.startsWith('http://127.0.0.1')) {
+        return origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1');
+      }
+      // For other origins, exact match
+      return origin === allowed;
+    });
+    
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      console.warn(`⚠️  CORS blocked origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-cron-secret'],
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(requestLogger);
 
