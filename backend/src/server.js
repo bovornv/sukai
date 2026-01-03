@@ -61,7 +61,7 @@ const corsOptions = {
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-cron-secret', 'X-Requested-With'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-cron-secret', 'X-Requested-With', 'x-user-id', 'x-language'],
   exposedHeaders: ['Content-Length', 'Content-Type'],
   maxAge: 86400, // 24 hours
   preflightContinue: false, // Let cors handle preflight
@@ -73,9 +73,19 @@ const corsOptions = {
 // Handle OPTIONS requests explicitly BEFORE cors middleware
 app.options('*', (req, res) => {
   const origin = req.headers.origin;
+  const requestedMethod = req.headers['access-control-request-method'];
+  const requestedHeaders = req.headers['access-control-request-headers'];
+  
+  console.log('🔍 OPTIONS preflight request:', {
+    origin,
+    path: req.path,
+    requestedMethod,
+    requestedHeaders,
+  });
   
   // Allow localhost with any port
   if (origin && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) {
+    console.log(`✅ OPTIONS: Allowing localhost origin: ${origin}`);
     res.header('Access-Control-Allow-Origin', origin);
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
@@ -90,6 +100,7 @@ app.options('*', (req, res) => {
   ];
   
   if (origin && allowedOrigins.includes(origin)) {
+    console.log(`✅ OPTIONS: Allowing production origin: ${origin}`);
     res.header('Access-Control-Allow-Origin', origin);
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
@@ -99,6 +110,7 @@ app.options('*', (req, res) => {
   }
   
   // Default: allow all origins (for debugging)
+  console.log(`✅ OPTIONS: Allowing origin (default): ${origin || '*'}`);
   res.header('Access-Control-Allow-Origin', origin || '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
