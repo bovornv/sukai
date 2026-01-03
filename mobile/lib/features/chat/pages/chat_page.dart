@@ -1745,7 +1745,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           }
         }
       },
-      borderRadius: BorderRadius.circular(12),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
