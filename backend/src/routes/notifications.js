@@ -68,6 +68,28 @@ router.get('/pending', asyncHandler(async (req, res) => {
 }));
 
 /**
+ * GET /api/notifications/process
+ * Test endpoint - returns info about pending notifications (for testing)
+ */
+router.get('/process', asyncHandler(async (req, res) => {
+  const { getPendingNotifications } = await import('../services/notification_scheduler.js');
+  const pending = await getPendingNotifications(10);
+  
+  res.json({
+    success: true,
+    message: 'Use POST method to process notifications',
+    pending_count: pending.length,
+    pending_notifications: pending.map(n => ({
+      id: n.id,
+      session_id: n.session_id,
+      notification_type: n.notification_type,
+      scheduled_at: n.scheduled_at,
+      status: n.status
+    }))
+  });
+}));
+
+/**
  * POST /api/notifications/process
  * Process and send pending notifications (for cron job)
  * This endpoint can be called by Railway Cron or external scheduler
