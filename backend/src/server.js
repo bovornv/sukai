@@ -1,15 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 
-// Legacy routes (for backward compatibility)
-import triageRoutes from './routes/triage.js';
-import chatRoutes from './routes/chat.js';
-import billingRoutes from './routes/billing.js';
-import followupRoutes from './routes/followup.js';
-import notificationRoutes from './routes/notifications.js';
-import deviceTokenRoutes from './routes/device_tokens.js';
-
-// New PUBLIC/PRIVATE/INTERNAL routes
+// PUBLIC/PRIVATE/INTERNAL routes
 import publicRoutes from './routes/public/index.js';
 import privateTriageRoutes from './routes/private/triage.js';
 import privateChatRoutes from './routes/private/chat.js';
@@ -140,19 +132,7 @@ app.use('/api/internal/notifications', corsMiddleware(false), internalNotificati
 app.use('/api/internal/analytics', corsMiddleware(false), internalAnalyticsRoutes);
 console.log('✅ Internal API routes registered at /api/internal/*');
 
-// ============================================================================
-// Legacy Routes (DEPRECATED - for backward compatibility during migration)
-// ============================================================================
-// These routes will be removed after frontend migration is complete
-// TODO: Remove after frontend is updated to use /api/private/* paths
-
-app.use('/api/triage', corsMiddleware(false), triageRoutes);
-app.use('/api/chat', corsMiddleware(false), chatRoutes);
-app.use('/api/billing', corsMiddleware(false), billingRoutes);
-app.use('/api/followup', corsMiddleware(false), followupRoutes);
-app.use('/api/notifications', corsMiddleware(false), notificationRoutes);
-app.use('/api/device-tokens', corsMiddleware(false), deviceTokenRoutes);
-console.log('⚠️  Legacy routes still active (will be removed after migration)');
+// Legacy routes removed - all frontend services now use /api/private/* paths
 
 // Optional: Enable node-cron for in-process scheduling (development)
 // For production, use Railway Cron Jobs instead

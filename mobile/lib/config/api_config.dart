@@ -24,13 +24,12 @@ class ApiConfig {
     return isProduction ? prodPublicBaseUrl : devPublicBaseUrl;
   }
   
-  /// Legacy base URL (for backward compatibility during migration)
-  /// TODO: Remove after all routes are migrated to /api/private/*
-  @Deprecated('Use privateBaseUrl instead')
+  /// Legacy base URL (DEPRECATED - removed after migration)
+  /// All services now use privateBaseUrl or publicBaseUrl
+  @Deprecated('Use privateBaseUrl or publicBaseUrl instead. This will be removed in next version.')
   static String get baseUrl {
-    return isProduction 
-        ? 'https://sukai-production.up.railway.app/api'
-        : 'http://localhost:3000/api';
+    // Fallback to privateBaseUrl for backward compatibility
+    return privateBaseUrl.replaceAll('/private', '');
   }
   
   /// Get the full backend URL (without /api)
