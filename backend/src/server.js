@@ -47,6 +47,38 @@ app.use('/api/billing', billingRoutes);
 import followupRoutes from './routes/followup.js';
 app.use('/api/followup', followupRoutes);
 
+// Notification routes
+import notificationRoutes from './routes/notifications.js';
+app.use('/api/notifications', notificationRoutes);
+console.log('✅ Notification routes registered at /api/notifications');
+
+// Device token routes
+import deviceTokenRoutes from './routes/device_tokens.js';
+app.use('/api/device-tokens', deviceTokenRoutes);
+
+// Analytics routes
+import analyticsRoutes from './routes/analytics.js';
+app.use('/api/analytics', analyticsRoutes);
+
+// Optional: Enable node-cron for in-process scheduling (development)
+// For production, use Railway Cron Jobs instead
+if (process.env.ENABLE_NODE_CRON === 'true') {
+  import('node-cron').then((cron) => {
+    import('./jobs/notification_sender.js').then(({ processPendingNotifications }) => {
+      // Run every 15 minutes
+      cron.default.schedule('*/15 * * * *', async () => {
+        console.log('🔄 Running notification sender job (node-cron)...');
+        await processPendingNotifications();
+      });
+      console.log('✅ Node-cron enabled: Notification sender will run every 15 minutes');
+    });
+  }).catch((err) => {
+    console.warn('⚠️  Node-cron not available, use Railway Cron Jobs instead');
+  });
+}
+
+// A/B Testing routes removed - locked to Variant A (Calm Doctor) only
+
 // Error handling (must be last)
 app.use(errorHandler);
 

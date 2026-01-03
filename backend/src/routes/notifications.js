@@ -17,6 +17,8 @@ import { processPendingNotifications } from '../jobs/notification_sender.js';
 
 const router = express.Router();
 
+console.log('📋 Notification routes module loaded');
+
 /**
  * POST /api/notifications/schedule
  * Schedule follow-up notifications for a session
@@ -72,6 +74,7 @@ router.get('/pending', asyncHandler(async (req, res) => {
  * Test endpoint - returns info about pending notifications (for testing)
  */
 router.get('/process', asyncHandler(async (req, res) => {
+  console.log('📬 GET /api/notifications/process called');
   const pending = await getPendingNotifications(10);
   
   res.json({
