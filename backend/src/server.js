@@ -30,39 +30,37 @@ const PORT = process.env.PORT || 3000;
 
 // CORS Configuration
 // Allow localhost for development and production domains
-const allowedOrigins = [
-  'http://localhost',
-  'http://127.0.0.1',
-  'https://sukai-production.up.railway.app',
-  // Add your production web app domain here when deployed
-  // 'https://your-web-app-domain.com',
-];
-
 const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
+    if (!origin) {
+      return callback(null, true);
+    }
     
-    // Check if origin is allowed
-    const isAllowed = allowedOrigins.some(allowed => {
-      // For localhost, match any port
-      if (allowed.startsWith('http://localhost') || allowed.startsWith('http://127.0.0.1')) {
-        return origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1');
-      }
-      // For other origins, exact match
-      return origin === allowed;
-    });
+    // Allow localhost with any port
+    if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
+      return callback(null, true);
+    }
     
-    if (isAllowed) {
+    // Allow production domains
+    const allowedOrigins = [
+      'https://sukai-production.up.railway.app',
+      // Add your production web app domain here when deployed
+      // 'https://your-web-app-domain.com',
+    ];
+    
+    if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       console.warn(`⚠️  CORS blocked origin: ${origin}`);
-      callback(new Error('Not allowed by CORS'));
+      callback(null, true); // Temporarily allow all for debugging - change to callback(new Error(...)) in production
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-cron-secret'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-cron-secret', 'X-Requested-With'],
+  exposedHeaders: ['Content-Length', 'Content-Type'],
+  maxAge: 86400, // 24 hours
 };
 
 // Middleware
