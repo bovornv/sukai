@@ -64,29 +64,58 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization', 'x-cron-secret', 'X-Requested-With', 'x-user-id', 'x-language'],
   exposedHeaders: ['Content-Length', 'Content-Type'],
   maxAge: 86400, // 24 hours
-  preflightContinue: false, // Let cors handle preflight
+  preflightContinue: true, // Let our explicit OPTIONS handler handle preflight
   optionsSuccessStatus: 200, // Some legacy browsers choke on 204
 };
 
 // Middleware
 // CRITICAL: CORS must be applied FIRST, before any routes
 // Handle OPTIONS requests explicitly BEFORE cors middleware
-app.options('*', (req, res) => {
-  const origin = req.headers.origin;
-  const requestedMethod = req.headers['access-control-request-method'];
-  const requestedHeaders = req.headers['access-control-request-headers'];
-  
-  console.log('🔍 OPTIONS preflight request:', {
-    origin,
-    path: req.path,
-    requestedMethod,
-    requestedHeaders,
-  });
-  
-  // Allow localhost with any port
-  if (origin && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) {
-    console.log(`✅ OPTIONS: Allowing localhost origin: ${origin}`);
-    res.header('Access-Control-Allow-Origin', origin);
+// This MUST be the first middleware to catch all OPTIONS requests
+app.use((req, res, next) => {
+  // Handle OPTIONS (preflight) requests immediately
+  if (req.method === 'OPTIONS') {
+    const origin = req.headers.origin;
+    const requestedMethod = req.headers['access-control-request-method'];
+    const requestedHeaders = req.headers['access-control-request-headers'];
+    
+    console.log('🔍 OPTIONS preflight request:', {
+      origin,
+      path: req.path,
+      method: req.method,
+      requestedMethod,
+      requestedHeaders,
+    });
+    
+    // Allow localhost with any port
+    if (origin && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) {
+      console.log(`✅ OPTIONS: Allowing localhost origin: ${origin}`);
+      res.header('Access-Control-Allow-Origin', origin);
+      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
+      res.header('Access-Control-Allow-Credentials', 'true');
+      res.header('Access-Control-Max-Age', '86400');
+      return res.sendStatus(200);
+    }
+    
+    // Allow production domains
+    const allowedOrigins = [
+      'https://sukai-production.up.railway.app',
+    ];
+    
+    if (origin && allowedOrigins.includes(origin)) {
+      console.log(`✅ OPTIONS: Allowing production origin: ${origin}`);
+      res.header('Access-Control-Allow-Origin', origin);
+      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
+      res.header('Access-Control-Allow-Credentials', 'true');
+      res.header('Access-Control-Max-Age', '86400');
+      return res.sendStatus(200);
+    }
+    
+    // Default: allow all origins (for debugging)
+    console.log(`✅ OPTIONS: Allowing origin (default): ${origin || '*'}`);
+    res.header('Access-Control-Allow-Origin', origin || '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
     res.header('Access-Control-Allow-Credentials', 'true');
@@ -94,29 +123,8 @@ app.options('*', (req, res) => {
     return res.sendStatus(200);
   }
   
-  // Allow production domains
-  const allowedOrigins = [
-    'https://sukai-production.up.railway.app',
-  ];
-  
-  if (origin && allowedOrigins.includes(origin)) {
-    console.log(`✅ OPTIONS: Allowing production origin: ${origin}`);
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Max-Age', '86400');
-    return res.sendStatus(200);
-  }
-  
-  // Default: allow all origins (for debugging)
-  console.log(`✅ OPTIONS: Allowing origin (default): ${origin || '*'}`);
-  res.header('Access-Control-Allow-Origin', origin || '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Max-Age', '86400');
-  return res.sendStatus(200);
+  // For non-OPTIONS requests, continue to next middleware
+  next();
 });
 
 // Apply CORS middleware to all routes
