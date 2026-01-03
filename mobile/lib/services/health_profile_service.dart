@@ -17,7 +17,15 @@ class HealthProfileService {
           .maybeSingle(); // Use maybeSingle to handle no rows gracefully
 
       if (response == null) return null;
-      return HealthProfile.fromJson(response);
+      
+      // Debug: Log raw response for drug_allergies
+      print('[HEALTH-PROFILE-SERVICE] Raw drug_allergies from DB: ${response['drug_allergies']}');
+      print('[HEALTH-PROFILE-SERVICE] Type: ${response['drug_allergies'].runtimeType}');
+      
+      final profile = HealthProfile.fromJson(response);
+      print('[HEALTH-PROFILE-SERVICE] Parsed drug_allergies: ${profile.drugAllergies}');
+      
+      return profile;
     } catch (e) {
       print('Error fetching health profile: $e');
       // Return null if error (profile doesn't exist or can't be fetched)
@@ -32,13 +40,29 @@ class HealthProfileService {
       data['id'] = userId;
       data['updated_at'] = DateTime.now().toIso8601String();
 
+      // Debug: Log drug_allergies before saving
+      print('[HEALTH-PROFILE-SERVICE] Saving drug_allergies: ${data['drug_allergies']}');
+      print('[HEALTH-PROFILE-SERVICE] Type: ${data['drug_allergies'].runtimeType}');
+      print('[HEALTH-PROFILE-SERVICE] Full data keys: ${data.keys.toList()}');
+
       // Use upsert to insert or update
-      await _supabase.from('user_profiles').upsert(
+      final result = await _supabase.from('user_profiles').upsert(
         data,
         onConflict: 'id',
       );
+      
+      print('[HEALTH-PROFILE-SERVICE] Upsert result: $result');
+      
+      // Verify save by reading back
+      final verify = await _supabase
+          .from('user_profiles')
+          .select('drug_allergies')
+          .eq('id', userId)
+          .maybeSingle();
+      print('[HEALTH-PROFILE-SERVICE] Verified drug_allergies in DB: ${verify?['drug_allergies']}');
     } catch (e) {
       print('Error saving health profile: $e');
+      print('Error stack: ${StackTrace.current}');
       rethrow;
     }
   }

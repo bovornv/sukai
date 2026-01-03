@@ -17,7 +17,7 @@ class SessionsService {
     String? baseUrl,
     Ref? ref,
   })  : _dio = dio ?? Dio(),
-        baseUrl = baseUrl ?? ApiConfig.baseUrl,
+        baseUrl = baseUrl ?? ApiConfig.privateBaseUrl,
         _ref = ref;
   
   /// Get user's past triage sessions

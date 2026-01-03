@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod/riverpod.dart' as riverpod;
 import '../config/api_config.dart';
 import '../features/auth/providers/auth_provider.dart';
 
@@ -84,20 +85,20 @@ class NotificationModel {
 class NotificationService {
   final Dio _dio;
   final String baseUrl;
-  final WidgetRef? _ref;
+  final riverpod.Ref? _ref;
   
   NotificationService({
     Dio? dio,
     String? baseUrl,
-    WidgetRef? ref,
+    riverpod.Ref? ref,
   })  : _dio = dio ?? Dio(),
-        baseUrl = baseUrl ?? ApiConfig.baseUrl,
+        baseUrl = baseUrl ?? ApiConfig.privateBaseUrl,
         _ref = ref;
   
   /// Get user's pending notifications
   Future<List<NotificationModel>> getPendingNotifications() async {
     try {
-      final userId = _ref?.read(authProvider).userId;
+      final userId = _ref != null ? (_ref as ProviderRef).read(authProvider).userId : null;
       
       if (userId == null) {
         return [];
@@ -130,7 +131,7 @@ class NotificationService {
   /// Respond to a notification
   Future<bool> respondToNotification(String notificationId, NotificationResponse response) async {
     try {
-      final userId = _ref?.read(authProvider).userId;
+      final userId = _ref != null ? (_ref as ProviderRef).read(authProvider).userId : null;
       
       final headers = <String, String>{};
       if (userId != null) {
@@ -155,7 +156,7 @@ class NotificationService {
   /// Dismiss a notification
   Future<bool> dismissNotification(String notificationId) async {
     try {
-      final userId = _ref?.read(authProvider).userId;
+      final userId = _ref != null ? (_ref as ProviderRef).read(authProvider).userId : null;
       
       final headers = <String, String>{};
       if (userId != null) {

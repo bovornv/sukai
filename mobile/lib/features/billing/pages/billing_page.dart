@@ -27,7 +27,7 @@ class _BillingPageState extends ConsumerState<BillingPage> {
   Future<void> _initializeService() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _billingService = BillingService(prefs: prefs);
+      _billingService = BillingService(prefs: prefs, ref: ref);
     });
     _loadCurrentPlan();
   }
@@ -87,13 +87,23 @@ class _BillingPageState extends ConsumerState<BillingPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   if (_currentPlan != null)
-                    Card(
-                      color: AppTheme.primaryYellow.withValues(alpha: 0.2),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppTheme.primarySoft, // Soft primary background
+                        borderRadius: BorderRadius.circular(16), // Rounded corners (14-16px)
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.04), // Soft shadow
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: Row(
                           children: [
-                            const Icon(Icons.check_circle, color: AppTheme.green),
+                            Icon(Icons.check_circle_outline, color: AppTheme.statusSafe),
                             const SizedBox(width: 12),
                             Expanded(
                               child: Text(
@@ -135,7 +145,7 @@ class _BillingPageState extends ConsumerState<BillingPage> {
                       'คำแนะนำการใช้ยา',
                       'ติดตามอาการ',
                     ],
-                    AppTheme.yellow,
+                    AppTheme.navActive, // Dark gray (Notion-style, no blue)
                     _currentPlan == SubscriptionPlan.pro,
                   ),
                   const SizedBox(height: 16),
@@ -150,7 +160,7 @@ class _BillingPageState extends ConsumerState<BillingPage> {
                       'ลำดับความสำคัญ',
                       'แชร์ครอบครัว (จำกัด)',
                     ],
-                    AppTheme.green,
+                    AppTheme.accentGreen, // Muted green
                     _currentPlan == SubscriptionPlan.premiumDoctor,
                   ),
                 ],
@@ -168,14 +178,25 @@ class _BillingPageState extends ConsumerState<BillingPage> {
     Color color,
     bool isCurrent,
   ) {
-    return Card(
-      elevation: isCurrent ? 4 : 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(
-          color: isCurrent ? color : Colors.transparent,
+    // Notion-inspired: Clean card, soft shadow, rounded corners
+    return Container(
+      decoration: BoxDecoration(
+        color: AppTheme.cardBackground,
+        borderRadius: BorderRadius.circular(16), // Rounded corners (14-16px)
+        border: isCurrent ? Border.all(
+          color: color.withValues(alpha: 0.5),
           width: 2,
+        ) : Border.all(
+          color: AppTheme.borderLight,
+          width: 1,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04), // Soft shadow
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -187,32 +208,48 @@ class _BillingPageState extends ConsumerState<BillingPage> {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                  style: TextStyle(
+                    fontSize: 18, // Smaller
+                    fontWeight: FontWeight.w600, // Medium-bold (not bold)
+                    color: AppTheme.textPrimary,
+                    letterSpacing: -0.1,
                   ),
                 ),
                 Text(
                   price,
                   style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600, // Medium-bold (not bold)
                     color: color,
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 16),
+            // Notion-style: Simple bullet points, no colored icons
             ...features.map((feature) => Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(Icons.check, color: color, size: 20),
-                      const SizedBox(width: 8),
+                      Container(
+                        margin: const EdgeInsets.only(top: 6, right: 10),
+                        width: 4,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: AppTheme.textTertiary, // Gray bullet
+                          shape: BoxShape.circle,
+                        ),
+                      ),
                       Expanded(
                         child: Text(
                           feature,
-                          style: const TextStyle(fontSize: 15),
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppTheme.textPrimary,
+                            height: 1.5,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
                       ),
                     ],

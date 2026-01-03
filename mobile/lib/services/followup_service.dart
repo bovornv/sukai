@@ -7,10 +7,35 @@ import '../features/auth/providers/auth_provider.dart';
 enum FollowupStatus {
   better('better'),
   same('same'),
-  worse('worse');
+  worse('worse'),
+  unsure('unsure');
   
   final String value;
   const FollowupStatus(this.value);
+}
+
+/// Follow-up Action Enum
+enum FollowupAction {
+  homeCare('home_care'),
+  medication('medication'),
+  doctor('doctor'),
+  emergency('emergency'),
+  nothing('nothing');
+  
+  final String value;
+  const FollowupAction(this.value);
+}
+
+/// Follow-up Next Intent Enum
+enum FollowupIntent {
+  recheck('recheck'),
+  medication('medication'),
+  selfcare('selfcare'), // New: ดูคำแนะนำอื่น (self-care guidance)
+  previous('previous'),
+  nothing('nothing');
+  
+  final String value;
+  const FollowupIntent(this.value);
 }
 
 /// Follow-up Service
@@ -25,13 +50,15 @@ class FollowupService {
     String? baseUrl,
     WidgetRef? ref,
   })  : _dio = dio ?? Dio(),
-        baseUrl = baseUrl ?? ApiConfig.baseUrl,
+        baseUrl = baseUrl ?? ApiConfig.privateBaseUrl,
         _ref = ref;
   
   /// Submit a follow-up check-in
   Future<bool> submitCheckin({
     required String sessionId,
     required FollowupStatus status,
+    List<FollowupAction>? actionsTaken,
+    FollowupIntent? nextIntent,
     String? notes,
   }) async {
     try {
@@ -47,6 +74,8 @@ class FollowupService {
         data: {
           'session_id': sessionId,
           'status': status.value,
+          'actions_taken': actionsTaken?.map((a) => a.value).toList(),
+          'next_intent': nextIntent?.value,
           'notes': notes,
         },
         options: Options(headers: headers),
