@@ -11,6 +11,21 @@ export function errorHandler(err, req, res, next) {
     stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
   });
 
+  // CRITICAL: Add CORS headers to error responses
+  const origin = req.headers.origin;
+  if (origin && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+  } else if (origin && ['https://sukai-production.up.railway.app'].includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+  } else if (origin) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+  }
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
+
   // Supabase errors
   if (err.code && err.code.startsWith('PGRST')) {
     return res.status(400).json({
