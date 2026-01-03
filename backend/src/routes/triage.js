@@ -8,13 +8,28 @@ const router = express.Router();
 
 // POST /api/triage/assess
 router.post('/assess', validateTriageAssess, asyncHandler(async (req, res) => {
-  const { session_id, symptom, previous_answers } = req.body;
+  // CRITICAL: Set CORS headers explicitly
+  const origin = req.headers.origin;
+  if (origin && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+  } else if (origin) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+  }
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
+
+  const { session_id, symptom, previous_answers, language } = req.body;
+  // Get language from header or body (default to 'th')
+  const lang = req.headers['x-language'] || language || 'th';
 
   const result = await assessSymptom({
     sessionId: session_id,
     symptom,
     previousAnswers: previous_answers || {},
     userId: req.headers['x-user-id'] || null,
+    language: lang, // Pass language to backend function
   });
 
   res.json(result);
@@ -22,7 +37,21 @@ router.post('/assess', validateTriageAssess, asyncHandler(async (req, res) => {
 
 // GET /api/triage/diagnosis
 router.get('/diagnosis', asyncHandler(async (req, res) => {
-  const { session_id } = req.query;
+  // CRITICAL: Set CORS headers explicitly
+  const origin = req.headers.origin;
+  if (origin && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+  } else if (origin) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+  }
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
+
+  const { session_id, language } = req.query;
+  // Get language from header or query (default to 'th')
+  const lang = req.headers['x-language'] || language || 'th';
 
   if (!session_id) {
     return res.status(400).json({
@@ -33,6 +62,7 @@ router.get('/diagnosis', asyncHandler(async (req, res) => {
   const result = await getDiagnosis({
     sessionId: session_id,
     userId: req.headers['x-user-id'] || null,
+    language: lang, // Pass language to backend function
   });
 
   res.json(result);
@@ -41,6 +71,18 @@ router.get('/diagnosis', asyncHandler(async (req, res) => {
 // GET /api/triage/sessions
 // Get user's past triage sessions
 router.get('/sessions', asyncHandler(async (req, res) => {
+  // CRITICAL: Set CORS headers explicitly
+  const origin = req.headers.origin;
+  if (origin && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+  } else if (origin) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+  }
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
+
   const userId = req.headers['x-user-id'];
   
   if (!userId) {
