@@ -121,18 +121,8 @@ router.post('/process', asyncHandler(async (req, res) => {
  * Get current user's pending notifications (for in-app display)
  */
 router.get('/user', asyncHandler(async (req, res) => {
-  // CRITICAL: Set CORS headers explicitly
-  const origin = req.headers.origin;
-  if (origin && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Credentials', 'true');
-  } else if (origin) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Credentials', 'true');
-  }
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
-
+  // CORS headers are handled globally in server.js
+  
   const userId = req.headers['x-user-id'];
   
   if (!userId) {

@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import dotenv from 'dotenv';
 
 import triageRoutes from './routes/triage.js';
@@ -28,127 +27,60 @@ if (missingVars.length > 0) {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// CORS Configuration
-// Allow localhost for development and production domains
-const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) {
-      console.log('✅ CORS: Allowing request with no origin');
-      return callback(null, true);
-    }
-    
-    // Allow localhost with any port
-    if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
-      console.log(`✅ CORS: Allowing localhost origin: ${origin}`);
-      return callback(null, true);
-    }
-    
-    // Allow production domains
-    const allowedOrigins = [
-      'https://sukai-production.up.railway.app',
-      // Add your production web app domain here when deployed
-      // 'https://your-web-app-domain.com',
-    ];
-    
-    if (allowedOrigins.includes(origin)) {
-      console.log(`✅ CORS: Allowing production origin: ${origin}`);
-      callback(null, true);
-    } else {
-      console.warn(`⚠️  CORS: Unknown origin: ${origin} - allowing for debugging`);
-      callback(null, true); // Temporarily allow all for debugging - change to callback(new Error(...)) in production
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-cron-secret', 'X-Requested-With', 'x-user-id', 'x-language'],
-  exposedHeaders: ['Content-Length', 'Content-Type'],
-  maxAge: 86400, // 24 hours
-  preflightContinue: true, // Let our explicit OPTIONS handler handle preflight
-  optionsSuccessStatus: 200, // Some legacy browsers choke on 204
+// CORS Configuration - Global setup for all routes
+// Allow localhost (any port) and production domains
+const getAllowedOrigin = (origin) => {
+  // Allow requests with no origin (like mobile apps or curl requests)
+  if (!origin) {
+    return null; // No CORS headers needed for same-origin requests
+  }
+  
+  // Allow localhost with any port (for Flutter Web development)
+  if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
+    return origin;
+  }
+  
+  // Allow production domains
+  const allowedOrigins = [
+    'https://sukai-production.up.railway.app',
+    // Add your production web app domain here when deployed
+    // 'https://your-web-app-domain.com',
+  ];
+  
+  if (allowedOrigins.includes(origin)) {
+    return origin;
+  }
+  
+  // For debugging: allow all origins (remove in production if needed)
+  return origin;
 };
 
-// Middleware
-// CRITICAL: CORS must be applied FIRST, before any routes
-// Handle OPTIONS requests explicitly BEFORE cors middleware
-// This MUST be the first middleware to catch all OPTIONS requests
+// Global CORS middleware - handles all requests including OPTIONS preflight
 app.use((req, res, next) => {
-  // Handle OPTIONS (preflight) requests immediately
+  const origin = req.headers.origin;
+  const allowedOrigin = getAllowedOrigin(origin);
+  
+  // Handle OPTIONS (preflight) requests
   if (req.method === 'OPTIONS') {
-    const origin = req.headers.origin;
-    const requestedMethod = req.headers['access-control-request-method'];
-    const requestedHeaders = req.headers['access-control-request-headers'];
-    
-    console.log('🔍 OPTIONS preflight request:', {
-      origin,
-      path: req.path,
-      method: req.method,
-      requestedMethod,
-      requestedHeaders,
-    });
-    
-    // Allow localhost with any port
-    if (origin && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) {
-      console.log(`✅ OPTIONS: Allowing localhost origin: ${origin}`);
-      res.header('Access-Control-Allow-Origin', origin);
+    if (allowedOrigin) {
+      res.header('Access-Control-Allow-Origin', allowedOrigin);
+      res.header('Access-Control-Allow-Credentials', 'true');
       res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
       res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
-      res.header('Access-Control-Allow-Credentials', 'true');
-      res.header('Access-Control-Max-Age', '86400');
+      res.header('Access-Control-Max-Age', '86400'); // 24 hours
       return res.sendStatus(200);
     }
-    
-    // Allow production domains
-    const allowedOrigins = [
-      'https://sukai-production.up.railway.app',
-    ];
-    
-    if (origin && allowedOrigins.includes(origin)) {
-      console.log(`✅ OPTIONS: Allowing production origin: ${origin}`);
-      res.header('Access-Control-Allow-Origin', origin);
-      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
-      res.header('Access-Control-Allow-Credentials', 'true');
-      res.header('Access-Control-Max-Age', '86400');
-      return res.sendStatus(200);
-    }
-    
-    // Default: allow all origins (for debugging)
-    console.log(`✅ OPTIONS: Allowing origin (default): ${origin || '*'}`);
-    res.header('Access-Control-Allow-Origin', origin || '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Max-Age', '86400');
+    // If origin not allowed, still respond to OPTIONS (but without CORS headers)
     return res.sendStatus(200);
   }
   
-  // For non-OPTIONS requests, continue to next middleware
-  next();
-});
-
-// Apply CORS middleware to all routes
-app.use(cors(corsOptions));
-
-// Add CORS headers to all responses (including errors)
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  
-  // Set CORS headers for all responses
-  if (origin && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) {
-    res.header('Access-Control-Allow-Origin', origin);
+  // For all other requests, set CORS headers
+  if (allowedOrigin) {
+    res.header('Access-Control-Allow-Origin', allowedOrigin);
     res.header('Access-Control-Allow-Credentials', 'true');
-  } else if (origin && ['https://sukai-production.up.railway.app'].includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Credentials', 'true');
-  } else if (origin) {
-    // Allow all for debugging
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
   }
-  
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
   
   next();
 });
