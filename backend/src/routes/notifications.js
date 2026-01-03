@@ -13,7 +13,6 @@ import {
   dismissNotification,
   getUserPendingNotifications,
 } from '../services/notification_scheduler.js';
-import { processPendingNotifications } from '../jobs/notification_sender.js';
 
 const router = express.Router();
 
@@ -107,6 +106,8 @@ router.post('/process', asyncHandler(async (req, res) => {
     });
   }
   
+  // Lazy import to avoid loading issues
+  const { processPendingNotifications } = await import('../jobs/notification_sender.js');
   const result = await processPendingNotifications();
   
   res.json({
