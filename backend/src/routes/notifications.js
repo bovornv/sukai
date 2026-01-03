@@ -72,7 +72,6 @@ router.get('/pending', asyncHandler(async (req, res) => {
  * Test endpoint - returns info about pending notifications (for testing)
  */
 router.get('/process', asyncHandler(async (req, res) => {
-  const { getPendingNotifications } = await import('../services/notification_scheduler.js');
   const pending = await getPendingNotifications(10);
   
   res.json({
