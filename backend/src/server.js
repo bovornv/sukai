@@ -34,11 +34,13 @@ const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) {
+      console.log('✅ CORS: Allowing request with no origin');
       return callback(null, true);
     }
     
     // Allow localhost with any port
     if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
+      console.log(`✅ CORS: Allowing localhost origin: ${origin}`);
       return callback(null, true);
     }
     
@@ -50,9 +52,10 @@ const corsOptions = {
     ];
     
     if (allowedOrigins.includes(origin)) {
+      console.log(`✅ CORS: Allowing production origin: ${origin}`);
       callback(null, true);
     } else {
-      console.warn(`⚠️  CORS blocked origin: ${origin}`);
+      console.warn(`⚠️  CORS: Unknown origin: ${origin} - allowing for debugging`);
       callback(null, true); // Temporarily allow all for debugging - change to callback(new Error(...)) in production
     }
   },
@@ -61,47 +64,17 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization', 'x-cron-secret', 'X-Requested-With'],
   exposedHeaders: ['Content-Length', 'Content-Type'],
   maxAge: 86400, // 24 hours
+  preflightContinue: false, // Let cors handle preflight
+  optionsSuccessStatus: 200, // Some legacy browsers choke on 204
 };
 
 // Middleware
-// Handle preflight OPTIONS requests explicitly BEFORE other middleware
-app.options('*', (req, res) => {
-  const origin = req.headers.origin;
-  
-  // Allow localhost with any port
-  if (origin && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Max-Age', '86400');
-    return res.sendStatus(200);
-  }
-  
-  // Allow production domains
-  const allowedOrigins = [
-    'https://sukai-production.up.railway.app',
-  ];
-  
-  if (origin && allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Max-Age', '86400');
-    return res.sendStatus(200);
-  }
-  
-  // Default: allow (for debugging - change in production)
-  res.header('Access-Control-Allow-Origin', origin || '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Max-Age', '86400');
-  return res.sendStatus(200);
-});
-
+// CORS must be applied BEFORE routes
+// Use cors middleware which handles OPTIONS automatically
 app.use(cors(corsOptions));
+
+// Also handle OPTIONS explicitly as fallback (some browsers need this)
+app.options('*', cors(corsOptions));
 app.use(express.json());
 app.use(requestLogger);
 
