@@ -56,9 +56,17 @@ console.log('✅ Notification routes registered at /api/notifications');
 import deviceTokenRoutes from './routes/device_tokens.js';
 app.use('/api/device-tokens', deviceTokenRoutes);
 
-// Analytics routes
-import analyticsRoutes from './routes/analytics.js';
-app.use('/api/analytics', analyticsRoutes);
+// Analytics routes (optional - may not exist)
+// Load analytics routes asynchronously to avoid blocking server startup
+(async () => {
+  try {
+    const analyticsRoutes = await import('./routes/analytics.js');
+    app.use('/api/analytics', analyticsRoutes.default);
+    console.log('✅ Analytics routes registered at /api/analytics');
+  } catch (error) {
+    console.warn('⚠️  Analytics routes not available:', error.message);
+  }
+})();
 
 // Optional: Enable node-cron for in-process scheduling (development)
 // For production, use Railway Cron Jobs instead
