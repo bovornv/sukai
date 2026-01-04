@@ -614,16 +614,80 @@ export async function getDiagnosis({ sessionId, userId = null, language = 'th' }
   // CRITICAL: Ensure session exists in DB before saving diagnosis (foreign key constraint)
   try {
     // Verify session exists in DB before saving diagnosis
-    const { data: verifySession, error: verifyError } = await supabaseAdmin
+    let verifySession = null;
+    let verifyError = null;
+    
+    const { data, error } = await supabaseAdmin
       .from('triage_sessions')
       .select('id')
       .eq('session_id', sessionId)
       .single();
     
+    verifySession = data;
+    verifyError = error;
+    
+    // If session doesn't exist in DB, try to create it from cache or create minimal record
     if (verifyError || !verifySession) {
-      console.error('[SAVE-DIAGNOSIS] ❌ Session does not exist in DB:', sessionId);
-      console.error('[SAVE-DIAGNOSIS] Verify error:', verifyError);
-      throw new Error(`Session ${sessionId} does not exist in triage_sessions table. Cannot save diagnosis.`);
+      console.warn('[SAVE-DIAGNOSIS] ⚠️ Session does not exist in DB, attempting to create it...');
+      console.warn('[SAVE-DIAGNOSIS] Verify error:', verifyError);
+      
+      // Try to save from cache first
+      if (session) {
+        const finalUserId = userId && userId !== 'anonymous' ? userId : null;
+        const sessionDataToSave = {
+          session_id: sessionId,
+          user_id: finalUserId,
+          symptoms: session.symptoms || [],
+          answers: session.answers || {},
+          questions_asked: session.questionsAsked || [],
+          question_count: session.questionCount || 0,
+          triage_level: session.triageLevel || diagnosis.triage_level || 'uncertain',
+          created_at: session.createdAt ? new Date(session.createdAt).toISOString() : new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        };
+        
+        const { data: insertData, error: insertError } = await supabaseAdmin
+          .from('triage_sessions')
+          .insert(sessionDataToSave)
+          .select('id')
+          .single();
+        
+        if (insertError) {
+          console.error('[SAVE-DIAGNOSIS] ❌ Failed to create session from cache:', insertError);
+          throw new Error(`Cannot save diagnosis: Session ${sessionId} does not exist and could not be created: ${insertError.message}`);
+        }
+        
+        console.log(`[SAVE-DIAGNOSIS] ✅ Created session in DB from cache with id: ${insertData?.id}`);
+        verifySession = insertData;
+      } else {
+        // Create minimal session record if cache doesn't have it either
+        const finalUserId = userId && userId !== 'anonymous' ? userId : null;
+        const minimalSessionData = {
+          session_id: sessionId,
+          user_id: finalUserId,
+          symptoms: [],
+          answers: {},
+          questions_asked: [],
+          question_count: 0,
+          triage_level: diagnosis.triage_level || 'uncertain',
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        };
+        
+        const { data: insertData, error: insertError } = await supabaseAdmin
+          .from('triage_sessions')
+          .insert(minimalSessionData)
+          .select('id')
+          .single();
+        
+        if (insertError) {
+          console.error('[SAVE-DIAGNOSIS] ❌ Failed to create minimal session:', insertError);
+          throw new Error(`Cannot save diagnosis: Session ${sessionId} does not exist and could not be created: ${insertError.message}`);
+        }
+        
+        console.log(`[SAVE-DIAGNOSIS] ✅ Created minimal session in DB with id: ${insertData?.id}`);
+        verifySession = insertData;
+      }
     }
     
     // NOTE: diagnoses table schema includes: id, session_id, user_id, triage_level, summary, recommendations

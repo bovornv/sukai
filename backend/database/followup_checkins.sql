@@ -1,12 +1,16 @@
 -- Follow-up Check-ins Table
 -- Stores user follow-up responses for triage sessions
+-- Updated to support comprehensive follow-up data and confidence model integration
 
 CREATE TABLE IF NOT EXISTS public.followup_checkins (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   session_id TEXT NOT NULL,
   user_id UUID,
-  status TEXT NOT NULL CHECK (status IN ('better', 'same', 'worse')),
+  status TEXT NOT NULL CHECK (status IN ('better', 'same', 'worse', 'unsure')),
+  actions_taken TEXT[] DEFAULT '{}',
+  next_intent TEXT CHECK (next_intent IN ('recheck', 'medication', 'previous', 'nothing')),
   notes TEXT,
+  confidence_delta DECIMAL(5,2) DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   
   -- Foreign key to user_profiles (optional, allows anonymous check-ins)
@@ -44,4 +48,3 @@ CREATE POLICY "Users can update their own check-ins"
 CREATE POLICY "Users can delete their own check-ins"
   ON followup_checkins FOR DELETE
   USING (auth.uid() = user_id);
-

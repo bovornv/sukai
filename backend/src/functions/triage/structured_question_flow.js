@@ -25,6 +25,10 @@ import {
 } from './question_variation_engine.js';
 import { getRedFlagQuestionForSymptom } from './intent_loader.js';
 import { getSymptomSpecificQuestion } from './symptom_question_map.js';
+import {
+  selectQuestionVariant,
+  QUESTION_INTENTS,
+} from './question_variation_system.js';
 
 /**
  * STEP 2: Red-Flag Screening Questions
@@ -68,68 +72,87 @@ export async function generateRedFlagQuestion(symptom, intent, language = 'th') 
  * Goal: Refine severity_level (mild / moderate / severe)
  * Rules: Prefer functional impact over numeric pain scores
  */
-export function generateSeverityQuestion(symptom, questionsAsked = [], language = 'th', sessionSeed = null) {
-  // EXPANDED: More question variations for better user experience
+export function generateSeverityQuestion(symptom, questionsAsked = [], language = 'th', sessionSeed = null, questionCount = 0, symptomGroup = null) {
+  // Use question variation system for natural variation
+  // Try different severity intents in order of priority
+  const severityIntents = [
+    QUESTION_INTENTS.SEVERITY_IMPACT,
+    QUESTION_INTENTS.SEVERITY_COMPARISON,
+    QUESTION_INTENTS.SEVERITY_FUNCTIONAL,
+  ];
+  
+  // Check which severity intents have been asked (by checking if any variant was asked)
+  const wasAskedIntent = (intentId) => {
+    // Try to get a variant to check its wording
+    const testVariant = selectQuestionVariant(intentId, language, 0, 0, []);
+    if (!testVariant) return false;
+    
+    // Check if any question with similar key phrases was asked
+    const keyPhrases = language === 'th' 
+      ? ['รบกวน', 'รุนแรง', 'เทียบ', 'ประเมิน', 'ไม่สบาย']
+      : ['interfere', 'severe', 'compare', 'rate', 'uncomfortable'];
+    
+    return questionsAsked.some(q => {
+      if (typeof q !== 'string') return false;
+      const normalizedQ = normalizeThaiText(q.toLowerCase().trim());
+      return keyPhrases.some(phrase => normalizedQ.includes(phrase));
+    });
+  };
+  
+  // Find unasked intent
+  let selectedIntent = null;
+  for (const intentId of severityIntents) {
+    if (!wasAskedIntent(intentId)) {
+      selectedIntent = intentId;
+      break;
+    }
+  }
+  
+  // If all intents asked, use first one (will reuse wording but that's okay)
+  if (!selectedIntent) {
+    selectedIntent = severityIntents[0];
+  }
+  
+  // Select variant using variation system (with symptom group for customization)
+  const variant = selectQuestionVariant(selectedIntent, language, sessionSeed, questionCount, questionsAsked, symptomGroup);
+  
+  if (variant && variant.question) {
+    console.log(`[SEVERITY-Q] Using variation system - Intent: ${selectedIntent}, Question: "${variant.question.substring(0, 50)}..."`);
+    return {
+      question: variant.question,
+      choices: variant.choices,
+      step: 3,
+      stepName: 'severity_calibration',
+      intent_id: variant.intent_id, // Store intent_id for tracking
+    };
+  }
+  
+  // Fallback to legacy system if variation system fails (should not happen)
+  console.warn(`[SEVERITY-Q] Variation system returned null, using fallback. Intent: ${selectedIntent}, sessionSeed: ${sessionSeed}`);
   const questions = language === 'th' 
     ? [
         'อาการนี้รบกวนชีวิตประจำวันแค่ไหน?',
         'อาการนี้ทำให้คุณทำกิจกรรมปกติได้ยากแค่ไหน?',
         'อาการนี้รุนแรงแค่ไหนเมื่อเทียบกับปกติ?',
-        'คุณรู้สึกว่าอาการนี้รบกวนมากแค่ไหน?',
-        'อาการนี้ส่งผลต่อการทำกิจกรรมประจำวันของคุณอย่างไร?',
-        'เมื่อเทียบกับปกติ อาการนี้เป็นอย่างไร?',
-        'อาการนี้ทำให้คุณรู้สึกไม่สบายมากแค่ไหน?',
-        'คุณประเมินความรุนแรงของอาการนี้อย่างไร?',
       ]
     : [
         'How much does this symptom interfere with your daily life?',
         'How difficult is it to do normal activities because of this symptom?',
         'How severe is this symptom compared to normal?',
-        'How much does this symptom bother you?',
-        'How does this symptom affect your daily activities?',
-        'Compared to normal, how is this symptom?',
-        'How uncomfortable does this symptom make you feel?',
-        'How would you rate the severity of this symptom?',
       ];
   
   const choices = language === 'th'
     ? ['แทบไม่รบกวน', 'รบกวนบ้าง', 'รบกวนมาก', 'รุนแรงผิดปกติ', 'ไม่แน่ใจ']
     : ['Hardly interferes', 'Somewhat interferes', 'Interferes a lot', 'Abnormally severe', 'Not sure'];
   
-  // Check which questions have been asked
-  const wasAsked = (text) => {
-    return questionsAsked.some(q => {
-      if (typeof q !== 'string') return false;
-      const normalizedQ = normalizeThaiText(q.toLowerCase().trim());
-      const normalizedText = normalizeThaiText(text.toLowerCase().trim());
-      return normalizedQ.includes(normalizedText) || normalizedText.includes(normalizedQ);
-    });
-  };
+  // Use sessionSeed with strong variation for fallback too
+  const seed = sessionSeed || Math.floor(Math.random() * 1000000);
+  const selectedIndex = Math.floor(seed % questions.length);
   
-  // Find unasked questions
-  const unaskedQuestions = questions.filter((q, index) => {
-    const keyPhrases = ['รบกวน', 'รุนแรง', 'interfere', 'severe'];
-    return !keyPhrases.some(phrase => wasAsked(phrase));
-  });
-  
-  // IMPROVED: Use stronger variation seed (sessionSeed + symptom hash + time)
-  let selectedQuestion = questions[0]; // Default
-  if (unaskedQuestions.length > 0) {
-    // Use sessionSeed if provided (for consistent variation per session)
-    const seed = sessionSeed || Math.random() * 10000;
-    const symptomHash = symptom.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const timeComponent = Date.now() % 10000; // Increased range
-    const variationIndex = Math.floor((seed + symptomHash + timeComponent) % unaskedQuestions.length);
-    selectedQuestion = unaskedQuestions[variationIndex];
-  } else {
-    // All similar questions asked - use variation to select different phrasing
-    const seed = sessionSeed || Math.random() * 10000;
-    const variationIndex = Math.floor((seed + Date.now()) % questions.length);
-    selectedQuestion = questions[variationIndex];
-  }
+  console.log(`[SEVERITY-Q] Fallback selected index: ${selectedIndex}/${questions.length}, question: "${questions[selectedIndex]}"`);
   
   return {
-    question: selectedQuestion,
+    question: questions[selectedIndex],
     choices,
     step: 3,
     stepName: 'severity_calibration',
@@ -141,113 +164,80 @@ export function generateSeverityQuestion(symptom, questionsAsked = [], language 
  * Goal: Lock trajectory (onset timing + symptom trend)
  * Rules: Ask BOTH onset timing AND symptom trend
  */
-export function generateTimeCourseQuestion(symptom, questionsAsked = [], language = 'th', sessionSeed = null) {
-  // Enhanced duplicate detection - check semantic similarity
-  const wasAsked = (text) => {
+export function generateTimeCourseQuestion(symptom, questionsAsked = [], language = 'th', sessionSeed = null, questionCount = 0, symptomGroup = null) {
+  // Use question variation system for natural variation
+  // Check if duration/onset questions were asked
+  const wasAskedDuration = () => {
     if (!Array.isArray(questionsAsked) || questionsAsked.length === 0) return false;
+    const keyPhrases = language === 'th' 
+      ? ['เมื่อไหร่', 'เริ่ม', 'นานเท่าไหร่', 'นานแค่ไหน', 'เป็นมานาน']
+      : ['when', 'start', 'how long', 'onset', 'began'];
     return questionsAsked.some(q => {
       if (typeof q !== 'string') return false;
       const normalizedQ = normalizeThaiText(q.toLowerCase().trim());
-      const normalizedText = normalizeThaiText(text.toLowerCase().trim());
-      
-      // Exact match
-      if (normalizedQ === normalizedText) return true;
-      
-      // Substring match (one contains the other)
-      if (normalizedQ.includes(normalizedText) || normalizedText.includes(normalizedQ)) {
-        // Only consider similar if both are substantial (> 10 chars)
-        if (normalizedQ.length > 10 && normalizedText.length > 10) return true;
-      }
-      
-      return false;
+      return keyPhrases.some(phrase => normalizedQ.includes(phrase));
     });
   };
   
-  // Check if onset question was asked (check for key phrases)
-  const onsetAsked = wasAsked('เมื่อไหร่') || wasAsked('เริ่ม') || wasAsked('onset') || 
-                     wasAsked('อาการนี้เริ่มเมื่อไหร่') || wasAsked('When did this symptom start') ||
-                     wasAsked('นานเท่าไหร่') || wasAsked('นานแค่ไหน');
+  // Check if trend questions were asked
+  const wasAskedTrend = () => {
+    if (!Array.isArray(questionsAsked) || questionsAsked.length === 0) return false;
+    const keyPhrases = language === 'th' 
+      ? ['ดีขึ้น', 'แย่ลง', 'เปลี่ยนแปลง', 'เป็นอย่างไร', 'แนวโน้ม']
+      : ['better', 'worse', 'change', 'progress', 'trend'];
+    return questionsAsked.some(q => {
+      if (typeof q !== 'string') return false;
+      const normalizedQ = normalizeThaiText(q.toLowerCase().trim());
+      return keyPhrases.some(phrase => normalizedQ.includes(phrase));
+    });
+  };
   
-  // Check if trend question was asked (check for key phrases)
-  const trendAsked = wasAsked('ดีขึ้น') || wasAsked('แย่ลง') || wasAsked('trend') || 
-                     wasAsked('เปลี่ยนแปลง') || wasAsked('How has this symptom changed') ||
-                     wasAsked('อาการเป็นอย่างไร');
-  
-  // EXPANDED: Multiple onset timing question variations
-  const onsetQuestions = language === 'th'
-    ? [
-        'อาการนี้เริ่มเมื่อไหร่?',
-        'อาการนี้เป็นมานานเท่าไหร่แล้ว?',
-        'คุณสังเกตเห็นอาการนี้เมื่อไหร่?',
-        'อาการนี้เกิดขึ้นเมื่อไหร่?',
-        'อาการนี้เริ่มเป็นเมื่อไหร่?',
-      ]
-    : [
-        'When did this symptom start?',
-        'How long have you had this symptom?',
-        'When did you first notice this symptom?',
-        'When did this symptom begin?',
-        'When did this symptom first appear?',
-      ];
-  
-  // EXPANDED: Multiple trend question variations
-  const trendQuestions = language === 'th'
-    ? [
-        'อาการนี้เปลี่ยนแปลงอย่างไร?',
-        'อาการนี้เป็นอย่างไร?',
-        'อาการนี้ดีขึ้นหรือแย่ลง?',
-        'อาการนี้มีแนวโน้มเป็นอย่างไร?',
-        'อาการนี้เปลี่ยนแปลงไปอย่างไรบ้าง?',
-      ]
-    : [
-        'How has this symptom changed?',
-        'How is this symptom progressing?',
-        'Is this symptom getting better or worse?',
-        'What is the trend of this symptom?',
-        'How has this symptom been changing?',
-      ];
-  
-  const choices = language === 'th'
-    ? ['วันนี้', 'เมื่อวาน', '2-3 วัน', '1 สัปดาห์', 'เป็นๆ หายๆ', 'ไม่แน่ใจ']
-    : ['Today', 'Yesterday', '2-3 days', '1 week', 'Comes and goes', 'Not sure'];
-  
-  const trendChoices = language === 'th'
-    ? ['ดีขึ้น', 'เท่าเดิม', 'แย่ลง', 'ขึ้นๆ ลงๆ', 'ไม่แน่ใจ']
-    : ['Getting better', 'Same', 'Getting worse', 'Up and down', 'Not sure'];
-  
-  // Onset timing question
-  if (!onsetAsked) {
-    // IMPROVED: Use sessionSeed for variation
-    const seed = sessionSeed || Math.random() * 10000;
-    const symptomHash = symptom.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const variationIndex = Math.floor((seed + symptomHash + Date.now()) % onsetQuestions.length);
-    const question = onsetQuestions[variationIndex];
+  // Onset timing question (priority: DURATION_ONSET, then DURATION_LENGTH)
+  if (!wasAskedDuration()) {
+    const durationIntents = [
+      QUESTION_INTENTS.DURATION_ONSET,
+      QUESTION_INTENTS.DURATION_LENGTH,
+    ];
     
-    return {
-      question,
-      choices,
-      step: 4,
-      stepName: 'time_course_onset',
-    };
+    // Try each intent until we find one that hasn't been asked
+    for (const intentId of durationIntents) {
+      const variant = selectQuestionVariant(intentId, language, sessionSeed, questionCount, questionsAsked, symptomGroup);
+      if (variant) {
+        return {
+          question: variant.question,
+          choices: variant.choices,
+          step: 4,
+          stepName: 'time_course_onset',
+          intent_id: variant.intent_id,
+        };
+      }
+    }
   }
   
-  // Symptom trend question
-  if (!trendAsked) {
-    // IMPROVED: Use sessionSeed for variation
-    const seed = sessionSeed || Math.random() * 10000;
-    const symptomHash = symptom.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const variationIndex = Math.floor((seed + symptomHash + Date.now()) % trendQuestions.length);
-    const question = trendQuestions[variationIndex];
+  // Trend question (priority: TREND_CHANGE, then TREND_PROGRESSION)
+  if (!wasAskedTrend()) {
+    const trendIntents = [
+      QUESTION_INTENTS.TREND_CHANGE,
+      QUESTION_INTENTS.TREND_PROGRESSION,
+    ];
     
-    return {
-      question,
-      choices: trendChoices,
-      step: 4,
-      stepName: 'time_course_trend',
-    };
+    // Try each intent until we find one that hasn't been asked
+    for (const intentId of trendIntents) {
+      const variant = selectQuestionVariant(intentId, language, sessionSeed, questionCount + 1, questionsAsked, symptomGroup);
+      if (variant) {
+        return {
+          question: variant.question,
+          choices: variant.choices,
+          step: 4,
+          stepName: 'time_course_trend',
+          intent_id: variant.intent_id,
+        };
+      }
+    }
   }
   
-  return null; // Both questions already asked
+  // Both questions asked
+  return null;
 }
 
 /**
@@ -255,73 +245,92 @@ export function generateTimeCourseQuestion(symptom, questionsAsked = [], languag
  * Goal: Increase confidence efficiently
  * Rules: Pull questions dynamically from intent hypothesis set
  */
-export function generateHypothesisQuestion(symptom, intent, hypotheses = [], questionsAsked = [], language = 'th', sessionSeed = null) {
-  // Enhanced duplicate detection - check semantic similarity
-  const wasAsked = (text) => {
+export function generateHypothesisQuestion(symptom, intent, hypotheses = [], questionsAsked = [], language = 'th', sessionSeed = null, questionCount = 0, symptomGroup = null) {
+  // Use question variation system for natural variation
+  // Check if associated symptoms questions were asked
+  const wasAskedAssociated = () => {
     if (!Array.isArray(questionsAsked) || questionsAsked.length === 0) return false;
+    const keyPhrases = language === 'th' 
+      ? ['อาการอื่น', 'ร่วมด้วย', 'อื่นๆ', 'มีอาการเหล่านี้']
+      : ['other symptoms', 'associated', 'along with', 'any of these'];
     return questionsAsked.some(q => {
       if (typeof q !== 'string') return false;
       const normalizedQ = normalizeThaiText(q.toLowerCase().trim());
-      const normalizedText = normalizeThaiText(text.toLowerCase().trim());
-      
-      // Exact match
-      if (normalizedQ === normalizedText) return true;
-      
-      // Substring match (one contains the other)
-      if (normalizedQ.includes(normalizedText) || normalizedText.includes(normalizedQ)) {
-        // Only consider similar if both are substantial (> 10 chars)
-        if (normalizedQ.length > 10 && normalizedText.length > 10) return true;
-      }
-      
-      return false;
+      return keyPhrases.some(phrase => normalizedQ.includes(phrase));
     });
   };
   
-  // EXPANDED: Multiple question variations for associated symptoms
+  if (wasAskedAssociated()) {
+    return null; // Already asked
+  }
+  
+  // Use variation system for associated symptoms
+  const associatedIntents = [
+    QUESTION_INTENTS.ASSOCIATED_SYMPTOMS,
+    QUESTION_INTENTS.ASSOCIATED_CONTEXT,
+  ];
+  
+  // Try each intent
+  for (const intentId of associatedIntents) {
+    const variant = selectQuestionVariant(intentId, language, sessionSeed, questionCount, questionsAsked, symptomGroup);
+    if (variant) {
+      // Get associated symptoms from intent if available
+      let associatedSymptoms = [];
+      if (intent && intent.associated_symptoms) {
+        const symptoms = typeof intent.associated_symptoms === 'string' 
+          ? intent.associated_symptoms.split(',').map(s => s.trim())
+          : intent.associated_symptoms;
+        associatedSymptoms = symptoms.slice(0, 3); // Max 3 options
+      }
+      
+      // Fallback to symptom-specific associated symptoms
+      if (associatedSymptoms.length === 0) {
+        // TODO: Map symptom to common associated symptoms
+        associatedSymptoms = ['ไข้', 'คลื่นไส้', 'อ่อนเพลีย']; // Placeholder
+      }
+      
+      const choices = language === 'th'
+        ? [...associatedSymptoms, 'ไม่มีอาการอื่น', 'ไม่แน่ใจ']
+        : [...associatedSymptoms, 'No other symptoms', 'Not sure'];
+      
+      return {
+        question: variant.question,
+        choices,
+        step: 5,
+        stepName: 'hypothesis_targeted',
+        intent_id: variant.intent_id,
+        allowMultiSelect: true, // Allow multi-select for associated symptoms
+      };
+    }
+  }
+  
+  // Fallback to legacy system if variation system fails
   const associatedQuestions = language === 'th'
     ? [
         'มีอาการเหล่านี้ร่วมด้วยไหม?',
         'คุณมีอาการอื่นๆ ร่วมด้วยหรือไม่?',
         'นอกจากนี้แล้ว มีอาการอื่นๆ อีกไหม?',
-        'มีอาการอื่นๆ ที่เกิดขึ้นพร้อมกันไหม?',
-        'คุณสังเกตเห็นอาการอื่นๆ ร่วมด้วยไหม?',
       ]
     : [
         'Do you have any of these associated symptoms?',
         'Are there any other symptoms you\'re experiencing?',
         'Besides this, do you have any other symptoms?',
-        'Are there any other symptoms occurring at the same time?',
-        'Have you noticed any other symptoms along with this?',
       ];
   
-  // Check if associated symptoms question was asked (check for key phrases)
-  const associatedAsked = wasAsked('อาการอื่น') || wasAsked('associated') || 
-                          wasAsked('มีอาการเหล่านี้') || wasAsked('Do you have any of these') ||
-                          wasAsked('ร่วมด้วย') || wasAsked('อื่นๆ');
-  
-  if (associatedAsked) {
-    return null; // Already asked
-  }
-  
-  // IMPROVED: Use sessionSeed for variation
   const seed = sessionSeed || Math.random() * 10000;
-  const symptomHash = symptom.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const variationIndex = Math.floor((seed + symptomHash + Date.now()) % associatedQuestions.length);
-  const question = associatedQuestions[variationIndex];
+  const selectedIndex = Math.floor(seed % associatedQuestions.length);
+  const question = associatedQuestions[selectedIndex];
   
-  // Get associated symptoms from intent if available
   let associatedSymptoms = [];
   if (intent && intent.associated_symptoms) {
     const symptoms = typeof intent.associated_symptoms === 'string' 
       ? intent.associated_symptoms.split(',').map(s => s.trim())
       : intent.associated_symptoms;
-    associatedSymptoms = symptoms.slice(0, 3); // Max 3 options
+    associatedSymptoms = symptoms.slice(0, 3);
   }
   
-  // Fallback to symptom-specific associated symptoms
   if (associatedSymptoms.length === 0) {
-    // TODO: Map symptom to common associated symptoms
-    associatedSymptoms = ['ไข้', 'คลื่นไส้', 'อ่อนเพลีย']; // Placeholder
+    associatedSymptoms = ['ไข้', 'คลื่นไส้', 'อ่อนเพลีย'];
   }
   
   const choices = language === 'th'
@@ -333,7 +342,7 @@ export function generateHypothesisQuestion(symptom, intent, hypotheses = [], que
     choices,
     step: 5,
     stepName: 'hypothesis_targeted',
-    allowMultiSelect: true, // Allow multi-select for associated symptoms
+    allowMultiSelect: true,
   };
 }
 
@@ -389,6 +398,7 @@ export async function generateNextStructuredQuestion({
   hypotheses = [],
   language = 'th',
   sessionSeed = null, // Session seed for variation
+  symptomGroup = null, // Symptom group for group-specific variations
 }) {
   const redFlagScreeningPassed = answers.redFlagScreeningPassed === true;
   const currentStep = getCurrentStep(questionCount, answers, redFlagScreeningPassed);
@@ -400,25 +410,162 @@ export async function generateNextStructuredQuestion({
   
   // STEP 3: Severity Calibration
   if (currentStep === 3) {
-    return generateSeverityQuestion(symptom, questionsAsked, language, sessionSeed);
+    return generateSeverityQuestion(symptom, questionsAsked, language, sessionSeed, questionCount, symptomGroup);
   }
   
   // STEP 4: Time-Course Disambiguation
   if (currentStep === 4) {
-    const timeCourseQ = generateTimeCourseQuestion(symptom, questionsAsked, language, sessionSeed);
+    const timeCourseQ = generateTimeCourseQuestion(symptom, questionsAsked, language, sessionSeed, questionCount, symptomGroup);
     if (timeCourseQ) return timeCourseQ;
     // If both time-course questions asked, move to next step
   }
   
   // STEP 5: Hypothesis-Targeted
   if (currentStep === 5) {
-    const hypothesisQ = generateHypothesisQuestion(symptom, intent, hypotheses, questionsAsked, language, sessionSeed);
+    const hypothesisQ = generateHypothesisQuestion(symptom, intent, hypotheses, questionsAsked, language, sessionSeed, questionCount, symptomGroup);
     if (hypothesisQ) return hypothesisQ;
+    
+    // If no hypothesis question, try other question types (frequency, triggers, impact)
+    // These are asked when confidence is still low
+    const frequencyQ = generateFrequencyQuestion(symptom, questionsAsked, language, sessionSeed, questionCount, symptomGroup);
+    if (frequencyQ) return frequencyQ;
+    
+    const triggerQ = generateTriggerQuestion(symptom, questionsAsked, language, sessionSeed, questionCount, symptomGroup);
+    if (triggerQ) return triggerQ;
+    
+    const impactQ = generateImpactQuestion(symptom, questionsAsked, language, sessionSeed, questionCount, symptomGroup);
+    if (impactQ) return impactQ;
   }
   
   // STEP 6: Health Context - REMOVED per user request
   
   // STEP 7: Confidence check - no more questions needed
+  return null;
+}
+
+/**
+ * Generate frequency question using variation system
+ */
+export function generateFrequencyQuestion(symptom, questionsAsked = [], language = 'th', sessionSeed = null, questionCount = 0, symptomGroup = null) {
+  const wasAskedFrequency = () => {
+    if (!Array.isArray(questionsAsked) || questionsAsked.length === 0) return false;
+    const keyPhrases = language === 'th' 
+      ? ['บ่อย', 'ถี่', 'กี่ครั้ง', 'เป็นบ่อย', 'เกิดขึ้น']
+      : ['often', 'frequent', 'how many', 'occur', 'happens'];
+    return questionsAsked.some(q => {
+      if (typeof q !== 'string') return false;
+      const normalizedQ = normalizeThaiText(q.toLowerCase().trim());
+      return keyPhrases.some(phrase => normalizedQ.includes(phrase));
+    });
+  };
+  
+  if (wasAskedFrequency()) {
+    return null;
+  }
+  
+  const frequencyIntents = [
+    QUESTION_INTENTS.FREQUENCY_OCCURRENCE,
+    QUESTION_INTENTS.FREQUENCY_PATTERN,
+  ];
+  
+  for (const intentId of frequencyIntents) {
+    const variant = selectQuestionVariant(intentId, language, sessionSeed, questionCount, questionsAsked, symptomGroup);
+    if (variant) {
+      return {
+        question: variant.question,
+        choices: variant.choices,
+        step: 5,
+        stepName: 'frequency',
+        intent_id: variant.intent_id,
+      };
+    }
+  }
+  
+  return null;
+}
+
+/**
+ * Generate trigger/relieving factor question using variation system
+ */
+export function generateTriggerQuestion(symptom, questionsAsked = [], language = 'th', sessionSeed = null, questionCount = 0, symptomGroup = null) {
+  const wasAskedTrigger = () => {
+    if (!Array.isArray(questionsAsked) || questionsAsked.length === 0) return false;
+    const keyPhrases = language === 'th' 
+      ? ['ทำให้', 'แย่ลง', 'ดีขึ้น', 'บรรเทา', 'ปัจจัย']
+      : ['makes', 'worse', 'better', 'relieve', 'trigger'];
+    return questionsAsked.some(q => {
+      if (typeof q !== 'string') return false;
+      const normalizedQ = normalizeThaiText(q.toLowerCase().trim());
+      return keyPhrases.some(phrase => normalizedQ.includes(phrase));
+    });
+  };
+  
+  if (wasAskedTrigger()) {
+    return null;
+  }
+  
+  // Try aggravating first, then relieving
+  const triggerIntents = [
+    QUESTION_INTENTS.TRIGGER_AGGRAVATING,
+    QUESTION_INTENTS.TRIGGER_RELIEVING,
+    QUESTION_INTENTS.TRIGGER_CONTEXT,
+  ];
+  
+  for (const intentId of triggerIntents) {
+    const variant = selectQuestionVariant(intentId, language, sessionSeed, questionCount, questionsAsked, symptomGroup);
+    if (variant) {
+      return {
+        question: variant.question,
+        choices: variant.choices,
+        step: 5,
+        stepName: 'triggers',
+        intent_id: variant.intent_id,
+      };
+    }
+  }
+  
+  return null;
+}
+
+/**
+ * Generate impact question using variation system
+ */
+export function generateImpactQuestion(symptom, questionsAsked = [], language = 'th', sessionSeed = null, questionCount = 0, symptomGroup = null) {
+  const wasAskedImpact = () => {
+    if (!Array.isArray(questionsAsked) || questionsAsked.length === 0) return false;
+    const keyPhrases = language === 'th' 
+      ? ['รบกวน', 'ส่งผล', 'ทำอะไร', 'นอน', 'ทำงาน', 'ใช้ชีวิต']
+      : ['interfere', 'affect', 'activities', 'sleep', 'work', 'daily'];
+    return questionsAsked.some(q => {
+      if (typeof q !== 'string') return false;
+      const normalizedQ = normalizeThaiText(q.toLowerCase().trim());
+      return keyPhrases.some(phrase => normalizedQ.includes(phrase));
+    });
+  };
+  
+  if (wasAskedImpact()) {
+    return null;
+  }
+  
+  const impactIntents = [
+    QUESTION_INTENTS.IMPACT_DAILY_LIFE,
+    QUESTION_INTENTS.IMPACT_SLEEP,
+    QUESTION_INTENTS.IMPACT_WORK,
+  ];
+  
+  for (const intentId of impactIntents) {
+    const variant = selectQuestionVariant(intentId, language, sessionSeed, questionCount, questionsAsked, symptomGroup);
+    if (variant) {
+      return {
+        question: variant.question,
+        choices: variant.choices,
+        step: 5,
+        stepName: 'impact',
+        intent_id: variant.intent_id,
+      };
+    }
+  }
+  
   return null;
 }
 

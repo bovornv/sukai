@@ -1841,14 +1841,59 @@ export async function assessSymptomLogic({
   if (!canonicalQuestion && !shouldSkipStructuredFlowForBodyPart) {
     try {
       // Get session seed for variation (ensures different questions each session)
+      // CRITICAL: Each NEW assessment must get a DIFFERENT seed, even with same sessionId
+      // Use symptom + timestamp + strong random component + questionCount to ensure variation
       let sessionSeed = null;
+      
+      // CRITICAL: For NEW assessments (questionCount === 0), generate a completely fresh seed
+      // This ensures that even the same symptom gets different questions each time
+      const isNewAssessment = questionCount === 0;
+      
       if (sessionId) {
-        const variationEngine = getSessionVariationEngine(sessionId);
-        sessionSeed = variationEngine.getSessionSeed();
-      } else {
-        // Fallback: generate seed from symptom + time
+        // Generate seed that varies per assessment (not just per sessionId)
+        // For new assessments, use STRONG randomness to ensure variation
+        const sessionIdHash = sessionId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
         const symptomHash = normalizedSymptom.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-        sessionSeed = Math.floor(symptomHash + Date.now() % 10000);
+        const timeComponent = Date.now(); // Use full timestamp (not modulo)
+        const randomComponent = Math.floor(Math.random() * 1000000); // Strong randomness (0-999999)
+        
+        if (isNewAssessment) {
+          // NEW assessment: Use strong randomness to ensure different questions
+          // Combine: sessionId hash + symptom hash + full timestamp + strong random
+          sessionSeed = Math.floor((sessionIdHash * 7 + symptomHash * 11 + timeComponent * 13 + randomComponent * 17) % 1000000);
+          console.log(`[VARIATION] NEW assessment - Generated sessionSeed: ${sessionSeed} (sessionId: ${sessionId?.substring(0, 8)}..., symptom: ${normalizedSymptom.substring(0, 20)}..., random: ${randomComponent})`);
+        } else {
+          // CONTINUING assessment: Use deterministic seed based on sessionId + questionCount
+          // This ensures same session gets same questions when going back
+          sessionSeed = Math.floor((sessionIdHash * 7 + symptomHash * 11 + questionCount * 1000) % 1000000);
+          console.log(`[VARIATION] CONTINUING assessment - Using deterministic sessionSeed: ${sessionSeed} (questionCount: ${questionCount})`);
+        }
+      } else {
+        // Fallback: generate seed from symptom + time + strong random
+        const symptomHash = normalizedSymptom.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        const timeComponent = Date.now();
+        const randomComponent = Math.floor(Math.random() * 1000000); // Strong randomness
+        sessionSeed = Math.floor((symptomHash * 7 + timeComponent * 11 + randomComponent * 13) % 1000000);
+        console.log(`[VARIATION] Generated sessionSeed (no sessionId): ${sessionSeed} (random: ${randomComponent})`);
+      }
+      
+      // Determine symptom group for group-specific question variations
+      let symptomGroupForVariation = 'general_symptoms'; // Default
+      if (intent && intent.symptom_group) {
+        symptomGroupForVariation = intent.symptom_group;
+      } else {
+        // Fallback: try to determine from symptom text
+        const symptomGroupMap = {
+          'ปวดหัว': 'headache_neuro', 'ปวดศีรษะ': 'headache_neuro', 'เวียนหัว': 'headache_neuro',
+          'ไอ': 'respiratory', 'น้ำมูก': 'respiratory', 'เจ็บคอ': 'respiratory',
+          'ปวดท้อง': 'gi', 'ท้องเสีย': 'gi', 'คลื่นไส้': 'gi',
+        };
+        for (const [keyword, group] of Object.entries(symptomGroupMap)) {
+          if (normalizedSymptom.includes(keyword)) {
+            symptomGroupForVariation = group;
+            break;
+          }
+        }
       }
       
       const structuredQuestion = await generateNextStructuredQuestion({
@@ -1860,6 +1905,7 @@ export async function assessSymptomLogic({
         hypotheses: hypotheses,
         language: language,
         sessionSeed: sessionSeed, // Pass session seed for variation
+        symptomGroup: symptomGroupForVariation, // Pass symptom group for group-specific variations
       });
       
       if (structuredQuestion && structuredQuestion.question) {
