@@ -74,8 +74,9 @@ const corsMiddleware = (isPublic = false) => {
     const origin = req.headers.origin;
     const allowedOrigin = getAllowedOrigin(origin, isPublic);
     
-    // Handle OPTIONS (preflight) requests
+    // Handle OPTIONS (preflight) requests FIRST - CRITICAL for CORS
     if (req.method === 'OPTIONS') {
+      // Always respond to OPTIONS with CORS headers if origin is allowed
       if (allowedOrigin) {
         res.header('Access-Control-Allow-Origin', allowedOrigin);
         res.header('Access-Control-Allow-Credentials', isPublic ? 'false' : 'true');
@@ -84,10 +85,11 @@ const corsMiddleware = (isPublic = false) => {
         res.header('Access-Control-Max-Age', '86400'); // 24 hours
         return res.sendStatus(200);
       }
+      // If origin not allowed, still respond (browser will block the actual request)
       return res.sendStatus(200);
     }
     
-    // For all other requests, set CORS headers
+    // For all other requests, set CORS headers if origin is allowed
     if (allowedOrigin) {
       res.header('Access-Control-Allow-Origin', allowedOrigin);
       res.header('Access-Control-Allow-Credentials', isPublic ? 'false' : 'true');
