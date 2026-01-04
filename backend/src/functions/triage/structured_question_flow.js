@@ -31,7 +31,7 @@ import { getSymptomSpecificQuestion } from './symptom_question_map.js';
  * Goal: Emergency detection ≤3 total questions
  * Rules: Binary or near-binary, high-risk focused
  */
-export function generateRedFlagQuestion(symptom, intent, language = 'th') {
+export async function generateRedFlagQuestion(symptom, intent, language = 'th') {
   // Try to get red-flag question from intent first
   let question = null;
   if (intent) {
@@ -395,7 +395,7 @@ export async function generateNextStructuredQuestion({
   
   // STEP 2: Red-Flag Screening
   if (currentStep === 2) {
-    return generateRedFlagQuestion(symptom, intent, language);
+    return await generateRedFlagQuestion(symptom, intent, language);
   }
   
   // STEP 3: Severity Calibration
