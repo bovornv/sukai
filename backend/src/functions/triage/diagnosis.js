@@ -174,7 +174,34 @@ function getSafeDefaultMedications(healthProfile, age, weightKg) {
       alternative: '🌿 หรือดูแลตัวเองด้วยการพักผ่อนและดื่มน้ำ\n   • วิธีใช้: พักผ่อนให้เพียงพอ ดื่มน้ำอุ่นบ่อยๆ\n   • ระวัง: หากอาการไม่ดีขึ้นควรพบแพทย์',
     };
   } else {
-    // CRITICAL SAFETY FIX: Check allergies before recommending paracetamol in fallback
+    // CRITICAL SAFETY FIX: Try to find alternative safe medications
+    // If paracetamol/ibuprofen are not safe, search for other medications from the catalog
+    console.log('[SAFE-DEFAULTS] Paracetamol/Ibuprofen not safe, searching for alternatives...');
+    
+    // Try to find alternative medications from fever_pain category
+    const alternativeMeds = feverPainMeds.filter(med => {
+      // Skip paracetamol and ibuprofen (already checked)
+      if (med.generic === 'พาราเซตามอล' || med.generic === 'ไอบูโพรเฟน') {
+        return false;
+      }
+      // Check if medication is safe
+      const safetyCheck = isMedicationSafe(med, healthProfile, {});
+      return safetyCheck.safe;
+    });
+    
+    if (alternativeMeds.length > 0) {
+      // Found alternative safe medications
+      console.log(`[SAFE-DEFAULTS] Found ${alternativeMeds.length} alternative safe medications`);
+      const med1 = alternativeMeds[0];
+      const med2 = alternativeMeds.length > 1 ? alternativeMeds[1] : null;
+      
+      return {
+        main: formatMed(med1, '💊'),
+        alternative: med2 ? formatMed(med2, '🌿') : '🌿 หรือดูแลตัวเองด้วยการพักผ่อนและดื่มน้ำ\n   • วิธีใช้: พักผ่อนให้เพียงพอ ดื่มน้ำอุ่นบ่อยๆ\n   • ระวัง: หากอาการไม่ดีขึ้นควรพบแพทย์',
+      };
+    }
+    
+    // CRITICAL SAFETY FIX: Check allergies before recommending paracetamol in ultimate fallback
     // If user is allergic to paracetamol, don't recommend it even in fallback
     const hasParacetamolAllergy = healthProfile?.drugAllergies?.some(allergy => {
       const allergyLower = allergy.toLowerCase().trim();
@@ -183,9 +210,10 @@ function getSafeDefaultMedications(healthProfile, age, weightKg) {
     });
     
     if (hasParacetamolAllergy) {
-      // User is allergic to paracetamol - only recommend self-care
+      // User is allergic to paracetamol and no alternatives found - recommend self-care with clear explanation
+      console.log('[SAFE-DEFAULTS] No safe medications found due to allergies, recommending self-care');
       return {
-        main: '🌿 ดูแลตัวเองด้วยการพักผ่อนและดื่มน้ำ\n   • วิธีใช้: พักผ่อนให้เพียงพอ ดื่มน้ำอุ่นบ่อยๆ\n   • ระวัง: คุณมีประวัติแพ้พาราเซตามอล - ไม่ควรใช้ยานี้',
+        main: '🌿 ดูแลตัวเองด้วยการพักผ่อนและดื่มน้ำ\n   • วิธีใช้: พักผ่อนให้เพียงพอ ดื่มน้ำอุ่นบ่อยๆ\n   • ระวัง: คุณมีประวัติแพ้ยาที่ใช้บรรเทาอาการ - ไม่ควรใช้ยานี้',
         alternative: '🌿 หรือใช้วิธีอื่นในการบรรเทาอาการ\n   • วิธีใช้: ประคบเย็น/ร้อน ตามอาการ\n   • ระวัง: หากอาการไม่ดีขึ้นควรพบแพทย์',
       };
     }

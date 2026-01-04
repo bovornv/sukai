@@ -1415,11 +1415,25 @@ export async function assessSymptomLogic({
     severityLevel = SEVERITY_LEVELS.MODERATE;
   }
   
-  // CRITICAL: If trajectory is "improving", ensure severity is NOT SEVERE
-  // This prevents false emergency triggers
+  // CRITICAL: Only downgrade SEVERE if trajectory is "improving" AND user didn't explicitly say it's severe/critical
+  // "Improving" doesn't mean "not critical" - a critical symptom that's improving slightly is still critical
+  // Only downgrade if user explicitly indicated it's not severe (e.g., "ไม่มาก", "เบา")
   if (trajectory === 'improving' && severityLevel === SEVERITY_LEVELS.SEVERE) {
-    console.log(`[SEVERITY-OVERRIDE] Trajectory is "improving" → Forcing severity from SEVERE to MODERATE`);
-    severityLevel = SEVERITY_LEVELS.MODERATE;
+    // Check if user explicitly said it's NOT severe
+    const userSaidNotSevere = hasNotSevereAnswer || 
+      (symptom && typeof symptom === 'string' && 
+       (normalizeThaiText(symptom).includes('ไม่มาก') || 
+        normalizeThaiText(symptom).includes('ไม่รุนแรง') ||
+        normalizeThaiText(symptom).includes('เบา')));
+    
+    // Only downgrade if user explicitly said it's not severe
+    if (userSaidNotSevere) {
+      console.log(`[SEVERITY-OVERRIDE] Trajectory is "improving" AND user said "ไม่มาก/ไม่รุนแรง" → Downgrading severity from SEVERE to MODERATE`);
+      severityLevel = SEVERITY_LEVELS.MODERATE;
+    } else {
+      // Keep SEVERE even if improving - a critical symptom that's improving slightly is still critical
+      console.log(`[SEVERITY-KEEP] Trajectory is "improving" BUT user indicated severe/critical → Keeping SEVERE (critical symptoms remain critical even if improving)`);
+    }
   }
   
   // Store trajectory, time-course, and severity level in answers
@@ -1468,16 +1482,6 @@ export async function assessSymptomLogic({
     console.log(`[RISK-ADJUSTMENT] Time-course: ${timeCourse} → adjusted risk score: ${baseRiskScore}`);
   }
   
-  // Use matrix triage level if available, otherwise fall back to risk-based
-  let triageLevel = matrixTriageLevel || determineTriageFromRisk(baseRiskScore);
-  
-  // CRITICAL: Map 'pharmacy' to 'gp' (Suk AI behaves as personal AI doctor)
-  // A doctor recommends: Safe (self-care), Emergency, or Consult real doctor
-  if (triageLevel === 'pharmacy') {
-    triageLevel = 'gp';
-    console.log(`[TRIAGE-MAPPING] Mapped 'pharmacy' → 'gp' (consult doctor)`);
-  }
-  
   // CRITICAL: Severe + Acute = Emergency always (matrix rule)
   // BUT: Multiple exceptions that override emergency:
   // 1. If trajectory is "improving" → NOT emergency (symptoms getting better)
@@ -1485,13 +1489,38 @@ export async function assessSymptomLogic({
   // 3. If severity was downgraded due to improving trajectory → NOT emergency
   // 4. If detected severity is actually medium/low (not severe) → NOT emergency
   if (severityLevel === SEVERITY_LEVELS.SEVERE && timeCourse === TIMECOURSE_TYPES.ACUTE) {
-    // Exception 1: Improving trajectory → NOT emergency (HIGHEST PRIORITY CHECK)
+    // Exception 1: Only downgrade if improving trajectory AND user explicitly said it's not severe
+    // A critical symptom that's improving slightly is still critical and may need emergency care
     if (trajectory === 'improving') {
-      console.log(`[MATRIX-RULE] ⚠️ Severe + Acute BUT improving trajectory → Downgrade to GP (NOT emergency)`);
-      console.log(`[MATRIX-RULE] Trajectory: ${trajectory}, Severity: ${severityLevel}, TimeCourse: ${timeCourse}`);
-      // Force severity to MODERATE and continue to normal triage flow
-      severityLevel = SEVERITY_LEVELS.MODERATE;
-      // Continue to normal triage flow (don't return emergency)
+      // Check if user explicitly said it's NOT severe
+      const userSaidNotSevere = hasNotSevereAnswer || 
+        (symptom && typeof symptom === 'string' && 
+         (normalizeThaiText(symptom).includes('ไม่มาก') || 
+          normalizeThaiText(symptom).includes('ไม่รุนแรง') ||
+          normalizeThaiText(symptom).includes('เบา')));
+      
+      if (userSaidNotSevere) {
+        console.log(`[MATRIX-RULE] ⚠️ Severe + Acute BUT improving trajectory AND user said "ไม่มาก/ไม่รุนแรง" → Downgrade to GP (NOT emergency)`);
+        console.log(`[MATRIX-RULE] Trajectory: ${trajectory}, Severity: ${severityLevel}, TimeCourse: ${timeCourse}`);
+        // Force severity to MODERATE and continue to normal triage flow
+        severityLevel = SEVERITY_LEVELS.MODERATE;
+        // Continue to normal triage flow (don't return emergency)
+      } else {
+        // Keep SEVERE + ACUTE = Emergency even if improving
+        // A critical symptom that's improving slightly is still critical
+        console.log(`[MATRIX-RULE] ✅ Severe + Acute → Emergency (even if improving, critical symptoms remain critical)`);
+        console.log(`[MATRIX-RULE] Trajectory: ${trajectory}, Severity: ${severityLevel}, TimeCourse: ${timeCourse}`);
+        return {
+          needMoreInfo: false,
+          nextQuestion: null,
+          triageLevel: 'emergency',
+          reassurance: isAnxiousUser ? getReassuranceMessage() : null,
+          healthContextAnswer: enrichedAnswers.health_context,
+          hypotheses: hypotheses,
+          severityTrajectory: trajectory,
+          timeCourse: timeCourse,
+        };
+      }
     } 
     // Exception 2: User explicitly said "ไม่มาก" (not severe) in current or previous answers → NOT emergency
     else if ((symptom && typeof symptom === 'string' && 
@@ -1531,6 +1560,23 @@ export async function assessSymptomLogic({
         timeCourse: timeCourse,
       };
     }
+  }
+
+  // CRITICAL: Recalculate matrix triage level AFTER severity might have been changed
+  // This ensures the triage level reflects the final severity determination
+  if (severityLevel && timeCourse) {
+    matrixTriageLevel = determineTriageFromMatrix(severityLevel, timeCourse, normalizedSymptom);
+    console.log(`[STEP-2-SEVERITY-TIMECOURSE-RECALC] Severity: ${severityLevel} × Time-course: ${timeCourse} → Triage: ${matrixTriageLevel}`);
+  }
+
+  // Use matrix triage level if available, otherwise fall back to risk-based
+  let triageLevel = matrixTriageLevel || determineTriageFromRisk(baseRiskScore);
+  
+  // CRITICAL: Map 'pharmacy' to 'gp' (Suk AI behaves as personal AI doctor)
+  // A doctor recommends: Safe (self-care), Emergency, or Consult real doctor
+  if (triageLevel === 'pharmacy') {
+    triageLevel = 'gp';
+    console.log(`[TRIAGE-MAPPING] Mapped 'pharmacy' → 'gp' (consult doctor)`);
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
