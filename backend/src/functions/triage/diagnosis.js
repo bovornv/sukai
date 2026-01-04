@@ -178,6 +178,28 @@ function getSafeDefaultMedications(healthProfile, age, weightKg) {
     // If paracetamol/ibuprofen are not safe, search for other medications from the catalog
     console.log('[SAFE-DEFAULTS] Paracetamol/Ibuprofen not safe, searching for alternatives...');
     
+    // Safety check: Ensure feverPainMeds is defined and is an array
+    if (!feverPainMeds || !Array.isArray(feverPainMeds) || feverPainMeds.length === 0) {
+      // No medications available - recommend self-care
+      const hasParacetamolAllergy = healthProfile?.drugAllergies?.some(allergy => {
+        const allergyLower = allergy.toLowerCase().trim();
+        const allergyDrugName = allergyLower.replace(/^แพ้ยา\s*/, '').replace(/^แพ้\s*/, '').trim();
+        return allergyLower.includes('พาราเซตามอล') || allergyDrugName.includes('พาราเซตามอล');
+      });
+      
+      if (hasParacetamolAllergy) {
+        return {
+          main: '🌿 ดูแลตัวเองด้วยการพักผ่อนและดื่มน้ำ\n   • วิธีใช้: พักผ่อนให้เพียงพอ ดื่มน้ำอุ่นบ่อยๆ\n   • ระวัง: คุณมีประวัติแพ้ยาที่ใช้บรรเทาอาการ - ไม่ควรใช้ยานี้',
+          alternative: '🌿 หรือใช้วิธีอื่นในการบรรเทาอาการ\n   • วิธีใช้: ประคบเย็น/ร้อน ตามอาการ\n   • ระวัง: หากอาการไม่ดีขึ้นควรพบแพทย์',
+        };
+      }
+      
+      return {
+        main: '💊 พาราเซตามอล — ลดไข้และปวด\n   • ขนาดยา: 500-1000 มก.\n   • ความถี่: ทุก 6 ชม.\n   • วิธีใช้: หลังอาหาร (ไม่เกิน 4,000 มก./วัน)\n   • ระวัง: อ่านฉลากยาอย่างระมัดระวัง',
+        alternative: '🌿 หรือดูแลตัวเองด้วยการพักผ่อนและดื่มน้ำ\n   • วิธีใช้: พักผ่อนให้เพียงพอ ดื่มน้ำอุ่นบ่อยๆ\n   • ระวัง: หากอาการไม่ดีขึ้นควรพบแพทย์',
+      };
+    }
+    
     // Try to find alternative medications from fever_pain category
     const alternativeMeds = feverPainMeds.filter(med => {
       // Skip paracetamol and ibuprofen (already checked)
