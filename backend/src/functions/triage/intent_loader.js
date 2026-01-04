@@ -161,13 +161,6 @@ async function loadIntents() {
   })();
   
   return _loadingPromise;
-  } catch (error) {
-    console.warn(`[IntentLoader] Failed to load intents: ${error.message}`);
-    console.warn('[IntentLoader] Falling back to legacy text-based mapping');
-    _cachedIntents = [];
-    _intentById = {};
-    return [];
-  }
 }
 
 /**
