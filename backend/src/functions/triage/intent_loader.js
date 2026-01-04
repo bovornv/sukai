@@ -438,5 +438,9 @@ export function findIntentBySymptomText(symptomText, language = 'th') {
   return null;
 }
 
-// Initialize on module load
-loadIntents();
+// Initialize on module load (with error handling to prevent crashes)
+loadIntents().catch((error) => {
+  console.error('[IntentLoader] ❌ CRITICAL: Failed to initialize intents on module load:', error.message);
+  console.error('[IntentLoader] Stack:', error.stack);
+  // Don't crash - fallback to legacy mapping will be used
+});

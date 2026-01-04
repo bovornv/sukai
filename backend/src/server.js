@@ -18,6 +18,19 @@ import { initSentry } from './middleware/sentry.js';
 
 dotenv.config();
 
+// CRITICAL: Handle unhandled promise rejections to prevent server crashes
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ UNHANDLED PROMISE REJECTION:', reason);
+  console.error('Promise:', promise);
+  // Don't exit - log and continue (Railway will restart if needed)
+});
+
+process.on('uncaughtException', (error) => {
+  console.error('❌ UNCAUGHT EXCEPTION:', error);
+  console.error('Stack:', error.stack);
+  // Don't exit immediately - let Express error handler deal with it
+});
+
 // Initialize Sentry if configured (after dotenv.config() so env vars are loaded)
 initSentry().catch(() => {
   // Sentry initialization failed, continue without it
