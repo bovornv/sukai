@@ -713,20 +713,20 @@ export async function getDiagnosis({ sessionId, userId = null, language = 'th' }
       has_recommendations: !!diagnosis.recommendations,
     });
 
-    const { data, error } = await supabaseAdmin
+    const { data: diagnosisResult, error: diagnosisError } = await supabaseAdmin
       .from('diagnoses')
       .insert(diagnosisData)
       .select()
       .single();
 
-    if (error) {
-      console.error('[SAVE-DIAGNOSIS] ❌ Failed to save diagnosis:', error);
-      console.error('[SAVE-DIAGNOSIS] Error details:', JSON.stringify(error, null, 2));
+    if (diagnosisError) {
+      console.error('[SAVE-DIAGNOSIS] ❌ Failed to save diagnosis:', diagnosisError);
+      console.error('[SAVE-DIAGNOSIS] Error details:', JSON.stringify(diagnosisError, null, 2));
       console.error('[SAVE-DIAGNOSIS] Diagnosis data:', JSON.stringify(diagnosisData, null, 2));
-      throw error;
+      throw diagnosisError;
     }
 
-    console.log(`[SAVE-DIAGNOSIS] ✅ Successfully saved diagnosis with id: ${data?.id}`);
+    console.log(`[SAVE-DIAGNOSIS] ✅ Successfully saved diagnosis with id: ${diagnosisResult?.id}`);
   } catch (err) {
     console.error('[SAVE-DIAGNOSIS] ❌ CRITICAL: Failed to save diagnosis to DB:', err.message);
     console.error('[SAVE-DIAGNOSIS] Stack trace:', err.stack);

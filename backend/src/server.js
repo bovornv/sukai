@@ -48,74 +48,101 @@ if (missingVars.length > 0) {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// CORS Configuration - Different rules for PUBLIC vs PRIVATE APIs
+// CORS Configuration - CRITICAL: Only enable CORS on PUBLIC APIs
+// PRIVATE APIs must NEVER be called from browsers
 const getAllowedOrigin = (origin, isPublic = false) => {
   // Allow requests with no origin (like mobile apps or curl requests)
   if (!origin) {
     return null;
   }
   
-  // PUBLIC APIs: Open CORS (any origin allowed)
+  // PUBLIC APIs: Open CORS (browser-safe)
   if (isPublic) {
-    return origin; // Allow all origins for public APIs
-  }
-  
-  // PRIVATE APIs: Restricted CORS (only allowed origins)
-  // Allow localhost with any port (for Flutter Web development)
-  if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
+    // Allow localhost (dev) and production domains
+    if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
+      return origin;
+    }
+    
+    // Allow production domains
+    const allowedOrigins = [
+      'https://sukai-production.up.railway.app',
+      // Add your production web app domain here when deployed
+      // 'https://your-web-app-domain.com',
+    ];
+    
+    if (allowedOrigins.includes(origin)) {
+      return origin;
+    }
+    
+    // For public APIs, allow any origin (can be restricted later if needed)
     return origin;
   }
   
-  // Allow production domains
-  const allowedOrigins = [
-    'https://sukai-production.up.railway.app',
-    // Add your production web app domain here when deployed
-    // 'https://your-web-app-domain.com',
-  ];
-  
-  if (allowedOrigins.includes(origin)) {
-    return origin;
-  }
-  
-  // For debugging: allow all origins (remove in production if needed)
-  return origin;
+  // PRIVATE APIs: BLOCK all browser requests (no CORS)
+  // These should only be called server-to-server
+  // Return null to block CORS headers
+  return null;
 };
 
-// CORS middleware factory - different rules for PUBLIC vs PRIVATE
+// CORS middleware factory - CRITICAL: Only enable CORS on PUBLIC APIs
 const corsMiddleware = (isPublic = false) => {
   return (req, res, next) => {
     const origin = req.headers.origin;
     const allowedOrigin = getAllowedOrigin(origin, isPublic);
     
+    // Debug logging for CORS
+    if (isPublic) {
+      console.log(`[CORS] ${req.method} ${req.path} - Origin: ${origin || 'none'}, Allowed: ${allowedOrigin || 'NO'}`);
+    }
+    
     // Handle OPTIONS (preflight) requests FIRST - CRITICAL for CORS
     if (req.method === 'OPTIONS') {
-      // Always respond to OPTIONS with CORS headers if origin is allowed
-      if (allowedOrigin) {
+      // Only respond to OPTIONS with CORS headers if this is a PUBLIC API
+      if (isPublic && allowedOrigin) {
+        console.log(`[CORS] ✅ Allowing OPTIONS preflight for ${origin}`);
         res.header('Access-Control-Allow-Origin', allowedOrigin);
-        res.header('Access-Control-Allow-Credentials', isPublic ? 'false' : 'true');
+        res.header('Access-Control-Allow-Credentials', 'false');
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, x-user-id, x-language');
         res.header('Access-Control-Max-Age', '86400'); // 24 hours
         return res.sendStatus(200);
       }
-      // If origin not allowed, still respond (browser will block the actual request)
-      return res.sendStatus(200);
+      // For PRIVATE APIs, block OPTIONS requests (no CORS)
+      console.log(`[CORS] ❌ Blocking OPTIONS for private API: ${req.path}`);
+      return res.status(403).json({ 
+        error: 'Forbidden', 
+        message: 'This endpoint cannot be called from a browser. Use /api/public/* endpoints instead.' 
+      });
     }
     
-    // For all other requests, set CORS headers if origin is allowed
-    if (allowedOrigin) {
+    // For all other requests, set CORS headers ONLY if this is a PUBLIC API
+    if (isPublic && allowedOrigin) {
       res.header('Access-Control-Allow-Origin', allowedOrigin);
-      res.header('Access-Control-Allow-Credentials', isPublic ? 'false' : 'true');
+      res.header('Access-Control-Allow-Credentials', 'false');
       res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-cron-secret, X-Requested-With, x-user-id, x-language');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, x-user-id, x-language');
+      console.log(`[CORS] ✅ Set CORS headers for ${req.method} ${req.path} from ${origin}`);
+    } else if (isPublic && !allowedOrigin) {
+      console.log(`[CORS] ⚠️ Public API but origin not allowed: ${origin}`);
     }
+    // For PRIVATE APIs, do NOT set CORS headers (browser will block)
     
     next();
   };
 };
 
-// Apply default CORS (for PRIVATE APIs) - will be overridden by route-specific middleware
-app.use(corsMiddleware(false));
+// Apply NO CORS by default (for PRIVATE APIs)
+// This ensures /api/private/* cannot be called from browsers
+app.use((req, res, next) => {
+  // Only allow requests without Origin header (server-to-server) for private APIs
+  if (req.path.startsWith('/api/private') && req.headers.origin) {
+    return res.status(403).json({ 
+      error: 'Forbidden', 
+      message: 'Private APIs cannot be called from browsers. Use /api/public/* endpoints instead.' 
+    });
+  }
+  next();
+});
 
 app.use(express.json());
 app.use(requestLogger);
@@ -129,9 +156,11 @@ app.get('/health', (req, res) => {
 // API Routes - Separated into PUBLIC, PRIVATE, and INTERNAL
 // ============================================================================
 
-// PUBLIC APIs - Open CORS, no authentication required
-app.use('/api/public', corsMiddleware(true), publicRoutes);
-console.log('✅ Public API routes registered at /api/public');
+// PUBLIC APIs - Open CORS, browser-safe
+// CRITICAL: CORS middleware must be applied BEFORE routes
+app.use('/api/public', corsMiddleware(true));
+app.use('/api/public', publicRoutes);
+console.log('✅ Public API routes registered at /api/public (CORS enabled)');
 
 // PRIVATE APIs - Restricted CORS, authentication required
 app.use('/api/private/triage', corsMiddleware(false), privateTriageRoutes);
