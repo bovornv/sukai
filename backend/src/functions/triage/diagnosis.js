@@ -98,7 +98,22 @@ function getSafeDefaultMedications(healthProfile, age, weightKg) {
   const feverPainMeds = getOTCMedsByCategory('fever_pain');
   
   if (!feverPainMeds || feverPainMeds.length === 0) {
-    // Ultimate fallback: hardcoded safe recommendations
+    // CRITICAL SAFETY FIX: Check allergies before recommending paracetamol in ultimate fallback
+    const hasParacetamolAllergy = healthProfile?.drugAllergies?.some(allergy => {
+      const allergyLower = allergy.toLowerCase().trim();
+      const allergyDrugName = allergyLower.replace(/^แพ้ยา\s*/, '').replace(/^แพ้\s*/, '').trim();
+      return allergyLower.includes('พาราเซตามอล') || allergyDrugName.includes('พาราเซตามอล');
+    });
+    
+    if (hasParacetamolAllergy) {
+      // User is allergic to paracetamol - only recommend self-care
+      return {
+        main: '🌿 ดูแลตัวเองด้วยการพักผ่อนและดื่มน้ำ\n   • วิธีใช้: พักผ่อนให้เพียงพอ ดื่มน้ำอุ่นบ่อยๆ\n   • ระวัง: คุณมีประวัติแพ้พาราเซตามอล - ไม่ควรใช้ยานี้',
+        alternative: '🌿 หรือใช้วิธีอื่นในการบรรเทาอาการ\n   • วิธีใช้: ประคบเย็น/ร้อน ตามอาการ\n   • ระวัง: หากอาการไม่ดีขึ้นควรพบแพทย์',
+      };
+    }
+    
+    // Ultimate fallback: hardcoded safe recommendations (only if no paracetamol allergy)
     return {
       main: '💊 พาราเซตามอล — ลดไข้และปวด\n   • ขนาดยา: 500-1000 มก.\n   • ความถี่: ทุก 6 ชม.\n   • วิธีใช้: หลังอาหาร (ไม่เกิน 4,000 มก./วัน)\n   • ระวัง: อ่านฉลากยาอย่างระมัดระวัง',
       alternative: '🌿 ไอบูโพรเฟน — ลดปวดและอักเสบ\n   • ขนาดยา: 200-400 มก.\n   • ความถี่: ทุก 6-8 ชม.\n   • วิธีใช้: หลังอาหาร (ไม่เกิน 1,200 มก./วัน)\n   • ระวัง: ห้ามใช้ในผู้แพ้ NSAID หรือมีแผลในกระเพาะ',
@@ -159,7 +174,23 @@ function getSafeDefaultMedications(healthProfile, age, weightKg) {
       alternative: '🌿 หรือดูแลตัวเองด้วยการพักผ่อนและดื่มน้ำ\n   • วิธีใช้: พักผ่อนให้เพียงพอ ดื่มน้ำอุ่นบ่อยๆ\n   • ระวัง: หากอาการไม่ดีขึ้นควรพบแพทย์',
     };
   } else {
-    // Ultimate fallback
+    // CRITICAL SAFETY FIX: Check allergies before recommending paracetamol in fallback
+    // If user is allergic to paracetamol, don't recommend it even in fallback
+    const hasParacetamolAllergy = healthProfile?.drugAllergies?.some(allergy => {
+      const allergyLower = allergy.toLowerCase().trim();
+      const allergyDrugName = allergyLower.replace(/^แพ้ยา\s*/, '').replace(/^แพ้\s*/, '').trim();
+      return allergyLower.includes('พาราเซตามอล') || allergyDrugName.includes('พาราเซตามอล');
+    });
+    
+    if (hasParacetamolAllergy) {
+      // User is allergic to paracetamol - only recommend self-care
+      return {
+        main: '🌿 ดูแลตัวเองด้วยการพักผ่อนและดื่มน้ำ\n   • วิธีใช้: พักผ่อนให้เพียงพอ ดื่มน้ำอุ่นบ่อยๆ\n   • ระวัง: คุณมีประวัติแพ้พาราเซตามอล - ไม่ควรใช้ยานี้',
+        alternative: '🌿 หรือใช้วิธีอื่นในการบรรเทาอาการ\n   • วิธีใช้: ประคบเย็น/ร้อน ตามอาการ\n   • ระวัง: หากอาการไม่ดีขึ้นควรพบแพทย์',
+      };
+    }
+    
+    // Ultimate fallback (only if no paracetamol allergy)
     return {
       main: '💊 พาราเซตามอล — ลดไข้และปวด\n   • ขนาดยา: 500-1000 มก.\n   • ความถี่: ทุก 6 ชม.\n   • วิธีใช้: หลังอาหาร (ไม่เกิน 4,000 มก./วัน)\n   • ระวัง: อ่านฉลากยาอย่างระมัดระวัง',
       alternative: '🌿 หรือดูแลตัวเองด้วยการพักผ่อนและดื่มน้ำ\n   • วิธีใช้: พักผ่อนให้เพียงพอ ดื่มน้ำอุ่นบ่อยๆ\n   • ระวัง: หากอาการไม่ดีขึ้นควรพบแพทย์',
@@ -226,7 +257,7 @@ async function generateOTCMeds(symptom, triageLevel, answers, healthProfile = nu
     
     // Eye symptoms - need eye-specific care
     if (normalizedSymptom.includes('ปวดตา') || normalizedSymptom.includes('ตาแดง') || normalizedSymptom.includes('ตาพร่า') || 
-        normalized.includes('สายตาล้า') || normalized.includes('ปวดกระบอกตา') || normalized.includes('ตามัว')) {
+        normalizedSymptom.includes('สายตาล้า') || normalizedSymptom.includes('ปวดกระบอกตา') || normalizedSymptom.includes('ตามัว')) {
       console.log('generateOTCMeds - Eye symptom detected, returning eye-specific guidance');
       return {
         main: '👁️ ควรปรึกษาแพทย์หรือเภสัชกรเพื่อประเมินอาการตา\n   • วิธีใช้: พักตา หลีกเลี่ยงการขยี้ตา\n   • ระวัง: ไม่ควรใช้ยาด้วยตัวเองก่อนได้รับการประเมิน\n   • สาเหตุ: อาการตาอาจเกิดจากหลายสาเหตุ ต้องตรวจวินิจฉัย',
@@ -866,22 +897,26 @@ export async function generateDiagnosis({ symptoms, answers, triageLevel, riskSc
     // Self-care must be shown even if OTC meds are recommended
     let selfCareRecs = recommendations.home_care || [];
     
+    // CRITICAL: Declare intent at function scope so it's available for both self-care and OTC sections
+    let intent = null;
+    
     if (finalTriage !== 'emergency') {
       // Extract severity and time-course from answers
       const severity = answers.severity_level || answers.severity || 'mild';
       const timeCourse = answers.time_course || 'acute';
       
       // CRITICAL IMPROVEMENT: Try to resolve intent for symptom to use intent's self-care groups
-      let intent = resolveSymptomIntent(symptomText);
+      intent = await resolveSymptomIntent(symptomText);
       if (!intent) {
-        intent = findIntentBySymptomText(symptomText, language);
+        intent = await findIntentBySymptomText(symptomText, language);
       }
       
       // CRITICAL IMPROVEMENT: Use intent self-care groups if available (from 700-intent dataset)
       let intentSelfCareGroups = [];
       if (intent) {
+        // getSelfCareGroups takes an intent object, not an intentId
         intentSelfCareGroups = getSelfCareGroups(intent);
-        if (intentSelfCareGroups.length > 0) {
+        if (intentSelfCareGroups && intentSelfCareGroups.length > 0) {
           console.log(`[SELF-CARE-INTENT] Using intent self-care groups: ${intentSelfCareGroups.join(', ')}`);
         }
       }
@@ -918,9 +953,18 @@ export async function generateDiagnosis({ symptoms, answers, triageLevel, riskSc
       otcMeds = []; // NO OTC recommendations for emergency
       console.log(`[STEP-5B-OTC] No OTC recommendations - Emergency detected`);
     } else if (finalTriage === 'self_care' || finalTriage === 'gp') {
+      // CRITICAL: Resolve intent if not already resolved (for OTC recommendations)
+      let intentForOtc = intent; // Use intent from self-care section if available
+      if (!intentForOtc) {
+        intentForOtc = await resolveSymptomIntent(symptomText);
+        if (!intentForOtc) {
+          intentForOtc = await findIntentBySymptomText(symptomText, language);
+        }
+      }
+      
       // MEDICAL-GRADE: Generate 2-3 OTC options for both self_care AND gp cases
       // GP cases can use temporary OTCs while waiting to see doctor
-      const clinicalMeds = await generateOTCMeds(symptomText, finalTriage, answers, healthProfile, intent);
+      const clinicalMeds = await generateOTCMeds(symptomText, finalTriage, answers, healthProfile, intentForOtc);
       // Build array of all available options (main + alternatives, max 3)
       otcMeds = [clinicalMeds.main];
       if (clinicalMeds.alternative) {
