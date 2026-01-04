@@ -1663,43 +1663,114 @@ function getDefaultSeverityTimecourseMatrix() {
  */
 export function isMedicationSafe(medication, healthProfile, answers = {}) {
   // MEDICAL-GRADE: Check ALL allergies (drug, food, other) - absolute exclusion
+  // CRITICAL: Collect allergies from multiple sources to ensure we catch them all
+  const drugAllergiesFromProfile = Array.isArray(healthProfile?.drugAllergies) 
+    ? healthProfile.drugAllergies 
+    : (healthProfile?.drugAllergies ? [healthProfile.drugAllergies] : []);
+  const drugAllergiesFromAnswers = Array.isArray(answers.drug_allergies)
+    ? answers.drug_allergies
+    : (answers.drug_allergies ? [answers.drug_allergies] : []);
+  const allAllergiesFromAnswers = Array.isArray(answers.all_allergies)
+    ? answers.all_allergies
+    : (answers.all_allergies ? [answers.all_allergies] : []);
+  
   const allAllergies = [
-    ...(healthProfile?.drugAllergies || []),
+    ...drugAllergiesFromProfile,
+    ...drugAllergiesFromAnswers,
     ...(healthProfile?.foodAllergies || []),
     ...(healthProfile?.otherAllergies || []),
-    ...(answers.all_allergies || []),
+    ...allAllergiesFromAnswers,
   ];
   
-  if (allAllergies.length > 0) {
-    const allergies = allAllergies.map(a => a.toLowerCase().trim());
+  // Remove duplicates
+  const uniqueAllergies = [...new Set(allAllergies)];
+  
+  // DEBUG: Log health profile and allergies
+  console.log(`[SAFETY-CHECK] 🔍 Checking medication: ${medication.generic}`);
+  console.log(`[SAFETY-CHECK] Health profile:`, healthProfile ? 'present' : 'missing');
+  console.log(`[SAFETY-CHECK] Drug allergies from healthProfile.drugAllergies:`, drugAllergiesFromProfile);
+  console.log(`[SAFETY-CHECK] Drug allergies from answers.drug_allergies:`, drugAllergiesFromAnswers);
+  console.log(`[SAFETY-CHECK] All allergies from answers.all_allergies:`, allAllergiesFromAnswers);
+  console.log(`[SAFETY-CHECK] Unique allergies combined:`, uniqueAllergies);
+  
+  if (uniqueAllergies.length > 0) {
+    const allergies = uniqueAllergies.map(a => {
+      // Handle both string and array elements
+      const allergyStr = typeof a === 'string' ? a : String(a);
+      return allergyStr.toLowerCase().trim();
+    }).filter(a => a.length > 0); // Remove empty strings
+    
     const medName = medication.generic.toLowerCase().trim();
     const brandNames = (medication.brandNames || medication.brandExamples || []).map(b => b.toLowerCase().trim());
     const contraindications = medication.contraindications?.map(c => c.toLowerCase().trim()) || [];
     
+    console.log(`[SAFETY-CHECK] Medication name (normalized): "${medName}"`);
+    console.log(`[SAFETY-CHECK] Allergies (normalized):`, allergies);
+    
+    // CRITICAL SAFETY FIX: Extract drug name from allergy text
+    // Handle cases like "แพ้ยา พาราเซตามอล" → extract "พาราเซตามอล"
+    // Also handles plain "พาราเซตามอล" (no prefix)
+    const extractDrugNameFromAllergy = (allergyText) => {
+      // Remove common prefixes: "แพ้ยา", "แพ้", "allergic to", etc.
+      const prefixes = ['แพ้ยา', 'แพ้', 'allergic to', 'allergy to'];
+      let cleaned = allergyText;
+      for (const prefix of prefixes) {
+        if (cleaned.startsWith(prefix)) {
+          cleaned = cleaned.substring(prefix.length).trim();
+        }
+      }
+      return cleaned;
+    };
+    
     // Check if user is allergic to this medication (generic name, brand name, or contraindication)
     // Use exact match or substring match for better detection
     const isAllergic = allergies.some(allergy => {
-      // Exact match (most reliable)
-      if (medName === allergy || allergy === medName) {
+      // Extract drug name from allergy text (handles "แพ้ยา พาราเซตามอล" → "พาราเซตามอล")
+      // If no prefix, allergyDrugName === allergy
+      const allergyDrugName = extractDrugNameFromAllergy(allergy);
+      
+      console.log(`[SAFETY-CHECK] Comparing: medName="${medName}" vs allergy="${allergy}" vs allergyDrugName="${allergyDrugName}"`);
+      
+      // Exact match (most reliable) - handles "พาราเซตามอล" === "พาราเซตามอล"
+      if (medName === allergy || allergy === medName || medName === allergyDrugName || allergyDrugName === medName) {
+        console.log(`[SAFETY-CHECK] ✅ EXACT MATCH: ${medName} === ${allergy} or ${allergyDrugName}`);
         return true;
       }
-      // Substring match (e.g., "พาราเซตามอล" matches "แพ้พาราเซตามอล")
-      if (medName.includes(allergy) || allergy.includes(medName)) {
+      // Substring match (e.g., "พาราเซตามอล" matches "แพ้พาราเซตามอล" or "แพ้ยา พาราเซตามอล")
+      if (medName.includes(allergy) || allergy.includes(medName) || 
+          medName.includes(allergyDrugName) || allergyDrugName.includes(medName)) {
+        console.log(`[SAFETY-CHECK] ✅ SUBSTRING MATCH: ${medName} includes ${allergy} or ${allergyDrugName}`);
         return true;
       }
       // Check brand names
-      if (brandNames.some(brand => brand === allergy || brand.includes(allergy) || allergy.includes(brand))) {
+      if (brandNames.some(brand => 
+          brand === allergy || allergy === brand ||
+          brand === allergyDrugName || allergyDrugName === brand ||
+          brand.includes(allergy) || allergy.includes(brand) ||
+          brand.includes(allergyDrugName) || allergyDrugName.includes(brand))) {
+        console.log(`[SAFETY-CHECK] ✅ BRAND NAME MATCH`);
         return true;
       }
       // Check contraindications
-      if (contraindications.some(ct => ct.includes(allergy) || allergy.includes(ct))) {
+      if (contraindications.some(ct => 
+          ct.includes(allergy) || allergy.includes(ct) ||
+          ct.includes(allergyDrugName) || allergyDrugName.includes(ct))) {
+        console.log(`[SAFETY-CHECK] ✅ CONTRAINDICATION MATCH`);
         return true;
       }
       return false;
     });
     
     if (isAllergic) {
-      console.log(`[SAFETY-CHECK] Medication ${medication.generic} excluded: แพ้ยานี้ (Allergies: ${allAllergies.join(', ')})`);
+      console.log(`[SAFETY-CHECK] 🚨 Medication ${medication.generic} EXCLUDED: แพ้ยานี้`);
+      console.log(`[SAFETY-CHECK] Allergies checked: ${allAllergies.join(', ')}`);
+      console.log(`[SAFETY-CHECK] Medication name: ${medName}`);
+      console.log(`[SAFETY-CHECK] Matched allergy: ${allergies.find(allergy => {
+        const allergyDrugName = extractDrugNameFromAllergy(allergy);
+        return medName === allergy || allergy === medName || medName === allergyDrugName || allergyDrugName === medName ||
+               medName.includes(allergy) || allergy.includes(medName) || 
+               medName.includes(allergyDrugName) || allergyDrugName.includes(medName);
+      })}`);
       return { safe: false, reason: 'แพ้ยานี้' };
     }
   }
@@ -2110,17 +2181,31 @@ export async function selectTwoOTCOptions(symptomCategory, healthProfile, age, w
   // PHARMACIST PERSPECTIVE: Filter safe medications with detailed safety check
   const safeMeds = [];
   const excludedMeds = [];
+  
+  // DEBUG: Log health profile before filtering
+  console.log(`[OTC-SELECTION] 🔍 Starting safety check for ${filteredMedications.length} medications`);
+  console.log(`[OTC-SELECTION] Health profile present:`, healthProfile ? 'YES' : 'NO');
+  if (healthProfile) {
+    console.log(`[OTC-SELECTION] Drug allergies:`, healthProfile.drugAllergies);
+    console.log(`[OTC-SELECTION] Food allergies:`, healthProfile.foodAllergies);
+    console.log(`[OTC-SELECTION] Other allergies:`, healthProfile.otherAllergies);
+  }
+  console.log(`[OTC-SELECTION] Answers.all_allergies:`, answers.all_allergies);
+  
   for (const med of filteredMedications) {
     const safetyCheck = isMedicationSafe(med, healthProfile, answers);
     if (safetyCheck.safe) {
       safeMeds.push(med);
     } else {
       excludedMeds.push({ medication: med.generic, reason: safetyCheck.reason });
+      console.log(`[OTC-SELECTION] ❌ EXCLUDED: ${med.generic} - ${safetyCheck.reason}`);
     }
   }
   
   if (excludedMeds.length > 0) {
-    console.log(`[OTC-SELECTION] Excluded ${excludedMeds.length} medications:`, excludedMeds);
+    console.log(`[OTC-SELECTION] 🚨 Excluded ${excludedMeds.length} medications due to allergies/contraindications:`, excludedMeds);
+  } else {
+    console.log(`[OTC-SELECTION] ✅ No medications excluded by allergies`);
   }
   
   if (safeMeds.length === 0) {
