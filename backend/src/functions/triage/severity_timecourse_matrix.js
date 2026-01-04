@@ -305,7 +305,7 @@ export const SEVERITY_TIMECOURSE_MATRIX = {
     [TIMECOURSE_TYPES.RECURRENT]: 'self_care', // Lifestyle / Non-urgent
   },
   [SEVERITY_LEVELS.MODERATE]: {
-    [TIMECOURSE_TYPES.ACUTE]: 'self_care',       // Self-care with OTC (monitor closely)
+    [TIMECOURSE_TYPES.ACUTE]: 'gp',             // ⚠️ SAFETY FIX: Moderate + Acute → GP (not self-care)
     [TIMECOURSE_TYPES.SUBACUTE]: 'gp',          // Consult doctor / OPD
     [TIMECOURSE_TYPES.PROGRESSIVE]: 'gp',       // 🚨 High risk - see GP
     [TIMECOURSE_TYPES.CHRONIC]: 'gp',           // GP / Review meds

@@ -59,9 +59,32 @@ function loadDataset() {
   }
 
   try {
-    // Path to CSV file (relative to backend/src/functions/triage)
-    // Go up: backend/src/functions/triage -> backend/src/functions -> backend/src -> backend -> project root
-    const csvPath = join(__dirname, '../../../../mobile/assets/data/bodypart_redflags_expanded.csv');
+    // Try multiple possible paths (for different deployment scenarios)
+    const possiblePaths = [
+      join(__dirname, '../../../data/bodypart_redflags_expanded.csv'), // backend/data/ (Railway deployment)
+      join(__dirname, '../../../../mobile/assets/data/bodypart_redflags_expanded.csv'), // mobile/assets/data/ (local dev)
+      join(process.cwd(), 'data/bodypart_redflags_expanded.csv'), // root/data/ (alternative)
+      '/app/data/bodypart_redflags_expanded.csv', // Direct Railway path
+    ];
+    
+    let csvPath = null;
+    for (const testPath of possiblePaths) {
+      try {
+        readFileSync(testPath, 'utf-8'); // Test if file exists
+        csvPath = testPath;
+        console.log(`[RED-FLAG-LOADER] ✅ Found CSV file at: ${csvPath}`);
+        break;
+      } catch (err) {
+        // File doesn't exist at this path, try next
+        continue;
+      }
+    }
+    
+    if (!csvPath) {
+      console.warn(`[RED-FLAG-LOADER] CSV file not found. Tried paths:`, possiblePaths);
+      throw new Error(`Body part red flags CSV file not found. Tried: ${possiblePaths.join(', ')}`);
+    }
+    
     const csvContent = readFileSync(csvPath, 'utf-8');
     
     const lines = csvContent.split('\n').filter(line => line.trim());

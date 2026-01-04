@@ -14,6 +14,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { supabaseAdmin } from '../../config/supabase.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,45 +22,145 @@ const __dirname = path.dirname(__filename);
 let _cachedIntents = null;
 let _intentById = null;
 let _intentsByPrimarySymptom = null;
+let _loadingPromise = null; // Prevent concurrent loads
+
+/**
+ * Load intents from external source (Supabase Storage or URL)
+ */
+async function loadIntentsFromExternal() {
+  // Try Supabase Storage first
+  const storagePath = process.env.INTENTS_STORAGE_PATH || 'data/symptom_intents_master.json';
+  const storageBucket = process.env.INTENTS_STORAGE_BUCKET || 'app-data';
+  
+  try {
+    console.log(`[IntentLoader] Attempting to load from Supabase Storage: ${storageBucket}/${storagePath}`);
+    const { data, error } = await supabaseAdmin.storage
+      .from(storageBucket)
+      .download(storagePath);
+    
+    if (!error && data) {
+      const text = await data.text();
+      return JSON.parse(text);
+    }
+  } catch (err) {
+    console.warn(`[IntentLoader] Failed to load from Supabase Storage: ${err.message}`);
+  }
+  
+  // Try external URL if configured
+  const externalUrl = process.env.INTENTS_EXTERNAL_URL;
+  if (externalUrl) {
+    try {
+      console.log(`[IntentLoader] Attempting to load from external URL: ${externalUrl}`);
+      const response = await fetch(externalUrl);
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      }
+    } catch (err) {
+      console.warn(`[IntentLoader] Failed to load from external URL: ${err.message}`);
+    }
+  }
+  
+  return null;
+}
 
 /**
  * Load intents from JSON file (lazy loading, cached)
+ * Supports multiple sources: local file, Supabase Storage, or external URL
  */
-function loadIntents() {
+async function loadIntents() {
   if (_cachedIntents !== null) {
     return _cachedIntents;
   }
-
-  try {
-    const intentPath = path.join(__dirname, '../../../data/symptom_intents_master.json');
-    const jsonData = fs.readFileSync(intentPath, 'utf8');
-    const data = JSON.parse(jsonData);
-    
-    _cachedIntents = data.intents || [];
-    
-    // Build index maps for fast lookup
-    _intentById = {};
-    _intentsByPrimarySymptom = {};
-    
-    for (const intent of _cachedIntents) {
-      if (intent.intent_id) {
-        _intentById[intent.intent_id] = intent;
+  
+  // Prevent concurrent loads
+  if (_loadingPromise) {
+    return _loadingPromise;
+  }
+  
+  _loadingPromise = (async () => {
+    try {
+      let data = null;
+      
+      // First, try external sources (Supabase Storage or URL) if configured
+      if (process.env.INTENTS_STORAGE_PATH || process.env.INTENTS_EXTERNAL_URL) {
+        data = await loadIntentsFromExternal();
+        if (data) {
+          console.log(`[IntentLoader] ✅ Loaded intents from external source`);
+        }
       }
       
-      // Index by primary symptom
-      const primarySymptom = intent.primary_symptom || intent.primarySymptom;
-      if (primarySymptom) {
-        if (!_intentsByPrimarySymptom[primarySymptom]) {
-          _intentsByPrimarySymptom[primarySymptom] = [];
+      // If external load failed, try local file system
+      if (!data) {
+        // Try multiple possible paths (for different deployment scenarios)
+        const possiblePaths = [
+          path.join(__dirname, '../../../data/symptom_intents_master.json'), // Local development
+          path.join(process.cwd(), 'data/symptom_intents_master.json'), // Railway deployment
+          path.join(process.cwd(), 'backend/data/symptom_intents_master.json'), // Alternative Railway path
+          '/app/data/symptom_intents_master.json', // Direct Railway path
+        ];
+        
+        let intentPath = null;
+        for (const testPath of possiblePaths) {
+          if (fs.existsSync(testPath)) {
+            intentPath = testPath;
+            console.log(`[IntentLoader] ✅ Found intents file at: ${intentPath}`);
+            break;
+          }
         }
-        _intentsByPrimarySymptom[primarySymptom].push(intent);
+        
+        if (!intentPath) {
+          // Log current working directory and __dirname for debugging
+          console.warn(`[IntentLoader] Current working directory: ${process.cwd()}`);
+          console.warn(`[IntentLoader] __dirname: ${__dirname}`);
+          console.warn(`[IntentLoader] Intent file not found. Tried paths:`);
+          possiblePaths.forEach(p => console.warn(`  - ${p}`));
+          throw new Error(`Intent file not found. Tried: ${possiblePaths.join(', ')}`);
+        }
+        
+        const jsonData = fs.readFileSync(intentPath, 'utf8');
+        data = JSON.parse(jsonData);
       }
-    }
     
-    console.log(`[IntentLoader] Loaded ${_cachedIntents.length} intents`);
-    console.log(`[IntentLoader] Indexed ${Object.keys(_intentById).length} intent IDs`);
-    console.log(`[IntentLoader] Indexed ${Object.keys(_intentsByPrimarySymptom).length} primary symptoms`);
-    return _cachedIntents;
+      _cachedIntents = data.intents || [];
+      
+      // Build index maps for fast lookup
+      _intentById = {};
+      _intentsByPrimarySymptom = {};
+      
+      for (const intent of _cachedIntents) {
+        if (intent.intent_id) {
+          _intentById[intent.intent_id] = intent;
+        }
+        
+        // Index by primary symptom
+        const primarySymptom = intent.primary_symptom || intent.primarySymptom;
+        if (primarySymptom) {
+          if (!_intentsByPrimarySymptom[primarySymptom]) {
+            _intentsByPrimarySymptom[primarySymptom] = [];
+          }
+          _intentsByPrimarySymptom[primarySymptom].push(intent);
+        }
+      }
+      
+      console.log(`[IntentLoader] ✅ Loaded ${_cachedIntents.length} intents`);
+      console.log(`[IntentLoader] ✅ Indexed ${Object.keys(_intentById).length} intent IDs`);
+      console.log(`[IntentLoader] ✅ Indexed ${Object.keys(_intentsByPrimarySymptom).length} primary symptoms`);
+      
+      _loadingPromise = null;
+      return _cachedIntents;
+    } catch (error) {
+      console.warn(`[IntentLoader] ❌ Failed to load intents: ${error.message}`);
+      console.warn('[IntentLoader] ⚠️ Falling back to legacy text-based mapping');
+      _cachedIntents = [];
+      _intentById = {};
+      _intentsByPrimarySymptom = {};
+      _loadingPromise = null;
+      return [];
+    }
+  })();
+  
+  return _loadingPromise;
   } catch (error) {
     console.warn(`[IntentLoader] Failed to load intents: ${error.message}`);
     console.warn('[IntentLoader] Falling back to legacy text-based mapping');
@@ -83,9 +184,12 @@ function isIntentId(symptom) {
  */
 function getIntentById(intentId) {
   if (!_intentById) {
-    loadIntents();
+    // Load synchronously (will use cached result if already loading)
+    loadIntents().catch(() => {
+      // Ignore errors, fallback to legacy mapping
+    });
   }
-  return _intentById[intentId] || null;
+  return _intentById?.[intentId] || null;
 }
 
 /**
@@ -119,15 +223,16 @@ function getPrimarySymptom(intent) {
 
 /**
  * Resolve symptom to intent (if intent_id) or return null
+ * NOTE: Now async because getIntentById is async
  */
-export function resolveSymptomIntent(symptom) {
+export async function resolveSymptomIntent(symptom) {
   if (!symptom || typeof symptom !== 'string') return null;
   
   const trimmed = symptom.trim();
   
   // Check if it's an intent_id
   if (isIntentId(trimmed)) {
-    const intent = getIntentById(trimmed);
+    const intent = await getIntentById(trimmed);
     if (intent) {
       return intent;
     }
@@ -139,12 +244,13 @@ export function resolveSymptomIntent(symptom) {
 
 /**
  * Get red-flag question for symptom (supports both intent_id and text)
+ * NOTE: Now async because resolveSymptomIntent is async
  */
-export function getRedFlagQuestionForSymptom(symptom, language = 'th') {
+export async function getRedFlagQuestionForSymptom(symptom, language = 'th') {
   // Try to resolve as intent_id first
-  const intent = resolveSymptomIntent(symptom);
+  const intent = await resolveSymptomIntent(symptom);
   if (intent) {
-    const question = getRedFlagQuestion(intent, language);
+    const question = await getRedFlagQuestion(intent.intent_id || intent.id, language);
     if (question) {
       return question;
     }
@@ -156,9 +262,10 @@ export function getRedFlagQuestionForSymptom(symptom, language = 'th') {
 
 /**
  * Check if symptom requires emergency triage (supports intent_id)
+ * NOTE: Now async because resolveSymptomIntent is async
  */
-export function checkEmergencyFromIntent(symptom) {
-  const intent = resolveSymptomIntent(symptom);
+export async function checkEmergencyFromIntent(symptom) {
+  const intent = await resolveSymptomIntent(symptom);
   if (intent) {
     return isEmergencyIntent(intent);
   }
@@ -169,9 +276,10 @@ export function checkEmergencyFromIntent(symptom) {
 
 /**
  * Get primary symptom for mapping (supports intent_id)
+ * NOTE: Now async because resolveSymptomIntent is async
  */
-export function getPrimarySymptomFromIntent(symptom) {
-  const intent = resolveSymptomIntent(symptom);
+export async function getPrimarySymptomFromIntent(symptom) {
+  const intent = await resolveSymptomIntent(symptom);
   if (intent) {
     return getPrimarySymptom(intent);
   }
@@ -232,9 +340,12 @@ export function getSelfCareGroups(intent) {
  */
 export function getIntentsByPrimarySymptom(primarySymptom) {
   if (!_intentsByPrimarySymptom) {
-    loadIntents();
+    // Load synchronously (will use cached result if already loading)
+    loadIntents().catch(() => {
+      // Ignore errors, fallback to legacy mapping
+    });
   }
-  return _intentsByPrimarySymptom[primarySymptom] || [];
+  return _intentsByPrimarySymptom?.[primarySymptom] || [];
 }
 
 /**
@@ -298,7 +409,10 @@ export function findIntentBySymptomText(symptomText, language = 'th') {
   if (!symptomText || typeof symptomText !== 'string') return null;
   
   if (!_cachedIntents) {
-    loadIntents();
+    // Load synchronously (will use cached result if already loading)
+    loadIntents().catch(() => {
+      // Ignore errors, fallback to legacy mapping
+    });
   }
   
   const normalizedText = symptomText.toLowerCase().trim();

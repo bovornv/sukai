@@ -86,10 +86,16 @@ const ANXIETY_KEYWORDS = [
 ];
 
 // Severity indicators (spoken language)
+// EXPANDED: More comprehensive severity detection to catch "bad" symptoms
 const SEVERITY_INDICATORS = {
-  high: ['รุนแรง', 'มาก', 'หนัก', 'ทนไม่ไหว', 'ไม่ไหว', 'ไม่ไหวละ', 'หนักมาก', 'แย่มาก'],
-  medium: ['ปานกลาง', 'พอทน', 'ไม่มาก', 'นิดหน่อย'],
-  low: ['เบา', 'เล็กน้อย', 'นิดเดียว'],
+  high: [
+    'รุนแรง', 'มาก', 'หนัก', 'ทนไม่ไหว', 'ไม่ไหว', 'ไม่ไหวละ', 'หนักมาก', 'แย่มาก',
+    'รบกวนมาก', 'รุนแรงผิดปกติ', 'ใช้ชีวิตไม่ได้', 'ทำอะไรไม่ได้', 'แย่', 'แย่มาก',
+    'รบกวนชีวิต', 'ทนไม่ได้', 'ไม่ทน', 'รุนแรงมาก', 'หนักมากๆ', 'แย่ที่สุด',
+    'รบกวนมากๆ', 'รบกวนชีวิตประจำวัน', 'ทำกิจกรรมไม่ได้', 'ทำอะไรไม่ได้เลย',
+  ],
+  medium: ['ปานกลาง', 'พอทน', 'ไม่มาก', 'นิดหน่อย', 'รบกวนบ้าง', 'รบกวนปานกลาง'],
+  low: ['เบา', 'เล็กน้อย', 'นิดเดียว', 'แทบไม่รบกวน', 'ไม่รบกวน'],
 };
 
 /**
@@ -219,6 +225,95 @@ export function isWorsening(text) {
 }
 
 /**
+ * Detect severity trajectory (แนวโน้มความรุนแรง)
+ * Returns: 'worsening' | 'stable' | 'improving' | null
+ * Medical-grade: Assess symptom trajectory, not just current severity
+ */
+export function detectSeverityTrajectory(text) {
+  const normalized = normalizeThaiText(text);
+  
+  // Worsening indicators
+  const worseningKeywords = [
+    'แย่ลง', 'ไม่ดีขึ้น', 'แย่กว่าเดิม', 'หนักขึ้น', 'มากขึ้น',
+    'แย่ลงเร็ว', 'แย่ลงทุกวัน', 'ไม่หาย', 'ยังไม่หาย',
+  ];
+  
+  // Improving indicators
+  const improvingKeywords = [
+    'ดีขึ้น', 'ดีกว่าเดิม', 'เบาลง', 'หายขึ้น', 'ดีขึ้นเรื่อยๆ',
+    'ดีขึ้นแล้ว', 'หายไปบ้าง', 'ดีขึ้นมาก',
+  ];
+  
+  // Stable indicators
+  const stableKeywords = [
+    'เหมือนเดิม', 'คงที่', 'ไม่เปลี่ยน', 'เหมือนเดิมทุกวัน',
+    'ไม่ดีขึ้นไม่แย่ลง',
+  ];
+  
+  if (worseningKeywords.some(keyword => normalized.includes(keyword))) {
+    return 'worsening';
+  }
+  
+  if (improvingKeywords.some(keyword => normalized.includes(keyword))) {
+    return 'improving';
+  }
+  
+  if (stableKeywords.some(keyword => normalized.includes(keyword))) {
+    return 'stable';
+  }
+  
+  return null;
+}
+
+/**
+ * Classify time-course of symptom
+ * Returns: 'acute' | 'subacute' | 'progressive' | 'chronic' | 'recurrent' | null
+ * Medical-grade: Classify symptom by time-course for differential diagnosis
+ */
+export function classifyTimeCourse(durationDays, trajectory, answers = {}) {
+  // If we have explicit trajectory info, use it
+  if (trajectory === 'worsening') {
+    // Progressive: getting worse over time
+    if (durationDays && durationDays <= 7) {
+      return 'progressive'; // Acute progressive
+    }
+    return 'progressive';
+  }
+  
+  // Duration-based classification
+  if (durationDays === null || durationDays === undefined) {
+    return null; // Unknown
+  }
+  
+  if (durationDays <= 2) {
+    return 'acute'; // Hours to 2 days
+  }
+  
+  if (durationDays <= 7) {
+    // Check if it's progressive or subacute
+    if (trajectory === 'worsening') {
+      return 'progressive';
+    }
+    return 'subacute'; // 3-7 days
+  }
+  
+  if (durationDays <= 30) {
+    // Check if recurrent pattern
+    if (answers.recurrent === true || answers.pattern === 'recurrent') {
+      return 'recurrent';
+    }
+    return 'chronic'; // More than a week
+  }
+  
+  // More than 30 days
+  if (answers.recurrent === true || answers.pattern === 'recurrent') {
+    return 'recurrent';
+  }
+  
+  return 'chronic';
+}
+
+/**
  * Check if user tried self-care
  * Returns: true if text indicates self-care attempts
  */
@@ -248,5 +343,77 @@ export function getReassuranceMessage() {
   ];
   
   return messages[Math.floor(Math.random() * messages.length)];
+}
+
+/**
+ * Detect if answer is affirmative (yes) in Thai
+ * Returns: true if answer indicates yes/affirmative
+ * CRITICAL: Used for red-flag detection - if user answers "ใช่" to red-flag question → Emergency
+ */
+export function isAffirmativeAnswer(text) {
+  if (!text || typeof text !== 'string') return false;
+  
+  const normalized = normalizeThaiText(text);
+  
+  // CRITICAL: Check for negative words FIRST (including "ไม่มาก", "ไม่รุนแรง", etc.)
+  // These MUST be checked before checking for severity indicators
+  const negativeKeywords = [
+    'ไม่ใช่', 'ไม่มี', 'ไม่เป็น', 'ไม่', 
+    'ไม่มีค่ะ', 'ไม่ใช่ค่ะ', 'ไม่เป็นค่ะ',
+    'ไม่มีครับ', 'ไม่ใช่ครับ', 'ไม่เป็นครับ',
+    'ไม่มาก', 'ไม่รุนแรง', 'ไม่หนัก', 'ไม่ทนไม่ไหว',
+    'ไม่มากค่ะ', 'ไม่รุนแรงค่ะ', 'ไม่มากครับ', 'ไม่รุนแรงครับ',
+    'ไม่มากเลย', 'ไม่รุนแรงเลย', 'ไม่มากเท่าไหร่', 'ไม่รุนแรงเท่าไหร่',
+  ];
+  
+  // Check if text contains any negative keyword (must check for "ไม่มาก" BEFORE checking for "มาก")
+  for (const keyword of negativeKeywords) {
+    if (normalized === keyword || 
+        normalized.startsWith(keyword + ' ') || 
+        normalized.startsWith(keyword + 'ค่ะ') ||
+        normalized.startsWith(keyword + 'ครับ') ||
+        normalized.includes(' ' + keyword + ' ') ||
+        normalized.includes(' ' + keyword + 'ค่ะ') ||
+        normalized.includes(' ' + keyword + 'ครับ')) {
+      return false; // Negative answer - NOT affirmative
+    }
+  }
+  
+  // Affirmative keywords (exact matches or starts with)
+  const affirmativeKeywords = [
+    'ใช่',
+    'ใช่ค่ะ',
+    'ใช่ครับ',
+    'ใช่แล้ว',
+    'ใช่เลย',
+    'มี',
+    'เป็น',
+    'มีค่ะ',
+    'เป็นค่ะ',
+    'มีครับ',
+    'เป็นครับ',
+  ];
+  
+  // Check for exact affirmative match
+  if (affirmativeKeywords.some(keyword => normalized === keyword || normalized.startsWith(keyword))) {
+    return true;
+  }
+  
+  // Check for "ใช่" followed by other words (e.g., "ใช่ มี", "ใช่ เป็น")
+  if (normalized.startsWith('ใช่ ')) {
+    return true;
+  }
+  
+  // Check for severity indicators that indicate positive (severe symptoms)
+  // BUT ONLY if we've already confirmed it's NOT a negative answer
+  const severeIndicators = ['รุนแรง', 'มาก', 'หนัก', 'ทนไม่ไหว', 'ไม่ไหว', 'ไม่ไหวละ'];
+  if (severeIndicators.some(indicator => normalized.includes(indicator))) {
+    // Double-check: exclude if it says "ไม่รุนแรง" or "ไม่มาก" (should already be caught above, but extra safety)
+    if (!normalized.includes('ไม่รุนแรง') && !normalized.includes('ไม่มาก') && !normalized.includes('ไม่หนัก')) {
+      return true;
+    }
+  }
+  
+  return false;
 }
 

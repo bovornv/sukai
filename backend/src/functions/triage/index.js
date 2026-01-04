@@ -400,6 +400,43 @@ export async function getDiagnosis({ sessionId, userId = null, language = 'th' }
     session = sessions.get(sessionId);
   }
 
+  // If session exists only in cache but not in DB, save it to DB first
+  // This prevents foreign key violations when saving diagnosis
+  if (!sessionData && session) {
+    console.log(`[GET-DIAGNOSIS] Session ${sessionId} exists in cache but not in DB, saving to DB...`);
+    const finalUserId = userId && userId !== 'anonymous' ? userId : null;
+    try {
+      const sessionDataToSave = {
+        session_id: sessionId,
+        user_id: finalUserId,
+        symptoms: session.symptoms || [],
+        answers: session.answers || {},
+        questions_asked: session.questionsAsked || [],
+        question_count: session.questionCount || 0,
+        triage_level: session.triageLevel || null,
+        created_at: session.createdAt ? new Date(session.createdAt).toISOString() : new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+      
+      const { data, error } = await supabaseAdmin
+        .from('triage_sessions')
+        .insert(sessionDataToSave)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('[GET-DIAGNOSIS] Failed to save cached session to DB:', error);
+        // Continue anyway - diagnosis save will fail but we'll log it
+      } else {
+        console.log(`[GET-DIAGNOSIS] ✅ Saved cached session to DB with id: ${data?.id}`);
+        sessionData = data;
+      }
+    } catch (err) {
+      console.error('[GET-DIAGNOSIS] Error saving cached session to DB:', err.message);
+      // Continue anyway
+    }
+  }
+
   if (!session) {
     console.error('Session not found for sessionId:', sessionId);
     throw new Error(`Session not found: ${sessionId}`);
@@ -574,19 +611,39 @@ export async function getDiagnosis({ sessionId, userId = null, language = 'th' }
   });
 
   // Save diagnosis to database
+  // CRITICAL: Ensure session exists in DB before saving diagnosis (foreign key constraint)
   try {
+    // Verify session exists in DB before saving diagnosis
+    const { data: verifySession, error: verifyError } = await supabaseAdmin
+      .from('triage_sessions')
+      .select('id')
+      .eq('session_id', sessionId)
+      .single();
+    
+    if (verifyError || !verifySession) {
+      console.error('[SAVE-DIAGNOSIS] ❌ Session does not exist in DB:', sessionId);
+      console.error('[SAVE-DIAGNOSIS] Verify error:', verifyError);
+      throw new Error(`Session ${sessionId} does not exist in triage_sessions table. Cannot save diagnosis.`);
+    }
+    
+    // NOTE: diagnoses table schema includes: id, session_id, user_id, triage_level, summary, recommendations
+    // Build diagnosis data object - only include user_id if it exists and is not null
     const diagnosisData = {
       session_id: sessionId,
-      user_id: finalUserId,
       triage_level: diagnosis.triage_level,
       summary: diagnosis.summary,
       // Ensure recommendations is properly serialized (Supabase handles JSONB automatically)
       recommendations: diagnosis.recommendations || null,
     };
+    
+    // Only include user_id if it exists (some databases may not have this column)
+    // If Supabase schema cache doesn't recognize user_id, this will prevent the error
+    if (userId) {
+      diagnosisData.user_id = userId;
+    }
 
     console.log(`[SAVE-DIAGNOSIS] Saving diagnosis for session ${sessionId}:`, {
       session_id: sessionId,
-      user_id: finalUserId,
       triage_level: diagnosis.triage_level,
       has_summary: !!diagnosis.summary,
       has_recommendations: !!diagnosis.recommendations,

@@ -1,0 +1,751 @@
+body_part,symptom_keyword,severity_modifier,time_course_modifier,body_side_modifier,associated_symptom,population_risk,red_flag_question,emergency_if_yes,rationale,question_priority,clinical_context
+head,ปวดหัว,mild,acute,left,,general,ปวดหัวรุนแรงที่สุดในชีวิตเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,3,Acute mild left ปวดหัว
+head,ปวดหัว,mild,acute,right,,general,ปวดหัวรุนแรงที่สุดในชีวิตเกิดขึ้นทันทีด้านขวาหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,3,Acute mild right ปวดหัว
+head,ปวดหัว,mild,acute,bilateral,,general,ปวดหัวรุนแรงที่สุดในชีวิตเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,3,Acute mild bilateral ปวดหัว
+head,ปวดหัว,mild,acute,central,,general,ปวดหัวรุนแรงที่สุดในชีวิตเกิดขึ้นทันทีหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,3,Acute mild central ปวดหัว
+head,ปวดหัว,mild,subacute,left,,general,ปวดหัวรุนแรงที่สุดในชีวิตด้านซ้ายหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,3,Subacute mild left ปวดหัว
+head,ปวดหัว,mild,subacute,right,,general,ปวดหัวรุนแรงที่สุดในชีวิตด้านขวาหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,3,Subacute mild right ปวดหัว
+head,ปวดหัว,mild,subacute,bilateral,,general,ปวดหัวรุนแรงที่สุดในชีวิตทั้งสองข้างหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,3,Subacute mild bilateral ปวดหัว
+head,ปวดหัว,mild,subacute,central,,general,ปวดหัวรุนแรงที่สุดในชีวิตหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,3,Subacute mild central ปวดหัว
+head,ปวดหัว,mild,progressive,left,,general,ปวดหัวรุนแรงที่สุดในชีวิตแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,2,Progressive mild left ปวดหัว
+head,ปวดหัว,mild,progressive,right,,general,ปวดหัวรุนแรงที่สุดในชีวิตแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,2,Progressive mild right ปวดหัว
+head,ปวดหัว,mild,progressive,bilateral,,general,ปวดหัวรุนแรงที่สุดในชีวิตแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,2,Progressive mild bilateral ปวดหัว
+head,ปวดหัว,mild,progressive,central,,general,ปวดหัวรุนแรงที่สุดในชีวิตแย่ลงเรื่อยๆหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,2,Progressive mild central ปวดหัว
+head,ปวดหัว,mild,recurrent,left,,general,ปวดหัวรุนแรงที่สุดในชีวิตเป็นๆ หายๆด้านซ้ายหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,3,Recurrent mild left ปวดหัว
+head,ปวดหัว,mild,recurrent,right,,general,ปวดหัวรุนแรงที่สุดในชีวิตเป็นๆ หายๆด้านขวาหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,3,Recurrent mild right ปวดหัว
+head,ปวดหัว,mild,recurrent,bilateral,,general,ปวดหัวรุนแรงที่สุดในชีวิตเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,3,Recurrent mild bilateral ปวดหัว
+head,ปวดหัว,mild,recurrent,central,,general,ปวดหัวรุนแรงที่สุดในชีวิตเป็นๆ หายๆหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,3,Recurrent mild central ปวดหัว
+head,ปวดหัว,moderate,acute,central,fever,general,ปวดหัวรุนแรงที่สุดในชีวิตเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,1,fever + ปวดหัว → Higher emergency risk
+head,ปวดหัว,moderate,progressive,central,fever,general,ปวดหัวรุนแรงที่สุดในชีวิตแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,1,fever + ปวดหัว → Higher emergency risk
+head,ปวดหัว,moderate,acute,central,weakness,general,ปวดหัวรุนแรงที่สุดในชีวิตเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,1,weakness + ปวดหัว → Higher emergency risk
+head,ปวดหัว,moderate,progressive,central,weakness,general,ปวดหัวรุนแรงที่สุดในชีวิตแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,1,weakness + ปวดหัว → Higher emergency risk
+head,ปวดหัว,moderate,acute,central,,elderly,ผู้สูงอายุปวดหัวรุนแรงที่สุดในชีวิตเกิดขึ้นทันทีหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,1,Elderly + ปวดหัว → Lower threshold
+head,ปวดหัว,moderate,progressive,central,,elderly,ผู้สูงอายุปวดหัวรุนแรงที่สุดในชีวิตแย่ลงเรื่อยๆหรือไม่,yes,Thunderclap headache อาจเป็นเส้นเลือดสมองแตก,1,Elderly + ปวดหัว → Lower threshold
+head,ปวดหัว,mild,acute,left,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Acute mild left ปวดหัว
+head,ปวดหัว,mild,acute,right,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดเกิดขึ้นทันทีด้านขวาหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Acute mild right ปวดหัว
+head,ปวดหัว,mild,acute,bilateral,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Acute mild bilateral ปวดหัว
+head,ปวดหัว,mild,acute,central,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดเกิดขึ้นทันทีหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Acute mild central ปวดหัว
+head,ปวดหัว,mild,subacute,left,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดด้านซ้ายหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Subacute mild left ปวดหัว
+head,ปวดหัว,mild,subacute,right,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดด้านขวาหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Subacute mild right ปวดหัว
+head,ปวดหัว,mild,subacute,bilateral,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดทั้งสองข้างหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Subacute mild bilateral ปวดหัว
+head,ปวดหัว,mild,subacute,central,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Subacute mild central ปวดหัว
+head,ปวดหัว,mild,progressive,left,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,2,Progressive mild left ปวดหัว
+head,ปวดหัว,mild,progressive,right,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,2,Progressive mild right ปวดหัว
+head,ปวดหัว,mild,progressive,bilateral,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,2,Progressive mild bilateral ปวดหัว
+head,ปวดหัว,mild,progressive,central,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,2,Progressive mild central ปวดหัว
+head,ปวดหัว,mild,recurrent,left,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Recurrent mild left ปวดหัว
+head,ปวดหัว,mild,recurrent,right,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Recurrent mild right ปวดหัว
+head,ปวดหัว,mild,recurrent,bilateral,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Recurrent mild bilateral ปวดหัว
+head,ปวดหัว,mild,recurrent,central,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดเป็นๆ หายๆหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Recurrent mild central ปวดหัว
+head,ปวดหัว,severe,acute,left,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,1,Acute severe left ปวดหัว
+head,ปวดหัว,severe,acute,right,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากเกิดขึ้นทันทีด้านขวาหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,1,Acute severe right ปวดหัว
+head,ปวดหัว,severe,acute,bilateral,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,1,Acute severe bilateral ปวดหัว
+head,ปวดหัว,severe,acute,central,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,1,Acute severe central ปวดหัว
+head,ปวดหัว,severe,subacute,left,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากด้านซ้ายหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Subacute severe left ปวดหัว
+head,ปวดหัว,severe,subacute,right,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากด้านขวาหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Subacute severe right ปวดหัว
+head,ปวดหัว,severe,subacute,bilateral,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากทั้งสองข้างหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Subacute severe bilateral ปวดหัว
+head,ปวดหัว,severe,subacute,central,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Subacute severe central ปวดหัว
+head,ปวดหัว,severe,progressive,left,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,2,Progressive severe left ปวดหัว
+head,ปวดหัว,severe,progressive,right,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,2,Progressive severe right ปวดหัว
+head,ปวดหัว,severe,progressive,bilateral,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,2,Progressive severe bilateral ปวดหัว
+head,ปวดหัว,severe,progressive,central,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,2,Progressive severe central ปวดหัว
+head,ปวดหัว,severe,recurrent,left,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Recurrent severe left ปวดหัว
+head,ปวดหัว,severe,recurrent,right,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Recurrent severe right ปวดหัว
+head,ปวดหัว,severe,recurrent,bilateral,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Recurrent severe bilateral ปวดหัว
+head,ปวดหัว,severe,recurrent,central,,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากเป็นๆ หายๆหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,3,Recurrent severe central ปวดหัว
+head,ปวดหัว,moderate,acute,central,fever,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,1,fever + ปวดหัว → Higher emergency risk
+head,ปวดหัว,moderate,progressive,central,fever,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,1,fever + ปวดหัว → Higher emergency risk
+head,ปวดหัว,severe,acute,central,fever,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,1,fever + ปวดหัว → Higher emergency risk
+head,ปวดหัว,severe,progressive,central,fever,general,ปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,1,fever + ปวดหัว → Higher emergency risk
+head,ปวดหัว,moderate,acute,central,,elderly,ผู้สูงอายุปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดเกิดขึ้นทันทีหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,1,Elderly + ปวดหัว → Lower threshold
+head,ปวดหัว,moderate,progressive,central,,elderly,ผู้สูงอายุปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,1,Elderly + ปวดหัว → Lower threshold
+head,ปวดหัว,severe,acute,central,,elderly,ผู้สูงอายุปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,1,Elderly + ปวดหัว → Lower threshold
+head,ปวดหัว,severe,progressive,central,,elderly,ผู้สูงอายุปวดหัวร่วมกับแขนขาอ่อนแรงหรือพูดไม่ชัดรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นโรคหลอดเลือดสมอง,1,Elderly + ปวดหัว → Lower threshold
+head,ปวดหัว,mild,acute,left,,general,มีไข้สูงและคอแข็งร่วมด้วยเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Acute mild left ปวดหัว
+head,ปวดหัว,mild,acute,right,,general,มีไข้สูงและคอแข็งร่วมด้วยเกิดขึ้นทันทีด้านขวาหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Acute mild right ปวดหัว
+head,ปวดหัว,mild,acute,bilateral,,general,มีไข้สูงและคอแข็งร่วมด้วยเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Acute mild bilateral ปวดหัว
+head,ปวดหัว,mild,acute,central,,general,มีไข้สูงและคอแข็งร่วมด้วยเกิดขึ้นทันทีหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Acute mild central ปวดหัว
+head,ปวดหัว,mild,subacute,left,,general,มีไข้สูงและคอแข็งร่วมด้วยด้านซ้ายหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Subacute mild left ปวดหัว
+head,ปวดหัว,mild,subacute,right,,general,มีไข้สูงและคอแข็งร่วมด้วยด้านขวาหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Subacute mild right ปวดหัว
+head,ปวดหัว,mild,subacute,bilateral,,general,มีไข้สูงและคอแข็งร่วมด้วยทั้งสองข้างหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Subacute mild bilateral ปวดหัว
+head,ปวดหัว,mild,subacute,central,,general,มีไข้สูงและคอแข็งร่วมด้วยหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Subacute mild central ปวดหัว
+head,ปวดหัว,mild,progressive,left,,general,มีไข้สูงและคอแข็งร่วมด้วยแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,2,Progressive mild left ปวดหัว
+head,ปวดหัว,mild,progressive,right,,general,มีไข้สูงและคอแข็งร่วมด้วยแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,2,Progressive mild right ปวดหัว
+head,ปวดหัว,mild,progressive,bilateral,,general,มีไข้สูงและคอแข็งร่วมด้วยแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,2,Progressive mild bilateral ปวดหัว
+head,ปวดหัว,mild,progressive,central,,general,มีไข้สูงและคอแข็งร่วมด้วยแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,2,Progressive mild central ปวดหัว
+head,ปวดหัว,mild,recurrent,left,,general,มีไข้สูงและคอแข็งร่วมด้วยเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Recurrent mild left ปวดหัว
+head,ปวดหัว,mild,recurrent,right,,general,มีไข้สูงและคอแข็งร่วมด้วยเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Recurrent mild right ปวดหัว
+head,ปวดหัว,mild,recurrent,bilateral,,general,มีไข้สูงและคอแข็งร่วมด้วยเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Recurrent mild bilateral ปวดหัว
+head,ปวดหัว,mild,recurrent,central,,general,มีไข้สูงและคอแข็งร่วมด้วยเป็นๆ หายๆหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Recurrent mild central ปวดหัว
+head,ปวดหัว,severe,acute,left,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,1,Acute severe left ปวดหัว
+head,ปวดหัว,severe,acute,right,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากเกิดขึ้นทันทีด้านขวาหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,1,Acute severe right ปวดหัว
+head,ปวดหัว,severe,acute,bilateral,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,1,Acute severe bilateral ปวดหัว
+head,ปวดหัว,severe,acute,central,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,1,Acute severe central ปวดหัว
+head,ปวดหัว,severe,subacute,left,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากด้านซ้ายหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Subacute severe left ปวดหัว
+head,ปวดหัว,severe,subacute,right,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากด้านขวาหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Subacute severe right ปวดหัว
+head,ปวดหัว,severe,subacute,bilateral,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากทั้งสองข้างหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Subacute severe bilateral ปวดหัว
+head,ปวดหัว,severe,subacute,central,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Subacute severe central ปวดหัว
+head,ปวดหัว,severe,progressive,left,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,2,Progressive severe left ปวดหัว
+head,ปวดหัว,severe,progressive,right,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,2,Progressive severe right ปวดหัว
+head,ปวดหัว,severe,progressive,bilateral,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,2,Progressive severe bilateral ปวดหัว
+head,ปวดหัว,severe,progressive,central,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,2,Progressive severe central ปวดหัว
+head,ปวดหัว,severe,recurrent,left,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Recurrent severe left ปวดหัว
+head,ปวดหัว,severe,recurrent,right,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Recurrent severe right ปวดหัว
+head,ปวดหัว,severe,recurrent,bilateral,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Recurrent severe bilateral ปวดหัว
+head,ปวดหัว,severe,recurrent,central,,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากเป็นๆ หายๆหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,3,Recurrent severe central ปวดหัว
+head,ปวดหัว,moderate,acute,central,weakness,general,มีไข้สูงและคอแข็งร่วมด้วยเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,1,weakness + ปวดหัว → Higher emergency risk
+head,ปวดหัว,moderate,progressive,central,weakness,general,มีไข้สูงและคอแข็งร่วมด้วยแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,1,weakness + ปวดหัว → Higher emergency risk
+head,ปวดหัว,severe,acute,central,weakness,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,1,weakness + ปวดหัว → Higher emergency risk
+head,ปวดหัว,severe,progressive,central,weakness,general,มีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,1,weakness + ปวดหัว → Higher emergency risk
+head,ปวดหัว,moderate,acute,central,,elderly,ผู้สูงอายุมีไข้สูงและคอแข็งร่วมด้วยเกิดขึ้นทันทีหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,1,Elderly + ปวดหัว → Lower threshold
+head,ปวดหัว,moderate,progressive,central,,elderly,ผู้สูงอายุมีไข้สูงและคอแข็งร่วมด้วยแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,1,Elderly + ปวดหัว → Lower threshold
+head,ปวดหัว,severe,acute,central,,elderly,ผู้สูงอายุมีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,1,Elderly + ปวดหัว → Lower threshold
+head,ปวดหัว,severe,progressive,central,,elderly,ผู้สูงอายุมีไข้สูงและคอแข็งร่วมด้วยรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นเยื่อหุ้มสมองอักเสบ,1,Elderly + ปวดหัว → Lower threshold
+head,เวียนหัว,mild,acute,left,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,สงสัย Stroke,3,Acute mild left เวียนหัว
+head,เวียนหัว,mild,acute,right,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกเกิดขึ้นทันทีด้านขวาหรือไม่,yes,สงสัย Stroke,3,Acute mild right เวียนหัว
+head,เวียนหัว,mild,acute,bilateral,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,สงสัย Stroke,3,Acute mild bilateral เวียนหัว
+head,เวียนหัว,mild,acute,central,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกเกิดขึ้นทันทีหรือไม่,yes,สงสัย Stroke,3,Acute mild central เวียนหัว
+head,เวียนหัว,mild,subacute,left,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกด้านซ้ายหรือไม่,yes,สงสัย Stroke,3,Subacute mild left เวียนหัว
+head,เวียนหัว,mild,subacute,right,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกด้านขวาหรือไม่,yes,สงสัย Stroke,3,Subacute mild right เวียนหัว
+head,เวียนหัว,mild,subacute,bilateral,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกทั้งสองข้างหรือไม่,yes,สงสัย Stroke,3,Subacute mild bilateral เวียนหัว
+head,เวียนหัว,mild,subacute,central,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกหรือไม่,yes,สงสัย Stroke,3,Subacute mild central เวียนหัว
+head,เวียนหัว,mild,progressive,left,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,สงสัย Stroke,2,Progressive mild left เวียนหัว
+head,เวียนหัว,mild,progressive,right,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,สงสัย Stroke,2,Progressive mild right เวียนหัว
+head,เวียนหัว,mild,progressive,bilateral,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,สงสัย Stroke,2,Progressive mild bilateral เวียนหัว
+head,เวียนหัว,mild,progressive,central,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกแย่ลงเรื่อยๆหรือไม่,yes,สงสัย Stroke,2,Progressive mild central เวียนหัว
+head,เวียนหัว,mild,recurrent,left,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกเป็นๆ หายๆด้านซ้ายหรือไม่,yes,สงสัย Stroke,3,Recurrent mild left เวียนหัว
+head,เวียนหัว,mild,recurrent,right,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกเป็นๆ หายๆด้านขวาหรือไม่,yes,สงสัย Stroke,3,Recurrent mild right เวียนหัว
+head,เวียนหัว,mild,recurrent,bilateral,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,สงสัย Stroke,3,Recurrent mild bilateral เวียนหัว
+head,เวียนหัว,mild,recurrent,central,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกเป็นๆ หายๆหรือไม่,yes,สงสัย Stroke,3,Recurrent mild central เวียนหัว
+head,เวียนหัว,severe,acute,left,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,สงสัย Stroke,1,Acute severe left เวียนหัว
+head,เวียนหัว,severe,acute,right,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากเกิดขึ้นทันทีด้านขวาหรือไม่,yes,สงสัย Stroke,1,Acute severe right เวียนหัว
+head,เวียนหัว,severe,acute,bilateral,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,สงสัย Stroke,1,Acute severe bilateral เวียนหัว
+head,เวียนหัว,severe,acute,central,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,สงสัย Stroke,1,Acute severe central เวียนหัว
+head,เวียนหัว,severe,subacute,left,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากด้านซ้ายหรือไม่,yes,สงสัย Stroke,3,Subacute severe left เวียนหัว
+head,เวียนหัว,severe,subacute,right,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากด้านขวาหรือไม่,yes,สงสัย Stroke,3,Subacute severe right เวียนหัว
+head,เวียนหัว,severe,subacute,bilateral,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากทั้งสองข้างหรือไม่,yes,สงสัย Stroke,3,Subacute severe bilateral เวียนหัว
+head,เวียนหัว,severe,subacute,central,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากหรือไม่,yes,สงสัย Stroke,3,Subacute severe central เวียนหัว
+head,เวียนหัว,severe,progressive,left,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,สงสัย Stroke,2,Progressive severe left เวียนหัว
+head,เวียนหัว,severe,progressive,right,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,สงสัย Stroke,2,Progressive severe right เวียนหัว
+head,เวียนหัว,severe,progressive,bilateral,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,สงสัย Stroke,2,Progressive severe bilateral เวียนหัว
+head,เวียนหัว,severe,progressive,central,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,สงสัย Stroke,2,Progressive severe central เวียนหัว
+head,เวียนหัว,severe,recurrent,left,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,สงสัย Stroke,3,Recurrent severe left เวียนหัว
+head,เวียนหัว,severe,recurrent,right,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,สงสัย Stroke,3,Recurrent severe right เวียนหัว
+head,เวียนหัว,severe,recurrent,bilateral,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,สงสัย Stroke,3,Recurrent severe bilateral เวียนหัว
+head,เวียนหัว,severe,recurrent,central,,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากเป็นๆ หายๆหรือไม่,yes,สงสัย Stroke,3,Recurrent severe central เวียนหัว
+head,เวียนหัว,moderate,acute,central,fever,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,สงสัย Stroke,1,fever + เวียนหัว → Higher emergency risk
+head,เวียนหัว,moderate,progressive,central,fever,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,สงสัย Stroke,1,fever + เวียนหัว → Higher emergency risk
+head,เวียนหัว,severe,acute,central,fever,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,สงสัย Stroke,1,fever + เวียนหัว → Higher emergency risk
+head,เวียนหัว,severe,progressive,central,fever,general,เวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,สงสัย Stroke,1,fever + เวียนหัว → Higher emergency risk
+head,เวียนหัว,moderate,acute,central,,elderly,ผู้สูงอายุเวียนหัวร่วมกับอ่อนแรงครึ่งซีกเกิดขึ้นทันทีหรือไม่,yes,สงสัย Stroke,1,Elderly + เวียนหัว → Lower threshold
+head,เวียนหัว,moderate,progressive,central,,elderly,ผู้สูงอายุเวียนหัวร่วมกับอ่อนแรงครึ่งซีกแย่ลงเรื่อยๆหรือไม่,yes,สงสัย Stroke,1,Elderly + เวียนหัว → Lower threshold
+head,เวียนหัว,severe,acute,central,,elderly,ผู้สูงอายุเวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,สงสัย Stroke,1,Elderly + เวียนหัว → Lower threshold
+head,เวียนหัว,severe,progressive,central,,elderly,ผู้สูงอายุเวียนหัวร่วมกับอ่อนแรงครึ่งซีกรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,สงสัย Stroke,1,Elderly + เวียนหัว → Lower threshold
+eye,ปวดตา,mild,acute,left,,general,ปวดตามากร่วมกับตามัวเฉียบพลันด้านซ้ายหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,3,Acute mild left ปวดตา
+eye,ปวดตา,mild,acute,right,,general,ปวดตามากร่วมกับตามัวเฉียบพลันด้านขวาหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,3,Acute mild right ปวดตา
+eye,ปวดตา,mild,acute,bilateral,,general,ปวดตามากร่วมกับตามัวเฉียบพลันทั้งสองข้างหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,3,Acute mild bilateral ปวดตา
+eye,ปวดตา,mild,acute,central,,general,ปวดตามากร่วมกับตามัวเฉียบพลันหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,3,Acute mild central ปวดตา
+eye,ปวดตา,mild,progressive,left,,general,ปวดตามากร่วมกับตามัวเฉียบพลันแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,2,Progressive mild left ปวดตา
+eye,ปวดตา,mild,progressive,right,,general,ปวดตามากร่วมกับตามัวเฉียบพลันแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,2,Progressive mild right ปวดตา
+eye,ปวดตา,mild,progressive,bilateral,,general,ปวดตามากร่วมกับตามัวเฉียบพลันแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,2,Progressive mild bilateral ปวดตา
+eye,ปวดตา,mild,progressive,central,,general,ปวดตามากร่วมกับตามัวเฉียบพลันแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,2,Progressive mild central ปวดตา
+eye,ปวดตา,mild,recurrent,left,,general,ปวดตามากร่วมกับตามัวเฉียบพลันเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,3,Recurrent mild left ปวดตา
+eye,ปวดตา,mild,recurrent,right,,general,ปวดตามากร่วมกับตามัวเฉียบพลันเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,3,Recurrent mild right ปวดตา
+eye,ปวดตา,mild,recurrent,bilateral,,general,ปวดตามากร่วมกับตามัวเฉียบพลันเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,3,Recurrent mild bilateral ปวดตา
+eye,ปวดตา,mild,recurrent,central,,general,ปวดตามากร่วมกับตามัวเฉียบพลันเป็นๆ หายๆหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,3,Recurrent mild central ปวดตา
+eye,ปวดตา,severe,acute,left,,general,ปวดตามากร่วมกับตามัวเฉียบพลันรุนแรงมากด้านซ้ายหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,1,Acute severe left ปวดตา
+eye,ปวดตา,severe,acute,right,,general,ปวดตามากร่วมกับตามัวเฉียบพลันรุนแรงมากด้านขวาหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,1,Acute severe right ปวดตา
+eye,ปวดตา,severe,acute,bilateral,,general,ปวดตามากร่วมกับตามัวเฉียบพลันรุนแรงมากทั้งสองข้างหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,1,Acute severe bilateral ปวดตา
+eye,ปวดตา,severe,acute,central,,general,ปวดตามากร่วมกับตามัวเฉียบพลันรุนแรงมากหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,1,Acute severe central ปวดตา
+eye,ปวดตา,severe,progressive,left,,general,ปวดตามากร่วมกับตามัวเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,2,Progressive severe left ปวดตา
+eye,ปวดตา,severe,progressive,right,,general,ปวดตามากร่วมกับตามัวเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,2,Progressive severe right ปวดตา
+eye,ปวดตา,severe,progressive,bilateral,,general,ปวดตามากร่วมกับตามัวเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,2,Progressive severe bilateral ปวดตา
+eye,ปวดตา,severe,progressive,central,,general,ปวดตามากร่วมกับตามัวเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,2,Progressive severe central ปวดตา
+eye,ปวดตา,severe,recurrent,left,,general,ปวดตามากร่วมกับตามัวเฉียบพลันรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,3,Recurrent severe left ปวดตา
+eye,ปวดตา,severe,recurrent,right,,general,ปวดตามากร่วมกับตามัวเฉียบพลันรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,3,Recurrent severe right ปวดตา
+eye,ปวดตา,severe,recurrent,bilateral,,general,ปวดตามากร่วมกับตามัวเฉียบพลันรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,3,Recurrent severe bilateral ปวดตา
+eye,ปวดตา,severe,recurrent,central,,general,ปวดตามากร่วมกับตามัวเฉียบพลันรุนแรงมากเป็นๆ หายๆหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,3,Recurrent severe central ปวดตา
+eye,ปวดตา,moderate,acute,central,fever,general,ปวดตามากร่วมกับตามัวเฉียบพลันร่วมกับไข้สูงหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,1,fever + ปวดตา → Higher emergency risk
+eye,ปวดตา,moderate,progressive,central,fever,general,ปวดตามากร่วมกับตามัวเฉียบพลันแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,1,fever + ปวดตา → Higher emergency risk
+eye,ปวดตา,severe,acute,central,fever,general,ปวดตามากร่วมกับตามัวเฉียบพลันรุนแรงมากร่วมกับไข้สูงหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,1,fever + ปวดตา → Higher emergency risk
+eye,ปวดตา,severe,progressive,central,fever,general,ปวดตามากร่วมกับตามัวเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,อาจเป็นต้อหินเฉียบพลัน,1,fever + ปวดตา → Higher emergency risk
+eye,ตามัว,mild,acute,left,,general,ตามัวเฉียบพลันข้างเดียวด้านซ้ายหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,3,Acute mild left ตามัว
+eye,ตามัว,mild,acute,right,,general,ตามัวเฉียบพลันข้างเดียวด้านขวาหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,3,Acute mild right ตามัว
+eye,ตามัว,mild,acute,bilateral,,general,ตามัวเฉียบพลันข้างเดียวทั้งสองข้างหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,3,Acute mild bilateral ตามัว
+eye,ตามัว,mild,acute,central,,general,ตามัวเฉียบพลันข้างเดียวหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,3,Acute mild central ตามัว
+eye,ตามัว,mild,progressive,left,,general,ตามัวเฉียบพลันข้างเดียวแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,2,Progressive mild left ตามัว
+eye,ตามัว,mild,progressive,right,,general,ตามัวเฉียบพลันข้างเดียวแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,2,Progressive mild right ตามัว
+eye,ตามัว,mild,progressive,bilateral,,general,ตามัวเฉียบพลันข้างเดียวแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,2,Progressive mild bilateral ตามัว
+eye,ตามัว,mild,progressive,central,,general,ตามัวเฉียบพลันข้างเดียวแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,2,Progressive mild central ตามัว
+eye,ตามัว,mild,recurrent,left,,general,ตามัวเฉียบพลันข้างเดียวเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,3,Recurrent mild left ตามัว
+eye,ตามัว,mild,recurrent,right,,general,ตามัวเฉียบพลันข้างเดียวเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,3,Recurrent mild right ตามัว
+eye,ตามัว,mild,recurrent,bilateral,,general,ตามัวเฉียบพลันข้างเดียวเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,3,Recurrent mild bilateral ตามัว
+eye,ตามัว,mild,recurrent,central,,general,ตามัวเฉียบพลันข้างเดียวเป็นๆ หายๆหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,3,Recurrent mild central ตามัว
+eye,ตามัว,severe,acute,left,,general,ตามัวเฉียบพลันข้างเดียวรุนแรงมากด้านซ้ายหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,1,Acute severe left ตามัว
+eye,ตามัว,severe,acute,right,,general,ตามัวเฉียบพลันข้างเดียวรุนแรงมากด้านขวาหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,1,Acute severe right ตามัว
+eye,ตามัว,severe,acute,bilateral,,general,ตามัวเฉียบพลันข้างเดียวรุนแรงมากทั้งสองข้างหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,1,Acute severe bilateral ตามัว
+eye,ตามัว,severe,acute,central,,general,ตามัวเฉียบพลันข้างเดียวรุนแรงมากหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,1,Acute severe central ตามัว
+eye,ตามัว,severe,progressive,left,,general,ตามัวเฉียบพลันข้างเดียวรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,2,Progressive severe left ตามัว
+eye,ตามัว,severe,progressive,right,,general,ตามัวเฉียบพลันข้างเดียวรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,2,Progressive severe right ตามัว
+eye,ตามัว,severe,progressive,bilateral,,general,ตามัวเฉียบพลันข้างเดียวรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,2,Progressive severe bilateral ตามัว
+eye,ตามัว,severe,progressive,central,,general,ตามัวเฉียบพลันข้างเดียวรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,2,Progressive severe central ตามัว
+eye,ตามัว,severe,recurrent,left,,general,ตามัวเฉียบพลันข้างเดียวรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,3,Recurrent severe left ตามัว
+eye,ตามัว,severe,recurrent,right,,general,ตามัวเฉียบพลันข้างเดียวรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,3,Recurrent severe right ตามัว
+eye,ตามัว,severe,recurrent,bilateral,,general,ตามัวเฉียบพลันข้างเดียวรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,3,Recurrent severe bilateral ตามัว
+eye,ตามัว,severe,recurrent,central,,general,ตามัวเฉียบพลันข้างเดียวรุนแรงมากเป็นๆ หายๆหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,3,Recurrent severe central ตามัว
+eye,ตามัว,moderate,acute,central,fever,general,ตามัวเฉียบพลันข้างเดียวร่วมกับไข้สูงหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,1,fever + ตามัว → Higher emergency risk
+eye,ตามัว,moderate,progressive,central,fever,general,ตามัวเฉียบพลันข้างเดียวแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,1,fever + ตามัว → Higher emergency risk
+eye,ตามัว,severe,acute,central,fever,general,ตามัวเฉียบพลันข้างเดียวรุนแรงมากร่วมกับไข้สูงหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,1,fever + ตามัว → Higher emergency risk
+eye,ตามัว,severe,progressive,central,fever,general,ตามัวเฉียบพลันข้างเดียวรุนแรงมากแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,อาจเป็นหลอดเลือดจอตาอุดตัน,1,fever + ตามัว → Higher emergency risk
+chest,เจ็บอก,mild,acute,left,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Acute mild left เจ็บอก
+chest,เจ็บอก,mild,acute,right,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามเกิดขึ้นทันทีด้านขวาหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Acute mild right เจ็บอก
+chest,เจ็บอก,mild,acute,bilateral,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Acute mild bilateral เจ็บอก
+chest,เจ็บอก,mild,acute,central,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามเกิดขึ้นทันทีหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Acute mild central เจ็บอก
+chest,เจ็บอก,mild,subacute,left,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามด้านซ้ายหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Subacute mild left เจ็บอก
+chest,เจ็บอก,mild,subacute,right,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามด้านขวาหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Subacute mild right เจ็บอก
+chest,เจ็บอก,mild,subacute,bilateral,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามทั้งสองข้างหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Subacute mild bilateral เจ็บอก
+chest,เจ็บอก,mild,subacute,central,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Subacute mild central เจ็บอก
+chest,เจ็บอก,mild,progressive,left,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,2,Progressive mild left เจ็บอก
+chest,เจ็บอก,mild,progressive,right,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,2,Progressive mild right เจ็บอก
+chest,เจ็บอก,mild,progressive,bilateral,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,2,Progressive mild bilateral เจ็บอก
+chest,เจ็บอก,mild,progressive,central,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามแย่ลงเรื่อยๆหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,2,Progressive mild central เจ็บอก
+chest,เจ็บอก,mild,recurrent,left,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามเป็นๆ หายๆด้านซ้ายหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Recurrent mild left เจ็บอก
+chest,เจ็บอก,mild,recurrent,right,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามเป็นๆ หายๆด้านขวาหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Recurrent mild right เจ็บอก
+chest,เจ็บอก,mild,recurrent,bilateral,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Recurrent mild bilateral เจ็บอก
+chest,เจ็บอก,mild,recurrent,central,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามเป็นๆ หายๆหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Recurrent mild central เจ็บอก
+chest,เจ็บอก,severe,acute,left,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,Acute severe left เจ็บอก
+chest,เจ็บอก,severe,acute,right,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากเกิดขึ้นทันทีด้านขวาหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,Acute severe right เจ็บอก
+chest,เจ็บอก,severe,acute,bilateral,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,Acute severe bilateral เจ็บอก
+chest,เจ็บอก,severe,acute,central,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,Acute severe central เจ็บอก
+chest,เจ็บอก,severe,subacute,left,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากด้านซ้ายหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Subacute severe left เจ็บอก
+chest,เจ็บอก,severe,subacute,right,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากด้านขวาหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Subacute severe right เจ็บอก
+chest,เจ็บอก,severe,subacute,bilateral,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากทั้งสองข้างหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Subacute severe bilateral เจ็บอก
+chest,เจ็บอก,severe,subacute,central,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Subacute severe central เจ็บอก
+chest,เจ็บอก,severe,progressive,left,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,2,Progressive severe left เจ็บอก
+chest,เจ็บอก,severe,progressive,right,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,2,Progressive severe right เจ็บอก
+chest,เจ็บอก,severe,progressive,bilateral,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,2,Progressive severe bilateral เจ็บอก
+chest,เจ็บอก,severe,progressive,central,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,2,Progressive severe central เจ็บอก
+chest,เจ็บอก,severe,recurrent,left,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Recurrent severe left เจ็บอก
+chest,เจ็บอก,severe,recurrent,right,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Recurrent severe right เจ็บอก
+chest,เจ็บอก,severe,recurrent,bilateral,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Recurrent severe bilateral เจ็บอก
+chest,เจ็บอก,severe,recurrent,central,,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากเป็นๆ หายๆหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,3,Recurrent severe central เจ็บอก
+chest,เจ็บอก,moderate,acute,central,shortness_of_breath,general,เจ็บแน่นอกร้าวไปแขนหรือกรามเกิดขึ้นทันทีร่วมกับหายใจลำบากหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,shortness_of_breath + เจ็บอก → Higher emergency risk
+chest,เจ็บอก,moderate,progressive,central,shortness_of_breath,general,เจ็บแน่นอกร้าวไปแขนหรือกรามแย่ลงเรื่อยๆร่วมกับหายใจลำบากหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,shortness_of_breath + เจ็บอก → Higher emergency risk
+chest,เจ็บอก,severe,acute,central,shortness_of_breath,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากเกิดขึ้นทันทีร่วมกับหายใจลำบากหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,shortness_of_breath + เจ็บอก → Higher emergency risk
+chest,เจ็บอก,severe,progressive,central,shortness_of_breath,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากแย่ลงเรื่อยๆร่วมกับหายใจลำบากหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,shortness_of_breath + เจ็บอก → Higher emergency risk
+chest,เจ็บอก,moderate,acute,central,weakness,general,เจ็บแน่นอกร้าวไปแขนหรือกรามเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,weakness + เจ็บอก → Higher emergency risk
+chest,เจ็บอก,moderate,progressive,central,weakness,general,เจ็บแน่นอกร้าวไปแขนหรือกรามแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,weakness + เจ็บอก → Higher emergency risk
+chest,เจ็บอก,severe,acute,central,weakness,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,weakness + เจ็บอก → Higher emergency risk
+chest,เจ็บอก,severe,progressive,central,weakness,general,เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,weakness + เจ็บอก → Higher emergency risk
+chest,เจ็บอก,moderate,acute,central,,elderly,ผู้สูงอายุเจ็บแน่นอกร้าวไปแขนหรือกรามเกิดขึ้นทันทีหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,Elderly + เจ็บอก → Lower threshold
+chest,เจ็บอก,moderate,progressive,central,,elderly,ผู้สูงอายุเจ็บแน่นอกร้าวไปแขนหรือกรามแย่ลงเรื่อยๆหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,Elderly + เจ็บอก → Lower threshold
+chest,เจ็บอก,severe,acute,central,,elderly,ผู้สูงอายุเจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,Elderly + เจ็บอก → Lower threshold
+chest,เจ็บอก,severe,progressive,central,,elderly,ผู้สูงอายุเจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,Elderly + เจ็บอก → Lower threshold
+chest,เจ็บอก,moderate,acute,central,,pregnancy,หญิงตั้งครรภ์เจ็บแน่นอกร้าวไปแขนหรือกรามเกิดขึ้นทันทีหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,Pregnancy + เจ็บอก → Lower threshold
+chest,เจ็บอก,moderate,progressive,central,,pregnancy,หญิงตั้งครรภ์เจ็บแน่นอกร้าวไปแขนหรือกรามแย่ลงเรื่อยๆหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,Pregnancy + เจ็บอก → Lower threshold
+chest,เจ็บอก,severe,acute,central,,pregnancy,หญิงตั้งครรภ์เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,Pregnancy + เจ็บอก → Lower threshold
+chest,เจ็บอก,severe,progressive,central,,pregnancy,หญิงตั้งครรภ์เจ็บแน่นอกร้าวไปแขนหรือกรามรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,สงสัยกล้ามเนื้อหัวใจขาดเลือด,1,Pregnancy + เจ็บอก → Lower threshold
+chest,เจ็บอก,mild,acute,left,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันด้านซ้ายหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,3,Acute mild left เจ็บอก
+chest,เจ็บอก,mild,acute,right,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันด้านขวาหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,3,Acute mild right เจ็บอก
+chest,เจ็บอก,mild,acute,bilateral,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันทั้งสองข้างหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,3,Acute mild bilateral เจ็บอก
+chest,เจ็บอก,mild,acute,central,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,3,Acute mild central เจ็บอก
+chest,เจ็บอก,mild,progressive,left,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,2,Progressive mild left เจ็บอก
+chest,เจ็บอก,mild,progressive,right,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,2,Progressive mild right เจ็บอก
+chest,เจ็บอก,mild,progressive,bilateral,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,2,Progressive mild bilateral เจ็บอก
+chest,เจ็บอก,mild,progressive,central,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,2,Progressive mild central เจ็บอก
+chest,เจ็บอก,mild,recurrent,left,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,3,Recurrent mild left เจ็บอก
+chest,เจ็บอก,mild,recurrent,right,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,3,Recurrent mild right เจ็บอก
+chest,เจ็บอก,mild,recurrent,bilateral,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,3,Recurrent mild bilateral เจ็บอก
+chest,เจ็บอก,mild,recurrent,central,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันเป็นๆ หายๆหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,3,Recurrent mild central เจ็บอก
+chest,เจ็บอก,severe,acute,left,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากด้านซ้ายหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,Acute severe left เจ็บอก
+chest,เจ็บอก,severe,acute,right,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากด้านขวาหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,Acute severe right เจ็บอก
+chest,เจ็บอก,severe,acute,bilateral,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากทั้งสองข้างหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,Acute severe bilateral เจ็บอก
+chest,เจ็บอก,severe,acute,central,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,Acute severe central เจ็บอก
+chest,เจ็บอก,severe,progressive,left,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,2,Progressive severe left เจ็บอก
+chest,เจ็บอก,severe,progressive,right,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,2,Progressive severe right เจ็บอก
+chest,เจ็บอก,severe,progressive,bilateral,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,2,Progressive severe bilateral เจ็บอก
+chest,เจ็บอก,severe,progressive,central,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,2,Progressive severe central เจ็บอก
+chest,เจ็บอก,severe,recurrent,left,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,3,Recurrent severe left เจ็บอก
+chest,เจ็บอก,severe,recurrent,right,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,3,Recurrent severe right เจ็บอก
+chest,เจ็บอก,severe,recurrent,bilateral,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,3,Recurrent severe bilateral เจ็บอก
+chest,เจ็บอก,severe,recurrent,central,,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากเป็นๆ หายๆหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,3,Recurrent severe central เจ็บอก
+chest,เจ็บอก,moderate,acute,central,weakness,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันร่วมกับอ่อนแรงหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,weakness + เจ็บอก → Higher emergency risk
+chest,เจ็บอก,moderate,progressive,central,weakness,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,weakness + เจ็บอก → Higher emergency risk
+chest,เจ็บอก,severe,acute,central,weakness,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากร่วมกับอ่อนแรงหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,weakness + เจ็บอก → Higher emergency risk
+chest,เจ็บอก,severe,progressive,central,weakness,general,เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,weakness + เจ็บอก → Higher emergency risk
+chest,เจ็บอก,moderate,acute,central,,elderly,ผู้สูงอายุเจ็บอกร่วมกับหายใจลำบากเฉียบพลันหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,Elderly + เจ็บอก → Lower threshold
+chest,เจ็บอก,moderate,progressive,central,,elderly,ผู้สูงอายุเจ็บอกร่วมกับหายใจลำบากเฉียบพลันแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,Elderly + เจ็บอก → Lower threshold
+chest,เจ็บอก,severe,acute,central,,elderly,ผู้สูงอายุเจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,Elderly + เจ็บอก → Lower threshold
+chest,เจ็บอก,severe,progressive,central,,elderly,ผู้สูงอายุเจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,Elderly + เจ็บอก → Lower threshold
+chest,เจ็บอก,moderate,acute,central,,pregnancy,หญิงตั้งครรภ์เจ็บอกร่วมกับหายใจลำบากเฉียบพลันหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,Pregnancy + เจ็บอก → Lower threshold
+chest,เจ็บอก,moderate,progressive,central,,pregnancy,หญิงตั้งครรภ์เจ็บอกร่วมกับหายใจลำบากเฉียบพลันแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,Pregnancy + เจ็บอก → Lower threshold
+chest,เจ็บอก,severe,acute,central,,pregnancy,หญิงตั้งครรภ์เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,Pregnancy + เจ็บอก → Lower threshold
+chest,เจ็บอก,severe,progressive,central,,pregnancy,หญิงตั้งครรภ์เจ็บอกร่วมกับหายใจลำบากเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นลิ่มเลือดอุดตันปอด,1,Pregnancy + เจ็บอก → Lower threshold
+abdomen,ปวดท้อง,mild,acute,left,,general,ปวดท้องรุนแรงเฉียบพลันด้านซ้ายหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,3,Acute mild left ปวดท้อง
+abdomen,ปวดท้อง,mild,acute,right,,general,ปวดท้องรุนแรงเฉียบพลันด้านขวาหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,3,Acute mild right ปวดท้อง
+abdomen,ปวดท้อง,mild,acute,bilateral,,general,ปวดท้องรุนแรงเฉียบพลันทั้งสองข้างหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,3,Acute mild bilateral ปวดท้อง
+abdomen,ปวดท้อง,mild,acute,central,,general,ปวดท้องรุนแรงเฉียบพลันหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,3,Acute mild central ปวดท้อง
+abdomen,ปวดท้อง,mild,progressive,left,,general,ปวดท้องรุนแรงเฉียบพลันแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,2,Progressive mild left ปวดท้อง
+abdomen,ปวดท้อง,mild,progressive,right,,general,ปวดท้องรุนแรงเฉียบพลันแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,2,Progressive mild right ปวดท้อง
+abdomen,ปวดท้อง,mild,progressive,bilateral,,general,ปวดท้องรุนแรงเฉียบพลันแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,2,Progressive mild bilateral ปวดท้อง
+abdomen,ปวดท้อง,mild,progressive,central,,general,ปวดท้องรุนแรงเฉียบพลันแย่ลงเรื่อยๆหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,2,Progressive mild central ปวดท้อง
+abdomen,ปวดท้อง,mild,recurrent,left,,general,ปวดท้องรุนแรงเฉียบพลันเป็นๆ หายๆด้านซ้ายหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,3,Recurrent mild left ปวดท้อง
+abdomen,ปวดท้อง,mild,recurrent,right,,general,ปวดท้องรุนแรงเฉียบพลันเป็นๆ หายๆด้านขวาหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,3,Recurrent mild right ปวดท้อง
+abdomen,ปวดท้อง,mild,recurrent,bilateral,,general,ปวดท้องรุนแรงเฉียบพลันเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,3,Recurrent mild bilateral ปวดท้อง
+abdomen,ปวดท้อง,mild,recurrent,central,,general,ปวดท้องรุนแรงเฉียบพลันเป็นๆ หายๆหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,3,Recurrent mild central ปวดท้อง
+abdomen,ปวดท้อง,moderate,acute,central,vomiting,general,ปวดท้องรุนแรงเฉียบพลันร่วมกับอาเจียนหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,1,vomiting + ปวดท้อง → Higher emergency risk
+abdomen,ปวดท้อง,moderate,progressive,central,vomiting,general,ปวดท้องรุนแรงเฉียบพลันแย่ลงเรื่อยๆร่วมกับอาเจียนหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,1,vomiting + ปวดท้อง → Higher emergency risk
+abdomen,ปวดท้อง,moderate,acute,central,bleeding,general,ปวดท้องรุนแรงเฉียบพลันร่วมกับเลือดออกหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,1,bleeding + ปวดท้อง → Higher emergency risk
+abdomen,ปวดท้อง,moderate,progressive,central,bleeding,general,ปวดท้องรุนแรงเฉียบพลันแย่ลงเรื่อยๆร่วมกับเลือดออกหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,1,bleeding + ปวดท้อง → Higher emergency risk
+abdomen,ปวดท้อง,moderate,acute,central,fever,general,ปวดท้องรุนแรงเฉียบพลันร่วมกับไข้สูงหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,1,fever + ปวดท้อง → Higher emergency risk
+abdomen,ปวดท้อง,moderate,progressive,central,fever,general,ปวดท้องรุนแรงเฉียบพลันแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,1,fever + ปวดท้อง → Higher emergency risk
+abdomen,ปวดท้อง,moderate,acute,central,,elderly,ผู้สูงอายุปวดท้องรุนแรงเฉียบพลันหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,1,Elderly + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,moderate,progressive,central,,elderly,ผู้สูงอายุปวดท้องรุนแรงเฉียบพลันแย่ลงเรื่อยๆหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,1,Elderly + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,moderate,acute,central,,pediatric,เด็กปวดท้องรุนแรงเฉียบพลันหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,1,Pediatric + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,moderate,progressive,central,,pediatric,เด็กปวดท้องรุนแรงเฉียบพลันแย่ลงเรื่อยๆหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,1,Pediatric + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,moderate,acute,central,,pregnancy,หญิงตั้งครรภ์ปวดท้องรุนแรงเฉียบพลันหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,1,Pregnancy + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,moderate,progressive,central,,pregnancy,หญิงตั้งครรภ์ปวดท้องรุนแรงเฉียบพลันแย่ลงเรื่อยๆหรือไม่,yes,ภาวะช่องท้องฉุกเฉิน,1,Pregnancy + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,mild,acute,left,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Acute mild left ปวดท้อง
+abdomen,ปวดท้อง,mild,acute,right,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดเกิดขึ้นทันทีด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Acute mild right ปวดท้อง
+abdomen,ปวดท้อง,mild,acute,bilateral,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Acute mild bilateral ปวดท้อง
+abdomen,ปวดท้อง,mild,acute,central,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดเกิดขึ้นทันทีหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Acute mild central ปวดท้อง
+abdomen,ปวดท้อง,mild,subacute,left,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute mild left ปวดท้อง
+abdomen,ปวดท้อง,mild,subacute,right,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute mild right ปวดท้อง
+abdomen,ปวดท้อง,mild,subacute,bilateral,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute mild bilateral ปวดท้อง
+abdomen,ปวดท้อง,mild,subacute,central,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute mild central ปวดท้อง
+abdomen,ปวดท้อง,mild,progressive,left,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive mild left ปวดท้อง
+abdomen,ปวดท้อง,mild,progressive,right,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive mild right ปวดท้อง
+abdomen,ปวดท้อง,mild,progressive,bilateral,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive mild bilateral ปวดท้อง
+abdomen,ปวดท้อง,mild,progressive,central,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดแย่ลงเรื่อยๆหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive mild central ปวดท้อง
+abdomen,ปวดท้อง,mild,recurrent,left,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดเป็นๆ หายๆด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent mild left ปวดท้อง
+abdomen,ปวดท้อง,mild,recurrent,right,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดเป็นๆ หายๆด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent mild right ปวดท้อง
+abdomen,ปวดท้อง,mild,recurrent,bilateral,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent mild bilateral ปวดท้อง
+abdomen,ปวดท้อง,mild,recurrent,central,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดเป็นๆ หายๆหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent mild central ปวดท้อง
+abdomen,ปวดท้อง,severe,acute,left,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Acute severe left ปวดท้อง
+abdomen,ปวดท้อง,severe,acute,right,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากเกิดขึ้นทันทีด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Acute severe right ปวดท้อง
+abdomen,ปวดท้อง,severe,acute,bilateral,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Acute severe bilateral ปวดท้อง
+abdomen,ปวดท้อง,severe,acute,central,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Acute severe central ปวดท้อง
+abdomen,ปวดท้อง,severe,subacute,left,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute severe left ปวดท้อง
+abdomen,ปวดท้อง,severe,subacute,right,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute severe right ปวดท้อง
+abdomen,ปวดท้อง,severe,subacute,bilateral,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute severe bilateral ปวดท้อง
+abdomen,ปวดท้อง,severe,subacute,central,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute severe central ปวดท้อง
+abdomen,ปวดท้อง,severe,progressive,left,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive severe left ปวดท้อง
+abdomen,ปวดท้อง,severe,progressive,right,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive severe right ปวดท้อง
+abdomen,ปวดท้อง,severe,progressive,bilateral,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive severe bilateral ปวดท้อง
+abdomen,ปวดท้อง,severe,progressive,central,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive severe central ปวดท้อง
+abdomen,ปวดท้อง,severe,recurrent,left,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent severe left ปวดท้อง
+abdomen,ปวดท้อง,severe,recurrent,right,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent severe right ปวดท้อง
+abdomen,ปวดท้อง,severe,recurrent,bilateral,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent severe bilateral ปวดท้อง
+abdomen,ปวดท้อง,severe,recurrent,central,,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากเป็นๆ หายๆหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent severe central ปวดท้อง
+abdomen,ปวดท้อง,moderate,acute,central,fever,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,fever + ปวดท้อง → Higher emergency risk
+abdomen,ปวดท้อง,moderate,progressive,central,fever,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,fever + ปวดท้อง → Higher emergency risk
+abdomen,ปวดท้อง,severe,acute,central,fever,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,fever + ปวดท้อง → Higher emergency risk
+abdomen,ปวดท้อง,severe,progressive,central,fever,general,ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,fever + ปวดท้อง → Higher emergency risk
+abdomen,ปวดท้อง,moderate,acute,central,,elderly,ผู้สูงอายุปวดท้องร่วมกับอาเจียนเป็นเลือดเกิดขึ้นทันทีหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Elderly + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,moderate,progressive,central,,elderly,ผู้สูงอายุปวดท้องร่วมกับอาเจียนเป็นเลือดแย่ลงเรื่อยๆหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Elderly + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,severe,acute,central,,elderly,ผู้สูงอายุปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Elderly + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,severe,progressive,central,,elderly,ผู้สูงอายุปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Elderly + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,moderate,acute,central,,pediatric,เด็กปวดท้องร่วมกับอาเจียนเป็นเลือดเกิดขึ้นทันทีหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Pediatric + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,moderate,progressive,central,,pediatric,เด็กปวดท้องร่วมกับอาเจียนเป็นเลือดแย่ลงเรื่อยๆหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Pediatric + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,severe,acute,central,,pediatric,เด็กปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Pediatric + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,severe,progressive,central,,pediatric,เด็กปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Pediatric + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,moderate,acute,central,,pregnancy,หญิงตั้งครรภ์ปวดท้องร่วมกับอาเจียนเป็นเลือดเกิดขึ้นทันทีหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Pregnancy + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,moderate,progressive,central,,pregnancy,หญิงตั้งครรภ์ปวดท้องร่วมกับอาเจียนเป็นเลือดแย่ลงเรื่อยๆหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Pregnancy + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,severe,acute,central,,pregnancy,หญิงตั้งครรภ์ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Pregnancy + ปวดท้อง → Lower threshold
+abdomen,ปวดท้อง,severe,progressive,central,,pregnancy,หญิงตั้งครรภ์ปวดท้องร่วมกับอาเจียนเป็นเลือดรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Pregnancy + ปวดท้อง → Lower threshold
+urinary,ฉี่บ่อย,mild,acute,left,,general,มีไข้สูงและปวดหลังร่วมด้วยเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Acute mild left ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,acute,right,,general,มีไข้สูงและปวดหลังร่วมด้วยเกิดขึ้นทันทีด้านขวาหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Acute mild right ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,acute,bilateral,,general,มีไข้สูงและปวดหลังร่วมด้วยเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Acute mild bilateral ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,acute,central,,general,มีไข้สูงและปวดหลังร่วมด้วยเกิดขึ้นทันทีหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Acute mild central ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,subacute,left,,general,มีไข้สูงและปวดหลังร่วมด้วยด้านซ้ายหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Subacute mild left ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,subacute,right,,general,มีไข้สูงและปวดหลังร่วมด้วยด้านขวาหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Subacute mild right ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,subacute,bilateral,,general,มีไข้สูงและปวดหลังร่วมด้วยทั้งสองข้างหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Subacute mild bilateral ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,subacute,central,,general,มีไข้สูงและปวดหลังร่วมด้วยหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Subacute mild central ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,progressive,left,,general,มีไข้สูงและปวดหลังร่วมด้วยแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,2,Progressive mild left ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,progressive,right,,general,มีไข้สูงและปวดหลังร่วมด้วยแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,2,Progressive mild right ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,progressive,bilateral,,general,มีไข้สูงและปวดหลังร่วมด้วยแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,2,Progressive mild bilateral ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,progressive,central,,general,มีไข้สูงและปวดหลังร่วมด้วยแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,2,Progressive mild central ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,recurrent,left,,general,มีไข้สูงและปวดหลังร่วมด้วยเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Recurrent mild left ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,recurrent,right,,general,มีไข้สูงและปวดหลังร่วมด้วยเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Recurrent mild right ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,recurrent,bilateral,,general,มีไข้สูงและปวดหลังร่วมด้วยเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Recurrent mild bilateral ฉี่บ่อย
+urinary,ฉี่บ่อย,mild,recurrent,central,,general,มีไข้สูงและปวดหลังร่วมด้วยเป็นๆ หายๆหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Recurrent mild central ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,acute,left,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,1,Acute severe left ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,acute,right,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากเกิดขึ้นทันทีด้านขวาหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,1,Acute severe right ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,acute,bilateral,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,1,Acute severe bilateral ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,acute,central,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,1,Acute severe central ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,subacute,left,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากด้านซ้ายหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Subacute severe left ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,subacute,right,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากด้านขวาหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Subacute severe right ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,subacute,bilateral,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากทั้งสองข้างหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Subacute severe bilateral ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,subacute,central,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Subacute severe central ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,progressive,left,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,2,Progressive severe left ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,progressive,right,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,2,Progressive severe right ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,progressive,bilateral,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,2,Progressive severe bilateral ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,progressive,central,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,2,Progressive severe central ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,recurrent,left,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Recurrent severe left ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,recurrent,right,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Recurrent severe right ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,recurrent,bilateral,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Recurrent severe bilateral ฉี่บ่อย
+urinary,ฉี่บ่อย,severe,recurrent,central,,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากเป็นๆ หายๆหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,3,Recurrent severe central ฉี่บ่อย
+urinary,ฉี่บ่อย,moderate,acute,central,bleeding,general,มีไข้สูงและปวดหลังร่วมด้วยเกิดขึ้นทันทีร่วมกับเลือดออกหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,1,bleeding + ฉี่บ่อย → Higher emergency risk
+urinary,ฉี่บ่อย,moderate,progressive,central,bleeding,general,มีไข้สูงและปวดหลังร่วมด้วยแย่ลงเรื่อยๆร่วมกับเลือดออกหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,1,bleeding + ฉี่บ่อย → Higher emergency risk
+urinary,ฉี่บ่อย,severe,acute,central,bleeding,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากเกิดขึ้นทันทีร่วมกับเลือดออกหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,1,bleeding + ฉี่บ่อย → Higher emergency risk
+urinary,ฉี่บ่อย,severe,progressive,central,bleeding,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากแย่ลงเรื่อยๆร่วมกับเลือดออกหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,1,bleeding + ฉี่บ่อย → Higher emergency risk
+urinary,ฉี่บ่อย,moderate,acute,central,weakness,general,มีไข้สูงและปวดหลังร่วมด้วยเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,1,weakness + ฉี่บ่อย → Higher emergency risk
+urinary,ฉี่บ่อย,moderate,progressive,central,weakness,general,มีไข้สูงและปวดหลังร่วมด้วยแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,1,weakness + ฉี่บ่อย → Higher emergency risk
+urinary,ฉี่บ่อย,severe,acute,central,weakness,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,1,weakness + ฉี่บ่อย → Higher emergency risk
+urinary,ฉี่บ่อย,severe,progressive,central,weakness,general,มีไข้สูงและปวดหลังร่วมด้วยรุนแรงมากแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,อาจเป็นกรวยไตอักเสบ,1,weakness + ฉี่บ่อย → Higher emergency risk
+urinary,ปัสสาวะไม่ออก,mild,acute,left,,general,ปัสสาวะไม่ออกตลอดวันเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Acute mild left ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,acute,right,,general,ปัสสาวะไม่ออกตลอดวันเกิดขึ้นทันทีด้านขวาหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Acute mild right ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,acute,bilateral,,general,ปัสสาวะไม่ออกตลอดวันเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Acute mild bilateral ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,acute,central,,general,ปัสสาวะไม่ออกตลอดวันเกิดขึ้นทันทีหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Acute mild central ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,subacute,left,,general,ปัสสาวะไม่ออกตลอดวันด้านซ้ายหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Subacute mild left ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,subacute,right,,general,ปัสสาวะไม่ออกตลอดวันด้านขวาหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Subacute mild right ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,subacute,bilateral,,general,ปัสสาวะไม่ออกตลอดวันทั้งสองข้างหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Subacute mild bilateral ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,subacute,central,,general,ปัสสาวะไม่ออกตลอดวันหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Subacute mild central ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,progressive,left,,general,ปัสสาวะไม่ออกตลอดวันแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,ภาวะปัสสาวะคั่ง,2,Progressive mild left ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,progressive,right,,general,ปัสสาวะไม่ออกตลอดวันแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,ภาวะปัสสาวะคั่ง,2,Progressive mild right ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,progressive,bilateral,,general,ปัสสาวะไม่ออกตลอดวันแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,ภาวะปัสสาวะคั่ง,2,Progressive mild bilateral ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,progressive,central,,general,ปัสสาวะไม่ออกตลอดวันแย่ลงเรื่อยๆหรือไม่,yes,ภาวะปัสสาวะคั่ง,2,Progressive mild central ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,recurrent,left,,general,ปัสสาวะไม่ออกตลอดวันเป็นๆ หายๆด้านซ้ายหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Recurrent mild left ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,recurrent,right,,general,ปัสสาวะไม่ออกตลอดวันเป็นๆ หายๆด้านขวาหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Recurrent mild right ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,recurrent,bilateral,,general,ปัสสาวะไม่ออกตลอดวันเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Recurrent mild bilateral ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,mild,recurrent,central,,general,ปัสสาวะไม่ออกตลอดวันเป็นๆ หายๆหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Recurrent mild central ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,acute,left,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,Acute severe left ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,acute,right,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากเกิดขึ้นทันทีด้านขวาหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,Acute severe right ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,acute,bilateral,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,Acute severe bilateral ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,acute,central,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,Acute severe central ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,subacute,left,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากด้านซ้ายหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Subacute severe left ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,subacute,right,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากด้านขวาหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Subacute severe right ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,subacute,bilateral,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากทั้งสองข้างหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Subacute severe bilateral ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,subacute,central,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Subacute severe central ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,progressive,left,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,ภาวะปัสสาวะคั่ง,2,Progressive severe left ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,progressive,right,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,ภาวะปัสสาวะคั่ง,2,Progressive severe right ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,progressive,bilateral,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,ภาวะปัสสาวะคั่ง,2,Progressive severe bilateral ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,progressive,central,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,ภาวะปัสสาวะคั่ง,2,Progressive severe central ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,recurrent,left,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Recurrent severe left ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,recurrent,right,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Recurrent severe right ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,recurrent,bilateral,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Recurrent severe bilateral ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,severe,recurrent,central,,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากเป็นๆ หายๆหรือไม่,yes,ภาวะปัสสาวะคั่ง,3,Recurrent severe central ปัสสาวะไม่ออก
+urinary,ปัสสาวะไม่ออก,moderate,acute,central,fever,general,ปัสสาวะไม่ออกตลอดวันเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,fever + ปัสสาวะไม่ออก → Higher emergency risk
+urinary,ปัสสาวะไม่ออก,moderate,progressive,central,fever,general,ปัสสาวะไม่ออกตลอดวันแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,fever + ปัสสาวะไม่ออก → Higher emergency risk
+urinary,ปัสสาวะไม่ออก,severe,acute,central,fever,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,fever + ปัสสาวะไม่ออก → Higher emergency risk
+urinary,ปัสสาวะไม่ออก,severe,progressive,central,fever,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,fever + ปัสสาวะไม่ออก → Higher emergency risk
+urinary,ปัสสาวะไม่ออก,moderate,acute,central,bleeding,general,ปัสสาวะไม่ออกตลอดวันเกิดขึ้นทันทีร่วมกับเลือดออกหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,bleeding + ปัสสาวะไม่ออก → Higher emergency risk
+urinary,ปัสสาวะไม่ออก,moderate,progressive,central,bleeding,general,ปัสสาวะไม่ออกตลอดวันแย่ลงเรื่อยๆร่วมกับเลือดออกหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,bleeding + ปัสสาวะไม่ออก → Higher emergency risk
+urinary,ปัสสาวะไม่ออก,severe,acute,central,bleeding,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากเกิดขึ้นทันทีร่วมกับเลือดออกหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,bleeding + ปัสสาวะไม่ออก → Higher emergency risk
+urinary,ปัสสาวะไม่ออก,severe,progressive,central,bleeding,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากแย่ลงเรื่อยๆร่วมกับเลือดออกหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,bleeding + ปัสสาวะไม่ออก → Higher emergency risk
+urinary,ปัสสาวะไม่ออก,moderate,acute,central,weakness,general,ปัสสาวะไม่ออกตลอดวันเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,weakness + ปัสสาวะไม่ออก → Higher emergency risk
+urinary,ปัสสาวะไม่ออก,moderate,progressive,central,weakness,general,ปัสสาวะไม่ออกตลอดวันแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,weakness + ปัสสาวะไม่ออก → Higher emergency risk
+urinary,ปัสสาวะไม่ออก,severe,acute,central,weakness,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,weakness + ปัสสาวะไม่ออก → Higher emergency risk
+urinary,ปัสสาวะไม่ออก,severe,progressive,central,weakness,general,ปัสสาวะไม่ออกตลอดวันรุนแรงมากแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,ภาวะปัสสาวะคั่ง,1,weakness + ปัสสาวะไม่ออก → Higher emergency risk
+skin,ผื่น,mild,acute,left,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Acute mild left ผื่น
+skin,ผื่น,mild,acute,right,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมเกิดขึ้นทันทีด้านขวาหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Acute mild right ผื่น
+skin,ผื่น,mild,acute,bilateral,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Acute mild bilateral ผื่น
+skin,ผื่น,mild,acute,central,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมเกิดขึ้นทันทีหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Acute mild central ผื่น
+skin,ผื่น,mild,subacute,left,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมด้านซ้ายหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Subacute mild left ผื่น
+skin,ผื่น,mild,subacute,right,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมด้านขวาหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Subacute mild right ผื่น
+skin,ผื่น,mild,subacute,bilateral,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมทั้งสองข้างหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Subacute mild bilateral ผื่น
+skin,ผื่น,mild,subacute,central,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Subacute mild central ผื่น
+skin,ผื่น,mild,progressive,left,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็นแพ้รุนแรง,2,Progressive mild left ผื่น
+skin,ผื่น,mild,progressive,right,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็นแพ้รุนแรง,2,Progressive mild right ผื่น
+skin,ผื่น,mild,progressive,bilateral,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็นแพ้รุนแรง,2,Progressive mild bilateral ผื่น
+skin,ผื่น,mild,progressive,central,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นแพ้รุนแรง,2,Progressive mild central ผื่น
+skin,ผื่น,mild,recurrent,left,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Recurrent mild left ผื่น
+skin,ผื่น,mild,recurrent,right,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Recurrent mild right ผื่น
+skin,ผื่น,mild,recurrent,bilateral,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Recurrent mild bilateral ผื่น
+skin,ผื่น,mild,recurrent,central,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมเป็นๆ หายๆหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Recurrent mild central ผื่น
+skin,ผื่น,severe,acute,left,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,อาจเป็นแพ้รุนแรง,1,Acute severe left ผื่น
+skin,ผื่น,severe,acute,right,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากเกิดขึ้นทันทีด้านขวาหรือไม่,yes,อาจเป็นแพ้รุนแรง,1,Acute severe right ผื่น
+skin,ผื่น,severe,acute,bilateral,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,อาจเป็นแพ้รุนแรง,1,Acute severe bilateral ผื่น
+skin,ผื่น,severe,acute,central,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,อาจเป็นแพ้รุนแรง,1,Acute severe central ผื่น
+skin,ผื่น,severe,subacute,left,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากด้านซ้ายหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Subacute severe left ผื่น
+skin,ผื่น,severe,subacute,right,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากด้านขวาหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Subacute severe right ผื่น
+skin,ผื่น,severe,subacute,bilateral,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากทั้งสองข้างหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Subacute severe bilateral ผื่น
+skin,ผื่น,severe,subacute,central,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Subacute severe central ผื่น
+skin,ผื่น,severe,progressive,left,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็นแพ้รุนแรง,2,Progressive severe left ผื่น
+skin,ผื่น,severe,progressive,right,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็นแพ้รุนแรง,2,Progressive severe right ผื่น
+skin,ผื่น,severe,progressive,bilateral,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็นแพ้รุนแรง,2,Progressive severe bilateral ผื่น
+skin,ผื่น,severe,progressive,central,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็นแพ้รุนแรง,2,Progressive severe central ผื่น
+skin,ผื่น,severe,recurrent,left,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Recurrent severe left ผื่น
+skin,ผื่น,severe,recurrent,right,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Recurrent severe right ผื่น
+skin,ผื่น,severe,recurrent,bilateral,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Recurrent severe bilateral ผื่น
+skin,ผื่น,severe,recurrent,central,,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากเป็นๆ หายๆหรือไม่,yes,อาจเป็นแพ้รุนแรง,3,Recurrent severe central ผื่น
+skin,ผื่น,moderate,acute,central,fever,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,อาจเป็นแพ้รุนแรง,1,fever + ผื่น → Higher emergency risk
+skin,ผื่น,moderate,progressive,central,fever,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,อาจเป็นแพ้รุนแรง,1,fever + ผื่น → Higher emergency risk
+skin,ผื่น,severe,acute,central,fever,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,อาจเป็นแพ้รุนแรง,1,fever + ผื่น → Higher emergency risk
+skin,ผื่น,severe,progressive,central,fever,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,อาจเป็นแพ้รุนแรง,1,fever + ผื่น → Higher emergency risk
+skin,ผื่น,moderate,acute,central,bleeding,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมเกิดขึ้นทันทีร่วมกับเลือดออกหรือไม่,yes,อาจเป็นแพ้รุนแรง,1,bleeding + ผื่น → Higher emergency risk
+skin,ผื่น,moderate,progressive,central,bleeding,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมแย่ลงเรื่อยๆร่วมกับเลือดออกหรือไม่,yes,อาจเป็นแพ้รุนแรง,1,bleeding + ผื่น → Higher emergency risk
+skin,ผื่น,severe,acute,central,bleeding,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากเกิดขึ้นทันทีร่วมกับเลือดออกหรือไม่,yes,อาจเป็นแพ้รุนแรง,1,bleeding + ผื่น → Higher emergency risk
+skin,ผื่น,severe,progressive,central,bleeding,general,ผื่นร่วมกับหายใจลำบากหรือหน้าบวมรุนแรงมากแย่ลงเรื่อยๆร่วมกับเลือดออกหรือไม่,yes,อาจเป็นแพ้รุนแรง,1,bleeding + ผื่น → Higher emergency risk
+skin,ผื่น,mild,acute,left,,general,ผื่นลามเร็วร่วมกับไข้สูงเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Acute mild left ผื่น
+skin,ผื่น,mild,acute,right,,general,ผื่นลามเร็วร่วมกับไข้สูงเกิดขึ้นทันทีด้านขวาหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Acute mild right ผื่น
+skin,ผื่น,mild,acute,bilateral,,general,ผื่นลามเร็วร่วมกับไข้สูงเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Acute mild bilateral ผื่น
+skin,ผื่น,mild,acute,central,,general,ผื่นลามเร็วร่วมกับไข้สูงเกิดขึ้นทันทีหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Acute mild central ผื่น
+skin,ผื่น,mild,subacute,left,,general,ผื่นลามเร็วร่วมกับไข้สูงด้านซ้ายหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Subacute mild left ผื่น
+skin,ผื่น,mild,subacute,right,,general,ผื่นลามเร็วร่วมกับไข้สูงด้านขวาหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Subacute mild right ผื่น
+skin,ผื่น,mild,subacute,bilateral,,general,ผื่นลามเร็วร่วมกับไข้สูงทั้งสองข้างหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Subacute mild bilateral ผื่น
+skin,ผื่น,mild,subacute,central,,general,ผื่นลามเร็วร่วมกับไข้สูงหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Subacute mild central ผื่น
+skin,ผื่น,mild,progressive,left,,general,ผื่นลามเร็วร่วมกับไข้สูงแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,2,Progressive mild left ผื่น
+skin,ผื่น,mild,progressive,right,,general,ผื่นลามเร็วร่วมกับไข้สูงแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,2,Progressive mild right ผื่น
+skin,ผื่น,mild,progressive,bilateral,,general,ผื่นลามเร็วร่วมกับไข้สูงแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,2,Progressive mild bilateral ผื่น
+skin,ผื่น,mild,progressive,central,,general,ผื่นลามเร็วร่วมกับไข้สูงแย่ลงเรื่อยๆหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,2,Progressive mild central ผื่น
+skin,ผื่น,mild,recurrent,left,,general,ผื่นลามเร็วร่วมกับไข้สูงเป็นๆ หายๆด้านซ้ายหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Recurrent mild left ผื่น
+skin,ผื่น,mild,recurrent,right,,general,ผื่นลามเร็วร่วมกับไข้สูงเป็นๆ หายๆด้านขวาหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Recurrent mild right ผื่น
+skin,ผื่น,mild,recurrent,bilateral,,general,ผื่นลามเร็วร่วมกับไข้สูงเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Recurrent mild bilateral ผื่น
+skin,ผื่น,mild,recurrent,central,,general,ผื่นลามเร็วร่วมกับไข้สูงเป็นๆ หายๆหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Recurrent mild central ผื่น
+skin,ผื่น,severe,acute,left,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,1,Acute severe left ผื่น
+skin,ผื่น,severe,acute,right,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากเกิดขึ้นทันทีด้านขวาหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,1,Acute severe right ผื่น
+skin,ผื่น,severe,acute,bilateral,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,1,Acute severe bilateral ผื่น
+skin,ผื่น,severe,acute,central,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,1,Acute severe central ผื่น
+skin,ผื่น,severe,subacute,left,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากด้านซ้ายหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Subacute severe left ผื่น
+skin,ผื่น,severe,subacute,right,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากด้านขวาหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Subacute severe right ผื่น
+skin,ผื่น,severe,subacute,bilateral,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากทั้งสองข้างหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Subacute severe bilateral ผื่น
+skin,ผื่น,severe,subacute,central,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Subacute severe central ผื่น
+skin,ผื่น,severe,progressive,left,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,2,Progressive severe left ผื่น
+skin,ผื่น,severe,progressive,right,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,2,Progressive severe right ผื่น
+skin,ผื่น,severe,progressive,bilateral,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,2,Progressive severe bilateral ผื่น
+skin,ผื่น,severe,progressive,central,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,2,Progressive severe central ผื่น
+skin,ผื่น,severe,recurrent,left,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Recurrent severe left ผื่น
+skin,ผื่น,severe,recurrent,right,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Recurrent severe right ผื่น
+skin,ผื่น,severe,recurrent,bilateral,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Recurrent severe bilateral ผื่น
+skin,ผื่น,severe,recurrent,central,,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากเป็นๆ หายๆหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,3,Recurrent severe central ผื่น
+skin,ผื่น,moderate,acute,central,shortness_of_breath,general,ผื่นลามเร็วร่วมกับไข้สูงเกิดขึ้นทันทีร่วมกับหายใจลำบากหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,1,shortness_of_breath + ผื่น → Higher emergency risk
+skin,ผื่น,moderate,progressive,central,shortness_of_breath,general,ผื่นลามเร็วร่วมกับไข้สูงแย่ลงเรื่อยๆร่วมกับหายใจลำบากหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,1,shortness_of_breath + ผื่น → Higher emergency risk
+skin,ผื่น,severe,acute,central,shortness_of_breath,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากเกิดขึ้นทันทีร่วมกับหายใจลำบากหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,1,shortness_of_breath + ผื่น → Higher emergency risk
+skin,ผื่น,severe,progressive,central,shortness_of_breath,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากแย่ลงเรื่อยๆร่วมกับหายใจลำบากหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,1,shortness_of_breath + ผื่น → Higher emergency risk
+skin,ผื่น,moderate,acute,central,bleeding,general,ผื่นลามเร็วร่วมกับไข้สูงเกิดขึ้นทันทีร่วมกับเลือดออกหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,1,bleeding + ผื่น → Higher emergency risk
+skin,ผื่น,moderate,progressive,central,bleeding,general,ผื่นลามเร็วร่วมกับไข้สูงแย่ลงเรื่อยๆร่วมกับเลือดออกหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,1,bleeding + ผื่น → Higher emergency risk
+skin,ผื่น,severe,acute,central,bleeding,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากเกิดขึ้นทันทีร่วมกับเลือดออกหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,1,bleeding + ผื่น → Higher emergency risk
+skin,ผื่น,severe,progressive,central,bleeding,general,ผื่นลามเร็วร่วมกับไข้สูงรุนแรงมากแย่ลงเรื่อยๆร่วมกับเลือดออกหรือไม่,yes,เสี่ยงติดเชื้อรุนแรง,1,bleeding + ผื่น → Higher emergency risk
+neuro,ชา,mild,acute,left,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกด้านซ้ายหรือไม่,yes,อาจเป็น Stroke,3,Acute mild left ชา
+neuro,ชา,mild,acute,right,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกด้านขวาหรือไม่,yes,อาจเป็น Stroke,3,Acute mild right ชา
+neuro,ชา,mild,acute,bilateral,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกทั้งสองข้างหรือไม่,yes,อาจเป็น Stroke,3,Acute mild bilateral ชา
+neuro,ชา,mild,acute,central,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกหรือไม่,yes,อาจเป็น Stroke,3,Acute mild central ชา
+neuro,ชา,mild,progressive,left,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็น Stroke,2,Progressive mild left ชา
+neuro,ชา,mild,progressive,right,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็น Stroke,2,Progressive mild right ชา
+neuro,ชา,mild,progressive,bilateral,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็น Stroke,2,Progressive mild bilateral ชา
+neuro,ชา,mild,progressive,central,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็น Stroke,2,Progressive mild central ชา
+neuro,ชา,mild,recurrent,left,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็น Stroke,3,Recurrent mild left ชา
+neuro,ชา,mild,recurrent,right,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็น Stroke,3,Recurrent mild right ชา
+neuro,ชา,mild,recurrent,bilateral,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็น Stroke,3,Recurrent mild bilateral ชา
+neuro,ชา,mild,recurrent,central,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกเป็นๆ หายๆหรือไม่,yes,อาจเป็น Stroke,3,Recurrent mild central ชา
+neuro,ชา,severe,acute,left,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกรุนแรงมากด้านซ้ายหรือไม่,yes,อาจเป็น Stroke,1,Acute severe left ชา
+neuro,ชา,severe,acute,right,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกรุนแรงมากด้านขวาหรือไม่,yes,อาจเป็น Stroke,1,Acute severe right ชา
+neuro,ชา,severe,acute,bilateral,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกรุนแรงมากทั้งสองข้างหรือไม่,yes,อาจเป็น Stroke,1,Acute severe bilateral ชา
+neuro,ชา,severe,acute,central,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกรุนแรงมากหรือไม่,yes,อาจเป็น Stroke,1,Acute severe central ชา
+neuro,ชา,severe,progressive,left,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,อาจเป็น Stroke,2,Progressive severe left ชา
+neuro,ชา,severe,progressive,right,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,อาจเป็น Stroke,2,Progressive severe right ชา
+neuro,ชา,severe,progressive,bilateral,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,อาจเป็น Stroke,2,Progressive severe bilateral ชา
+neuro,ชา,severe,progressive,central,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,อาจเป็น Stroke,2,Progressive severe central ชา
+neuro,ชา,severe,recurrent,left,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,อาจเป็น Stroke,3,Recurrent severe left ชา
+neuro,ชา,severe,recurrent,right,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,อาจเป็น Stroke,3,Recurrent severe right ชา
+neuro,ชา,severe,recurrent,bilateral,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,อาจเป็น Stroke,3,Recurrent severe bilateral ชา
+neuro,ชา,severe,recurrent,central,,general,ชาหรืออ่อนแรงเฉียบพลันครึ่งซีกรุนแรงมากเป็นๆ หายๆหรือไม่,yes,อาจเป็น Stroke,3,Recurrent severe central ชา
+respiratory,หายใจลำบาก,mild,acute,left,,general,หายใจลำบากเฉียบพลันด้านซ้ายหรือไม่,yes,ภาวะหายใจล้มเหลว,3,Acute mild left หายใจลำบาก
+respiratory,หายใจลำบาก,mild,acute,right,,general,หายใจลำบากเฉียบพลันด้านขวาหรือไม่,yes,ภาวะหายใจล้มเหลว,3,Acute mild right หายใจลำบาก
+respiratory,หายใจลำบาก,mild,acute,bilateral,,general,หายใจลำบากเฉียบพลันทั้งสองข้างหรือไม่,yes,ภาวะหายใจล้มเหลว,3,Acute mild bilateral หายใจลำบาก
+respiratory,หายใจลำบาก,mild,acute,central,,general,หายใจลำบากเฉียบพลันหรือไม่,yes,ภาวะหายใจล้มเหลว,3,Acute mild central หายใจลำบาก
+respiratory,หายใจลำบาก,mild,progressive,left,,general,หายใจลำบากเฉียบพลันแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,ภาวะหายใจล้มเหลว,2,Progressive mild left หายใจลำบาก
+respiratory,หายใจลำบาก,mild,progressive,right,,general,หายใจลำบากเฉียบพลันแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,ภาวะหายใจล้มเหลว,2,Progressive mild right หายใจลำบาก
+respiratory,หายใจลำบาก,mild,progressive,bilateral,,general,หายใจลำบากเฉียบพลันแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,ภาวะหายใจล้มเหลว,2,Progressive mild bilateral หายใจลำบาก
+respiratory,หายใจลำบาก,mild,progressive,central,,general,หายใจลำบากเฉียบพลันแย่ลงเรื่อยๆหรือไม่,yes,ภาวะหายใจล้มเหลว,2,Progressive mild central หายใจลำบาก
+respiratory,หายใจลำบาก,mild,recurrent,left,,general,หายใจลำบากเฉียบพลันเป็นๆ หายๆด้านซ้ายหรือไม่,yes,ภาวะหายใจล้มเหลว,3,Recurrent mild left หายใจลำบาก
+respiratory,หายใจลำบาก,mild,recurrent,right,,general,หายใจลำบากเฉียบพลันเป็นๆ หายๆด้านขวาหรือไม่,yes,ภาวะหายใจล้มเหลว,3,Recurrent mild right หายใจลำบาก
+respiratory,หายใจลำบาก,mild,recurrent,bilateral,,general,หายใจลำบากเฉียบพลันเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,ภาวะหายใจล้มเหลว,3,Recurrent mild bilateral หายใจลำบาก
+respiratory,หายใจลำบาก,mild,recurrent,central,,general,หายใจลำบากเฉียบพลันเป็นๆ หายๆหรือไม่,yes,ภาวะหายใจล้มเหลว,3,Recurrent mild central หายใจลำบาก
+respiratory,หายใจลำบาก,severe,acute,left,,general,หายใจลำบากเฉียบพลันรุนแรงมากด้านซ้ายหรือไม่,yes,ภาวะหายใจล้มเหลว,1,Acute severe left หายใจลำบาก
+respiratory,หายใจลำบาก,severe,acute,right,,general,หายใจลำบากเฉียบพลันรุนแรงมากด้านขวาหรือไม่,yes,ภาวะหายใจล้มเหลว,1,Acute severe right หายใจลำบาก
+respiratory,หายใจลำบาก,severe,acute,bilateral,,general,หายใจลำบากเฉียบพลันรุนแรงมากทั้งสองข้างหรือไม่,yes,ภาวะหายใจล้มเหลว,1,Acute severe bilateral หายใจลำบาก
+respiratory,หายใจลำบาก,severe,acute,central,,general,หายใจลำบากเฉียบพลันรุนแรงมากหรือไม่,yes,ภาวะหายใจล้มเหลว,1,Acute severe central หายใจลำบาก
+respiratory,หายใจลำบาก,severe,progressive,left,,general,หายใจลำบากเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,ภาวะหายใจล้มเหลว,2,Progressive severe left หายใจลำบาก
+respiratory,หายใจลำบาก,severe,progressive,right,,general,หายใจลำบากเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,ภาวะหายใจล้มเหลว,2,Progressive severe right หายใจลำบาก
+respiratory,หายใจลำบาก,severe,progressive,bilateral,,general,หายใจลำบากเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,ภาวะหายใจล้มเหลว,2,Progressive severe bilateral หายใจลำบาก
+respiratory,หายใจลำบาก,severe,progressive,central,,general,หายใจลำบากเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,ภาวะหายใจล้มเหลว,2,Progressive severe central หายใจลำบาก
+respiratory,หายใจลำบาก,severe,recurrent,left,,general,หายใจลำบากเฉียบพลันรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,ภาวะหายใจล้มเหลว,3,Recurrent severe left หายใจลำบาก
+respiratory,หายใจลำบาก,severe,recurrent,right,,general,หายใจลำบากเฉียบพลันรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,ภาวะหายใจล้มเหลว,3,Recurrent severe right หายใจลำบาก
+respiratory,หายใจลำบาก,severe,recurrent,bilateral,,general,หายใจลำบากเฉียบพลันรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,ภาวะหายใจล้มเหลว,3,Recurrent severe bilateral หายใจลำบาก
+respiratory,หายใจลำบาก,severe,recurrent,central,,general,หายใจลำบากเฉียบพลันรุนแรงมากเป็นๆ หายๆหรือไม่,yes,ภาวะหายใจล้มเหลว,3,Recurrent severe central หายใจลำบาก
+respiratory,หายใจลำบาก,moderate,acute,central,weakness,general,หายใจลำบากเฉียบพลันร่วมกับอ่อนแรงหรือไม่,yes,ภาวะหายใจล้มเหลว,1,weakness + หายใจลำบาก → Higher emergency risk
+respiratory,หายใจลำบาก,moderate,progressive,central,weakness,general,หายใจลำบากเฉียบพลันแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,ภาวะหายใจล้มเหลว,1,weakness + หายใจลำบาก → Higher emergency risk
+respiratory,หายใจลำบาก,severe,acute,central,weakness,general,หายใจลำบากเฉียบพลันรุนแรงมากร่วมกับอ่อนแรงหรือไม่,yes,ภาวะหายใจล้มเหลว,1,weakness + หายใจลำบาก → Higher emergency risk
+respiratory,หายใจลำบาก,severe,progressive,central,weakness,general,หายใจลำบากเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,ภาวะหายใจล้มเหลว,1,weakness + หายใจลำบาก → Higher emergency risk
+respiratory,หายใจลำบาก,moderate,acute,central,fever,general,หายใจลำบากเฉียบพลันร่วมกับไข้สูงหรือไม่,yes,ภาวะหายใจล้มเหลว,1,fever + หายใจลำบาก → Higher emergency risk
+respiratory,หายใจลำบาก,moderate,progressive,central,fever,general,หายใจลำบากเฉียบพลันแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,ภาวะหายใจล้มเหลว,1,fever + หายใจลำบาก → Higher emergency risk
+respiratory,หายใจลำบาก,severe,acute,central,fever,general,หายใจลำบากเฉียบพลันรุนแรงมากร่วมกับไข้สูงหรือไม่,yes,ภาวะหายใจล้มเหลว,1,fever + หายใจลำบาก → Higher emergency risk
+respiratory,หายใจลำบาก,severe,progressive,central,fever,general,หายใจลำบากเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,ภาวะหายใจล้มเหลว,1,fever + หายใจลำบาก → Higher emergency risk
+respiratory,หายใจลำบาก,moderate,acute,central,,pediatric,เด็กหายใจลำบากเฉียบพลันหรือไม่,yes,ภาวะหายใจล้มเหลว,1,Pediatric + หายใจลำบาก → Lower threshold
+respiratory,หายใจลำบาก,moderate,progressive,central,,pediatric,เด็กหายใจลำบากเฉียบพลันแย่ลงเรื่อยๆหรือไม่,yes,ภาวะหายใจล้มเหลว,1,Pediatric + หายใจลำบาก → Lower threshold
+respiratory,หายใจลำบาก,severe,acute,central,,pediatric,เด็กหายใจลำบากเฉียบพลันรุนแรงมากหรือไม่,yes,ภาวะหายใจล้มเหลว,1,Pediatric + หายใจลำบาก → Lower threshold
+respiratory,หายใจลำบาก,severe,progressive,central,,pediatric,เด็กหายใจลำบากเฉียบพลันรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,ภาวะหายใจล้มเหลว,1,Pediatric + หายใจลำบาก → Lower threshold
+GI,ถ่ายดำ,mild,acute,left,,general,ถ่ายดำเหมือนยางมะตอยเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Acute mild left ถ่ายดำ
+GI,ถ่ายดำ,mild,acute,right,,general,ถ่ายดำเหมือนยางมะตอยเกิดขึ้นทันทีด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Acute mild right ถ่ายดำ
+GI,ถ่ายดำ,mild,acute,bilateral,,general,ถ่ายดำเหมือนยางมะตอยเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Acute mild bilateral ถ่ายดำ
+GI,ถ่ายดำ,mild,acute,central,,general,ถ่ายดำเหมือนยางมะตอยเกิดขึ้นทันทีหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Acute mild central ถ่ายดำ
+GI,ถ่ายดำ,mild,subacute,left,,general,ถ่ายดำเหมือนยางมะตอยด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute mild left ถ่ายดำ
+GI,ถ่ายดำ,mild,subacute,right,,general,ถ่ายดำเหมือนยางมะตอยด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute mild right ถ่ายดำ
+GI,ถ่ายดำ,mild,subacute,bilateral,,general,ถ่ายดำเหมือนยางมะตอยทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute mild bilateral ถ่ายดำ
+GI,ถ่ายดำ,mild,subacute,central,,general,ถ่ายดำเหมือนยางมะตอยหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute mild central ถ่ายดำ
+GI,ถ่ายดำ,mild,progressive,left,,general,ถ่ายดำเหมือนยางมะตอยแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive mild left ถ่ายดำ
+GI,ถ่ายดำ,mild,progressive,right,,general,ถ่ายดำเหมือนยางมะตอยแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive mild right ถ่ายดำ
+GI,ถ่ายดำ,mild,progressive,bilateral,,general,ถ่ายดำเหมือนยางมะตอยแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive mild bilateral ถ่ายดำ
+GI,ถ่ายดำ,mild,progressive,central,,general,ถ่ายดำเหมือนยางมะตอยแย่ลงเรื่อยๆหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive mild central ถ่ายดำ
+GI,ถ่ายดำ,mild,recurrent,left,,general,ถ่ายดำเหมือนยางมะตอยเป็นๆ หายๆด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent mild left ถ่ายดำ
+GI,ถ่ายดำ,mild,recurrent,right,,general,ถ่ายดำเหมือนยางมะตอยเป็นๆ หายๆด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent mild right ถ่ายดำ
+GI,ถ่ายดำ,mild,recurrent,bilateral,,general,ถ่ายดำเหมือนยางมะตอยเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent mild bilateral ถ่ายดำ
+GI,ถ่ายดำ,mild,recurrent,central,,general,ถ่ายดำเหมือนยางมะตอยเป็นๆ หายๆหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent mild central ถ่ายดำ
+GI,ถ่ายดำ,severe,acute,left,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Acute severe left ถ่ายดำ
+GI,ถ่ายดำ,severe,acute,right,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากเกิดขึ้นทันทีด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Acute severe right ถ่ายดำ
+GI,ถ่ายดำ,severe,acute,bilateral,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Acute severe bilateral ถ่ายดำ
+GI,ถ่ายดำ,severe,acute,central,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,Acute severe central ถ่ายดำ
+GI,ถ่ายดำ,severe,subacute,left,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute severe left ถ่ายดำ
+GI,ถ่ายดำ,severe,subacute,right,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute severe right ถ่ายดำ
+GI,ถ่ายดำ,severe,subacute,bilateral,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute severe bilateral ถ่ายดำ
+GI,ถ่ายดำ,severe,subacute,central,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Subacute severe central ถ่ายดำ
+GI,ถ่ายดำ,severe,progressive,left,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive severe left ถ่ายดำ
+GI,ถ่ายดำ,severe,progressive,right,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive severe right ถ่ายดำ
+GI,ถ่ายดำ,severe,progressive,bilateral,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive severe bilateral ถ่ายดำ
+GI,ถ่ายดำ,severe,progressive,central,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,เลือดออกในทางเดินอาหาร,2,Progressive severe central ถ่ายดำ
+GI,ถ่ายดำ,severe,recurrent,left,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent severe left ถ่ายดำ
+GI,ถ่ายดำ,severe,recurrent,right,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent severe right ถ่ายดำ
+GI,ถ่ายดำ,severe,recurrent,bilateral,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent severe bilateral ถ่ายดำ
+GI,ถ่ายดำ,severe,recurrent,central,,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากเป็นๆ หายๆหรือไม่,yes,เลือดออกในทางเดินอาหาร,3,Recurrent severe central ถ่ายดำ
+GI,ถ่ายดำ,moderate,acute,central,bleeding,general,ถ่ายดำเหมือนยางมะตอยเกิดขึ้นทันทีร่วมกับเลือดออกหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,bleeding + ถ่ายดำ → Higher emergency risk
+GI,ถ่ายดำ,moderate,progressive,central,bleeding,general,ถ่ายดำเหมือนยางมะตอยแย่ลงเรื่อยๆร่วมกับเลือดออกหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,bleeding + ถ่ายดำ → Higher emergency risk
+GI,ถ่ายดำ,severe,acute,central,bleeding,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากเกิดขึ้นทันทีร่วมกับเลือดออกหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,bleeding + ถ่ายดำ → Higher emergency risk
+GI,ถ่ายดำ,severe,progressive,central,bleeding,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากแย่ลงเรื่อยๆร่วมกับเลือดออกหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,bleeding + ถ่ายดำ → Higher emergency risk
+GI,ถ่ายดำ,moderate,acute,central,vomiting,general,ถ่ายดำเหมือนยางมะตอยเกิดขึ้นทันทีร่วมกับอาเจียนหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,vomiting + ถ่ายดำ → Higher emergency risk
+GI,ถ่ายดำ,moderate,progressive,central,vomiting,general,ถ่ายดำเหมือนยางมะตอยแย่ลงเรื่อยๆร่วมกับอาเจียนหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,vomiting + ถ่ายดำ → Higher emergency risk
+GI,ถ่ายดำ,severe,acute,central,vomiting,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากเกิดขึ้นทันทีร่วมกับอาเจียนหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,vomiting + ถ่ายดำ → Higher emergency risk
+GI,ถ่ายดำ,severe,progressive,central,vomiting,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากแย่ลงเรื่อยๆร่วมกับอาเจียนหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,vomiting + ถ่ายดำ → Higher emergency risk
+GI,ถ่ายดำ,moderate,acute,central,weakness,general,ถ่ายดำเหมือนยางมะตอยเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,weakness + ถ่ายดำ → Higher emergency risk
+GI,ถ่ายดำ,moderate,progressive,central,weakness,general,ถ่ายดำเหมือนยางมะตอยแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,weakness + ถ่ายดำ → Higher emergency risk
+GI,ถ่ายดำ,severe,acute,central,weakness,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,weakness + ถ่ายดำ → Higher emergency risk
+GI,ถ่ายดำ,severe,progressive,central,weakness,general,ถ่ายดำเหมือนยางมะตอยรุนแรงมากแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,เลือดออกในทางเดินอาหาร,1,weakness + ถ่ายดำ → Higher emergency risk
+fever,ไข้,mild,acute,left,,general,ไข้สูงมากร่วมกับซึมเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Acute mild left ไข้
+fever,ไข้,mild,acute,right,,general,ไข้สูงมากร่วมกับซึมเกิดขึ้นทันทีด้านขวาหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Acute mild right ไข้
+fever,ไข้,mild,acute,bilateral,,general,ไข้สูงมากร่วมกับซึมเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Acute mild bilateral ไข้
+fever,ไข้,mild,acute,central,,general,ไข้สูงมากร่วมกับซึมเกิดขึ้นทันทีหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Acute mild central ไข้
+fever,ไข้,mild,subacute,left,,general,ไข้สูงมากร่วมกับซึมด้านซ้ายหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Subacute mild left ไข้
+fever,ไข้,mild,subacute,right,,general,ไข้สูงมากร่วมกับซึมด้านขวาหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Subacute mild right ไข้
+fever,ไข้,mild,subacute,bilateral,,general,ไข้สูงมากร่วมกับซึมทั้งสองข้างหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Subacute mild bilateral ไข้
+fever,ไข้,mild,subacute,central,,general,ไข้สูงมากร่วมกับซึมหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Subacute mild central ไข้
+fever,ไข้,mild,progressive,left,,general,ไข้สูงมากร่วมกับซึมแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,2,Progressive mild left ไข้
+fever,ไข้,mild,progressive,right,,general,ไข้สูงมากร่วมกับซึมแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,2,Progressive mild right ไข้
+fever,ไข้,mild,progressive,bilateral,,general,ไข้สูงมากร่วมกับซึมแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,2,Progressive mild bilateral ไข้
+fever,ไข้,mild,progressive,central,,general,ไข้สูงมากร่วมกับซึมแย่ลงเรื่อยๆหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,2,Progressive mild central ไข้
+fever,ไข้,mild,recurrent,left,,general,ไข้สูงมากร่วมกับซึมเป็นๆ หายๆด้านซ้ายหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Recurrent mild left ไข้
+fever,ไข้,mild,recurrent,right,,general,ไข้สูงมากร่วมกับซึมเป็นๆ หายๆด้านขวาหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Recurrent mild right ไข้
+fever,ไข้,mild,recurrent,bilateral,,general,ไข้สูงมากร่วมกับซึมเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Recurrent mild bilateral ไข้
+fever,ไข้,mild,recurrent,central,,general,ไข้สูงมากร่วมกับซึมเป็นๆ หายๆหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Recurrent mild central ไข้
+fever,ไข้,severe,acute,left,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,Acute severe left ไข้
+fever,ไข้,severe,acute,right,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากเกิดขึ้นทันทีด้านขวาหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,Acute severe right ไข้
+fever,ไข้,severe,acute,bilateral,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,Acute severe bilateral ไข้
+fever,ไข้,severe,acute,central,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,Acute severe central ไข้
+fever,ไข้,severe,subacute,left,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากด้านซ้ายหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Subacute severe left ไข้
+fever,ไข้,severe,subacute,right,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากด้านขวาหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Subacute severe right ไข้
+fever,ไข้,severe,subacute,bilateral,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากทั้งสองข้างหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Subacute severe bilateral ไข้
+fever,ไข้,severe,subacute,central,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Subacute severe central ไข้
+fever,ไข้,severe,progressive,left,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,2,Progressive severe left ไข้
+fever,ไข้,severe,progressive,right,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,2,Progressive severe right ไข้
+fever,ไข้,severe,progressive,bilateral,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,2,Progressive severe bilateral ไข้
+fever,ไข้,severe,progressive,central,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,2,Progressive severe central ไข้
+fever,ไข้,severe,recurrent,left,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Recurrent severe left ไข้
+fever,ไข้,severe,recurrent,right,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Recurrent severe right ไข้
+fever,ไข้,severe,recurrent,bilateral,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Recurrent severe bilateral ไข้
+fever,ไข้,severe,recurrent,central,,general,ไข้สูงมากร่วมกับซึมรุนแรงมากเป็นๆ หายๆหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,3,Recurrent severe central ไข้
+fever,ไข้,moderate,acute,central,weakness,general,ไข้สูงมากร่วมกับซึมเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,weakness + ไข้ → Higher emergency risk
+fever,ไข้,moderate,progressive,central,weakness,general,ไข้สูงมากร่วมกับซึมแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,weakness + ไข้ → Higher emergency risk
+fever,ไข้,severe,acute,central,weakness,general,ไข้สูงมากร่วมกับซึมรุนแรงมากเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,weakness + ไข้ → Higher emergency risk
+fever,ไข้,severe,progressive,central,weakness,general,ไข้สูงมากร่วมกับซึมรุนแรงมากแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,weakness + ไข้ → Higher emergency risk
+fever,ไข้,moderate,acute,central,bleeding,general,ไข้สูงมากร่วมกับซึมเกิดขึ้นทันทีร่วมกับเลือดออกหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,bleeding + ไข้ → Higher emergency risk
+fever,ไข้,moderate,progressive,central,bleeding,general,ไข้สูงมากร่วมกับซึมแย่ลงเรื่อยๆร่วมกับเลือดออกหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,bleeding + ไข้ → Higher emergency risk
+fever,ไข้,severe,acute,central,bleeding,general,ไข้สูงมากร่วมกับซึมรุนแรงมากเกิดขึ้นทันทีร่วมกับเลือดออกหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,bleeding + ไข้ → Higher emergency risk
+fever,ไข้,severe,progressive,central,bleeding,general,ไข้สูงมากร่วมกับซึมรุนแรงมากแย่ลงเรื่อยๆร่วมกับเลือดออกหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,bleeding + ไข้ → Higher emergency risk
+fever,ไข้,moderate,acute,central,,pediatric,เด็กไข้สูงมากร่วมกับซึมเกิดขึ้นทันทีหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,Pediatric + ไข้ → Lower threshold
+fever,ไข้,moderate,progressive,central,,pediatric,เด็กไข้สูงมากร่วมกับซึมแย่ลงเรื่อยๆหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,Pediatric + ไข้ → Lower threshold
+fever,ไข้,severe,acute,central,,pediatric,เด็กไข้สูงมากร่วมกับซึมรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,Pediatric + ไข้ → Lower threshold
+fever,ไข้,severe,progressive,central,,pediatric,เด็กไข้สูงมากร่วมกับซึมรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,ภาวะติดเชื้อในกระแสเลือด,1,Pediatric + ไข้ → Lower threshold
+OB-GYN,ปวดท้องน้อย,mild,acute,left,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Acute mild left ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,acute,right,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติเกิดขึ้นทันทีด้านขวาหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Acute mild right ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,acute,bilateral,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Acute mild bilateral ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,acute,central,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติเกิดขึ้นทันทีหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Acute mild central ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,subacute,left,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติด้านซ้ายหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Subacute mild left ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,subacute,right,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติด้านขวาหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Subacute mild right ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,subacute,bilateral,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติทั้งสองข้างหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Subacute mild bilateral ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,subacute,central,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Subacute mild central ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,progressive,left,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,เสี่ยงท้องนอกมดลูก,2,Progressive mild left ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,progressive,right,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,เสี่ยงท้องนอกมดลูก,2,Progressive mild right ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,progressive,bilateral,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,เสี่ยงท้องนอกมดลูก,2,Progressive mild bilateral ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,progressive,central,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติแย่ลงเรื่อยๆหรือไม่,yes,เสี่ยงท้องนอกมดลูก,2,Progressive mild central ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,recurrent,left,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติเป็นๆ หายๆด้านซ้ายหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Recurrent mild left ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,recurrent,right,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติเป็นๆ หายๆด้านขวาหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Recurrent mild right ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,recurrent,bilateral,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Recurrent mild bilateral ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,mild,recurrent,central,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติเป็นๆ หายๆหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Recurrent mild central ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,acute,left,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,Acute severe left ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,acute,right,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากเกิดขึ้นทันทีด้านขวาหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,Acute severe right ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,acute,bilateral,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,Acute severe bilateral ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,acute,central,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,Acute severe central ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,subacute,left,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากด้านซ้ายหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Subacute severe left ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,subacute,right,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากด้านขวาหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Subacute severe right ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,subacute,bilateral,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากทั้งสองข้างหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Subacute severe bilateral ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,subacute,central,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Subacute severe central ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,progressive,left,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,เสี่ยงท้องนอกมดลูก,2,Progressive severe left ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,progressive,right,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,เสี่ยงท้องนอกมดลูก,2,Progressive severe right ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,progressive,bilateral,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,เสี่ยงท้องนอกมดลูก,2,Progressive severe bilateral ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,progressive,central,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,เสี่ยงท้องนอกมดลูก,2,Progressive severe central ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,recurrent,left,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Recurrent severe left ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,recurrent,right,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Recurrent severe right ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,recurrent,bilateral,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Recurrent severe bilateral ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,severe,recurrent,central,,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากเป็นๆ หายๆหรือไม่,yes,เสี่ยงท้องนอกมดลูก,3,Recurrent severe central ปวดท้องน้อย
+OB-GYN,ปวดท้องน้อย,moderate,acute,central,fever,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,fever + ปวดท้องน้อย → Higher emergency risk
+OB-GYN,ปวดท้องน้อย,moderate,progressive,central,fever,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,fever + ปวดท้องน้อย → Higher emergency risk
+OB-GYN,ปวดท้องน้อย,severe,acute,central,fever,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,fever + ปวดท้องน้อย → Higher emergency risk
+OB-GYN,ปวดท้องน้อย,severe,progressive,central,fever,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,fever + ปวดท้องน้อย → Higher emergency risk
+OB-GYN,ปวดท้องน้อย,moderate,acute,central,weakness,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,weakness + ปวดท้องน้อย → Higher emergency risk
+OB-GYN,ปวดท้องน้อย,moderate,progressive,central,weakness,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,weakness + ปวดท้องน้อย → Higher emergency risk
+OB-GYN,ปวดท้องน้อย,severe,acute,central,weakness,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,weakness + ปวดท้องน้อย → Higher emergency risk
+OB-GYN,ปวดท้องน้อย,severe,progressive,central,weakness,general,ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,weakness + ปวดท้องน้อย → Higher emergency risk
+OB-GYN,ปวดท้องน้อย,moderate,acute,central,,pregnancy,หญิงตั้งครรภ์ปวดท้องน้อยร่วมกับเลือดออกผิดปกติเกิดขึ้นทันทีหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,Pregnancy + ปวดท้องน้อย → Lower threshold
+OB-GYN,ปวดท้องน้อย,moderate,progressive,central,,pregnancy,หญิงตั้งครรภ์ปวดท้องน้อยร่วมกับเลือดออกผิดปกติแย่ลงเรื่อยๆหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,Pregnancy + ปวดท้องน้อย → Lower threshold
+OB-GYN,ปวดท้องน้อย,severe,acute,central,,pregnancy,หญิงตั้งครรภ์ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,Pregnancy + ปวดท้องน้อย → Lower threshold
+OB-GYN,ปวดท้องน้อย,severe,progressive,central,,pregnancy,หญิงตั้งครรภ์ปวดท้องน้อยร่วมกับเลือดออกผิดปกติรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,เสี่ยงท้องนอกมดลูก,1,Pregnancy + ปวดท้องน้อย → Lower threshold
+pediatric,เด็กซึม,mild,acute,left,,general,เด็กซึมไม่กินไม่เล่นเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Acute mild left เด็กซึม
+pediatric,เด็กซึม,mild,acute,right,,general,เด็กซึมไม่กินไม่เล่นเกิดขึ้นทันทีด้านขวาหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Acute mild right เด็กซึม
+pediatric,เด็กซึม,mild,acute,bilateral,,general,เด็กซึมไม่กินไม่เล่นเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Acute mild bilateral เด็กซึม
+pediatric,เด็กซึม,mild,acute,central,,general,เด็กซึมไม่กินไม่เล่นเกิดขึ้นทันทีหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Acute mild central เด็กซึม
+pediatric,เด็กซึม,mild,subacute,left,,general,เด็กซึมไม่กินไม่เล่นด้านซ้ายหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Subacute mild left เด็กซึม
+pediatric,เด็กซึม,mild,subacute,right,,general,เด็กซึมไม่กินไม่เล่นด้านขวาหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Subacute mild right เด็กซึม
+pediatric,เด็กซึม,mild,subacute,bilateral,,general,เด็กซึมไม่กินไม่เล่นทั้งสองข้างหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Subacute mild bilateral เด็กซึม
+pediatric,เด็กซึม,mild,subacute,central,,general,เด็กซึมไม่กินไม่เล่นหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Subacute mild central เด็กซึม
+pediatric,เด็กซึม,mild,progressive,left,,general,เด็กซึมไม่กินไม่เล่นแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,2,Progressive mild left เด็กซึม
+pediatric,เด็กซึม,mild,progressive,right,,general,เด็กซึมไม่กินไม่เล่นแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,2,Progressive mild right เด็กซึม
+pediatric,เด็กซึม,mild,progressive,bilateral,,general,เด็กซึมไม่กินไม่เล่นแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,2,Progressive mild bilateral เด็กซึม
+pediatric,เด็กซึม,mild,progressive,central,,general,เด็กซึมไม่กินไม่เล่นแย่ลงเรื่อยๆหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,2,Progressive mild central เด็กซึม
+pediatric,เด็กซึม,mild,recurrent,left,,general,เด็กซึมไม่กินไม่เล่นเป็นๆ หายๆด้านซ้ายหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Recurrent mild left เด็กซึม
+pediatric,เด็กซึม,mild,recurrent,right,,general,เด็กซึมไม่กินไม่เล่นเป็นๆ หายๆด้านขวาหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Recurrent mild right เด็กซึม
+pediatric,เด็กซึม,mild,recurrent,bilateral,,general,เด็กซึมไม่กินไม่เล่นเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Recurrent mild bilateral เด็กซึม
+pediatric,เด็กซึม,mild,recurrent,central,,general,เด็กซึมไม่กินไม่เล่นเป็นๆ หายๆหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Recurrent mild central เด็กซึม
+pediatric,เด็กซึม,severe,acute,left,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากเกิดขึ้นทันทีด้านซ้ายหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,1,Acute severe left เด็กซึม
+pediatric,เด็กซึม,severe,acute,right,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากเกิดขึ้นทันทีด้านขวาหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,1,Acute severe right เด็กซึม
+pediatric,เด็กซึม,severe,acute,bilateral,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากเกิดขึ้นทันทีทั้งสองข้างหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,1,Acute severe bilateral เด็กซึม
+pediatric,เด็กซึม,severe,acute,central,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากเกิดขึ้นทันทีหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,1,Acute severe central เด็กซึม
+pediatric,เด็กซึม,severe,subacute,left,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากด้านซ้ายหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Subacute severe left เด็กซึม
+pediatric,เด็กซึม,severe,subacute,right,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากด้านขวาหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Subacute severe right เด็กซึม
+pediatric,เด็กซึม,severe,subacute,bilateral,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากทั้งสองข้างหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Subacute severe bilateral เด็กซึม
+pediatric,เด็กซึม,severe,subacute,central,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Subacute severe central เด็กซึม
+pediatric,เด็กซึม,severe,progressive,left,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากแย่ลงเรื่อยๆด้านซ้ายหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,2,Progressive severe left เด็กซึม
+pediatric,เด็กซึม,severe,progressive,right,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากแย่ลงเรื่อยๆด้านขวาหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,2,Progressive severe right เด็กซึม
+pediatric,เด็กซึม,severe,progressive,bilateral,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากแย่ลงเรื่อยๆทั้งสองข้างหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,2,Progressive severe bilateral เด็กซึม
+pediatric,เด็กซึม,severe,progressive,central,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากแย่ลงเรื่อยๆหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,2,Progressive severe central เด็กซึม
+pediatric,เด็กซึม,severe,recurrent,left,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากเป็นๆ หายๆด้านซ้ายหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Recurrent severe left เด็กซึม
+pediatric,เด็กซึม,severe,recurrent,right,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากเป็นๆ หายๆด้านขวาหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Recurrent severe right เด็กซึม
+pediatric,เด็กซึม,severe,recurrent,bilateral,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากเป็นๆ หายๆทั้งสองข้างหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Recurrent severe bilateral เด็กซึม
+pediatric,เด็กซึม,severe,recurrent,central,,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากเป็นๆ หายๆหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,3,Recurrent severe central เด็กซึม
+pediatric,เด็กซึม,moderate,acute,central,fever,general,เด็กซึมไม่กินไม่เล่นเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,1,fever + เด็กซึม → Higher emergency risk
+pediatric,เด็กซึม,moderate,progressive,central,fever,general,เด็กซึมไม่กินไม่เล่นแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,1,fever + เด็กซึม → Higher emergency risk
+pediatric,เด็กซึม,severe,acute,central,fever,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากเกิดขึ้นทันทีร่วมกับไข้สูงหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,1,fever + เด็กซึม → Higher emergency risk
+pediatric,เด็กซึม,severe,progressive,central,fever,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากแย่ลงเรื่อยๆร่วมกับไข้สูงหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,1,fever + เด็กซึม → Higher emergency risk
+pediatric,เด็กซึม,moderate,acute,central,weakness,general,เด็กซึมไม่กินไม่เล่นเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,1,weakness + เด็กซึม → Higher emergency risk
+pediatric,เด็กซึม,moderate,progressive,central,weakness,general,เด็กซึมไม่กินไม่เล่นแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,1,weakness + เด็กซึม → Higher emergency risk
+pediatric,เด็กซึม,severe,acute,central,weakness,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากเกิดขึ้นทันทีร่วมกับอ่อนแรงหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,1,weakness + เด็กซึม → Higher emergency risk
+pediatric,เด็กซึม,severe,progressive,central,weakness,general,เด็กซึมไม่กินไม่เล่นรุนแรงมากแย่ลงเรื่อยๆร่วมกับอ่อนแรงหรือไม่,yes,ภาวะฉุกเฉินในเด็ก,1,weakness + เด็กซึม → Higher emergency risk

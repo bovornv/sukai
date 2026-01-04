@@ -43,7 +43,7 @@ export function generateRedFlagQuestion(symptom, intent, language = 'th') {
   
   // Fallback to symptom-specific question map
   if (!question) {
-    question = getRedFlagQuestionForSymptom(symptom, language);
+    question = await getRedFlagQuestionForSymptom(symptom, language);
   }
   
   if (!question) {
@@ -68,17 +68,28 @@ export function generateRedFlagQuestion(symptom, intent, language = 'th') {
  * Goal: Refine severity_level (mild / moderate / severe)
  * Rules: Prefer functional impact over numeric pain scores
  */
-export function generateSeverityQuestion(symptom, questionsAsked = [], language = 'th') {
+export function generateSeverityQuestion(symptom, questionsAsked = [], language = 'th', sessionSeed = null) {
+  // EXPANDED: More question variations for better user experience
   const questions = language === 'th' 
     ? [
         'อาการนี้รบกวนชีวิตประจำวันแค่ไหน?',
         'อาการนี้ทำให้คุณทำกิจกรรมปกติได้ยากแค่ไหน?',
         'อาการนี้รุนแรงแค่ไหนเมื่อเทียบกับปกติ?',
+        'คุณรู้สึกว่าอาการนี้รบกวนมากแค่ไหน?',
+        'อาการนี้ส่งผลต่อการทำกิจกรรมประจำวันของคุณอย่างไร?',
+        'เมื่อเทียบกับปกติ อาการนี้เป็นอย่างไร?',
+        'อาการนี้ทำให้คุณรู้สึกไม่สบายมากแค่ไหน?',
+        'คุณประเมินความรุนแรงของอาการนี้อย่างไร?',
       ]
     : [
         'How much does this symptom interfere with your daily life?',
         'How difficult is it to do normal activities because of this symptom?',
         'How severe is this symptom compared to normal?',
+        'How much does this symptom bother you?',
+        'How does this symptom affect your daily activities?',
+        'Compared to normal, how is this symptom?',
+        'How uncomfortable does this symptom make you feel?',
+        'How would you rate the severity of this symptom?',
       ];
   
   const choices = language === 'th'
@@ -101,17 +112,19 @@ export function generateSeverityQuestion(symptom, questionsAsked = [], language 
     return !keyPhrases.some(phrase => wasAsked(phrase));
   });
   
-  // Select question with variation (rotate based on symptom hash + time)
+  // IMPROVED: Use stronger variation seed (sessionSeed + symptom hash + time)
   let selectedQuestion = questions[0]; // Default
   if (unaskedQuestions.length > 0) {
-    // Use symptom hash + time for variation
+    // Use sessionSeed if provided (for consistent variation per session)
+    const seed = sessionSeed || Math.random() * 10000;
     const symptomHash = symptom.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const timeComponent = Date.now() % 1000;
-    const variationIndex = (symptomHash + timeComponent) % unaskedQuestions.length;
+    const timeComponent = Date.now() % 10000; // Increased range
+    const variationIndex = Math.floor((seed + symptomHash + timeComponent) % unaskedQuestions.length);
     selectedQuestion = unaskedQuestions[variationIndex];
   } else {
     // All similar questions asked - use variation to select different phrasing
-    const variationIndex = (Date.now() % questions.length);
+    const seed = sessionSeed || Math.random() * 10000;
+    const variationIndex = Math.floor((seed + Date.now()) % questions.length);
     selectedQuestion = questions[variationIndex];
   }
   
@@ -128,7 +141,7 @@ export function generateSeverityQuestion(symptom, questionsAsked = [], language 
  * Goal: Lock trajectory (onset timing + symptom trend)
  * Rules: Ask BOTH onset timing AND symptom trend
  */
-export function generateTimeCourseQuestion(symptom, questionsAsked = [], language = 'th') {
+export function generateTimeCourseQuestion(symptom, questionsAsked = [], language = 'th', sessionSeed = null) {
   // Enhanced duplicate detection - check semantic similarity
   const wasAsked = (text) => {
     if (!Array.isArray(questionsAsked) || questionsAsked.length === 0) return false;
@@ -152,21 +165,63 @@ export function generateTimeCourseQuestion(symptom, questionsAsked = [], languag
   
   // Check if onset question was asked (check for key phrases)
   const onsetAsked = wasAsked('เมื่อไหร่') || wasAsked('เริ่ม') || wasAsked('onset') || 
-                     wasAsked('อาการนี้เริ่มเมื่อไหร่') || wasAsked('When did this symptom start');
+                     wasAsked('อาการนี้เริ่มเมื่อไหร่') || wasAsked('When did this symptom start') ||
+                     wasAsked('นานเท่าไหร่') || wasAsked('นานแค่ไหน');
   
   // Check if trend question was asked (check for key phrases)
   const trendAsked = wasAsked('ดีขึ้น') || wasAsked('แย่ลง') || wasAsked('trend') || 
-                     wasAsked('เปลี่ยนแปลง') || wasAsked('How has this symptom changed');
+                     wasAsked('เปลี่ยนแปลง') || wasAsked('How has this symptom changed') ||
+                     wasAsked('อาการเป็นอย่างไร');
+  
+  // EXPANDED: Multiple onset timing question variations
+  const onsetQuestions = language === 'th'
+    ? [
+        'อาการนี้เริ่มเมื่อไหร่?',
+        'อาการนี้เป็นมานานเท่าไหร่แล้ว?',
+        'คุณสังเกตเห็นอาการนี้เมื่อไหร่?',
+        'อาการนี้เกิดขึ้นเมื่อไหร่?',
+        'อาการนี้เริ่มเป็นเมื่อไหร่?',
+      ]
+    : [
+        'When did this symptom start?',
+        'How long have you had this symptom?',
+        'When did you first notice this symptom?',
+        'When did this symptom begin?',
+        'When did this symptom first appear?',
+      ];
+  
+  // EXPANDED: Multiple trend question variations
+  const trendQuestions = language === 'th'
+    ? [
+        'อาการนี้เปลี่ยนแปลงอย่างไร?',
+        'อาการนี้เป็นอย่างไร?',
+        'อาการนี้ดีขึ้นหรือแย่ลง?',
+        'อาการนี้มีแนวโน้มเป็นอย่างไร?',
+        'อาการนี้เปลี่ยนแปลงไปอย่างไรบ้าง?',
+      ]
+    : [
+        'How has this symptom changed?',
+        'How is this symptom progressing?',
+        'Is this symptom getting better or worse?',
+        'What is the trend of this symptom?',
+        'How has this symptom been changing?',
+      ];
+  
+  const choices = language === 'th'
+    ? ['วันนี้', 'เมื่อวาน', '2-3 วัน', '1 สัปดาห์', 'เป็นๆ หายๆ', 'ไม่แน่ใจ']
+    : ['Today', 'Yesterday', '2-3 days', '1 week', 'Comes and goes', 'Not sure'];
+  
+  const trendChoices = language === 'th'
+    ? ['ดีขึ้น', 'เท่าเดิม', 'แย่ลง', 'ขึ้นๆ ลงๆ', 'ไม่แน่ใจ']
+    : ['Getting better', 'Same', 'Getting worse', 'Up and down', 'Not sure'];
   
   // Onset timing question
   if (!onsetAsked) {
-    const question = language === 'th'
-      ? 'อาการนี้เริ่มเมื่อไหร่?'
-      : 'When did this symptom start?';
-    
-    const choices = language === 'th'
-      ? ['วันนี้', 'เมื่อวาน', '2-3 วัน', '1 สัปดาห์', 'เป็นๆ หายๆ', 'ไม่แน่ใจ']
-      : ['Today', 'Yesterday', '2-3 days', '1 week', 'Comes and goes', 'Not sure'];
+    // IMPROVED: Use sessionSeed for variation
+    const seed = sessionSeed || Math.random() * 10000;
+    const symptomHash = symptom.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const variationIndex = Math.floor((seed + symptomHash + Date.now()) % onsetQuestions.length);
+    const question = onsetQuestions[variationIndex];
     
     return {
       question,
@@ -178,17 +233,15 @@ export function generateTimeCourseQuestion(symptom, questionsAsked = [], languag
   
   // Symptom trend question
   if (!trendAsked) {
-    const question = language === 'th'
-      ? 'อาการนี้เปลี่ยนแปลงอย่างไร?'
-      : 'How has this symptom changed?';
-    
-    const choices = language === 'th'
-      ? ['ดีขึ้น', 'เท่าเดิม', 'แย่ลง', 'ขึ้นๆ ลงๆ', 'ไม่แน่ใจ']
-      : ['Getting better', 'Same', 'Getting worse', 'Up and down', 'Not sure'];
+    // IMPROVED: Use sessionSeed for variation
+    const seed = sessionSeed || Math.random() * 10000;
+    const symptomHash = symptom.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const variationIndex = Math.floor((seed + symptomHash + Date.now()) % trendQuestions.length);
+    const question = trendQuestions[variationIndex];
     
     return {
       question,
-      choices,
+      choices: trendChoices,
       step: 4,
       stepName: 'time_course_trend',
     };
@@ -202,10 +255,7 @@ export function generateTimeCourseQuestion(symptom, questionsAsked = [], languag
  * Goal: Increase confidence efficiently
  * Rules: Pull questions dynamically from intent hypothesis set
  */
-export function generateHypothesisQuestion(symptom, intent, hypotheses = [], questionsAsked = [], language = 'th') {
-  // TODO: Generate questions based on intent's associated_symptoms or hypotheses
-  // For now, use generic associated symptom question
-  
+export function generateHypothesisQuestion(symptom, intent, hypotheses = [], questionsAsked = [], language = 'th', sessionSeed = null) {
   // Enhanced duplicate detection - check semantic similarity
   const wasAsked = (text) => {
     if (!Array.isArray(questionsAsked) || questionsAsked.length === 0) return false;
@@ -227,17 +277,37 @@ export function generateHypothesisQuestion(symptom, intent, hypotheses = [], que
     });
   };
   
+  // EXPANDED: Multiple question variations for associated symptoms
+  const associatedQuestions = language === 'th'
+    ? [
+        'มีอาการเหล่านี้ร่วมด้วยไหม?',
+        'คุณมีอาการอื่นๆ ร่วมด้วยหรือไม่?',
+        'นอกจากนี้แล้ว มีอาการอื่นๆ อีกไหม?',
+        'มีอาการอื่นๆ ที่เกิดขึ้นพร้อมกันไหม?',
+        'คุณสังเกตเห็นอาการอื่นๆ ร่วมด้วยไหม?',
+      ]
+    : [
+        'Do you have any of these associated symptoms?',
+        'Are there any other symptoms you\'re experiencing?',
+        'Besides this, do you have any other symptoms?',
+        'Are there any other symptoms occurring at the same time?',
+        'Have you noticed any other symptoms along with this?',
+      ];
+  
   // Check if associated symptoms question was asked (check for key phrases)
   const associatedAsked = wasAsked('อาการอื่น') || wasAsked('associated') || 
-                          wasAsked('มีอาการเหล่านี้') || wasAsked('Do you have any of these');
+                          wasAsked('มีอาการเหล่านี้') || wasAsked('Do you have any of these') ||
+                          wasAsked('ร่วมด้วย') || wasAsked('อื่นๆ');
   
   if (associatedAsked) {
     return null; // Already asked
   }
   
-  const question = language === 'th'
-    ? 'มีอาการเหล่านี้ร่วมด้วยไหม?'
-    : 'Do you have any of these associated symptoms?';
+  // IMPROVED: Use sessionSeed for variation
+  const seed = sessionSeed || Math.random() * 10000;
+  const symptomHash = symptom.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const variationIndex = Math.floor((seed + symptomHash + Date.now()) % associatedQuestions.length);
+  const question = associatedQuestions[variationIndex];
   
   // Get associated symptoms from intent if available
   let associatedSymptoms = [];
@@ -310,7 +380,7 @@ export function getCurrentStep(questionCount, answers, redFlagScreeningPassed) {
 /**
  * Generate next question based on current step
  */
-export function generateNextStructuredQuestion({
+export async function generateNextStructuredQuestion({
   symptom,
   intent,
   questionCount,
@@ -318,6 +388,7 @@ export function generateNextStructuredQuestion({
   answers = {},
   hypotheses = [],
   language = 'th',
+  sessionSeed = null, // Session seed for variation
 }) {
   const redFlagScreeningPassed = answers.redFlagScreeningPassed === true;
   const currentStep = getCurrentStep(questionCount, answers, redFlagScreeningPassed);
@@ -329,19 +400,19 @@ export function generateNextStructuredQuestion({
   
   // STEP 3: Severity Calibration
   if (currentStep === 3) {
-    return generateSeverityQuestion(symptom, questionsAsked, language);
+    return generateSeverityQuestion(symptom, questionsAsked, language, sessionSeed);
   }
   
   // STEP 4: Time-Course Disambiguation
   if (currentStep === 4) {
-    const timeCourseQ = generateTimeCourseQuestion(symptom, questionsAsked, language);
+    const timeCourseQ = generateTimeCourseQuestion(symptom, questionsAsked, language, sessionSeed);
     if (timeCourseQ) return timeCourseQ;
     // If both time-course questions asked, move to next step
   }
   
   // STEP 5: Hypothesis-Targeted
   if (currentStep === 5) {
-    const hypothesisQ = generateHypothesisQuestion(symptom, intent, hypotheses, questionsAsked, language);
+    const hypothesisQ = generateHypothesisQuestion(symptom, intent, hypotheses, questionsAsked, language, sessionSeed);
     if (hypothesisQ) return hypothesisQ;
   }
   

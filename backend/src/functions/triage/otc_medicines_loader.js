@@ -46,7 +46,32 @@ export async function loadOTCMedicinesDataset() {
   }
 
   try {
-    const csvPath = join(__dirname, '../../../../mobile/assets/data/otc_medicines_master_th.csv');
+    // Try multiple possible paths (for different deployment scenarios)
+    const possiblePaths = [
+      join(__dirname, '../../../data/otc_medicines_master_th.csv'), // backend/data/ (Railway deployment)
+      join(__dirname, '../../../../mobile/assets/data/otc_medicines_master_th.csv'), // mobile/assets/data/ (local dev)
+      join(process.cwd(), 'data/otc_medicines_master_th.csv'), // root/data/ (alternative)
+      '/app/data/otc_medicines_master_th.csv', // Direct Railway path
+    ];
+    
+    let csvPath = null;
+    for (const testPath of possiblePaths) {
+      try {
+        readFileSync(testPath, 'utf-8'); // Test if file exists
+        csvPath = testPath;
+        console.log(`[OTC-LOADER] ✅ Found CSV file at: ${csvPath}`);
+        break;
+      } catch (err) {
+        // File doesn't exist at this path, try next
+        continue;
+      }
+    }
+    
+    if (!csvPath) {
+      console.warn(`[OTC-LOADER] CSV file not found. Tried paths:`, possiblePaths);
+      throw new Error(`OTC medicines CSV file not found. Tried: ${possiblePaths.join(', ')}`);
+    }
+    
     const csvContent = readFileSync(csvPath, 'utf-8');
     const lines = csvContent.split('\n').filter(line => line.trim());
     

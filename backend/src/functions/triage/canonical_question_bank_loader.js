@@ -29,7 +29,32 @@ export function loadCanonicalQuestionBank() {
   }
   
   try {
-    const canonicalBankPath = path.join(__dirname, '../../../mobile/assets/data/canonical_question_bank.json');
+    // Try multiple possible paths (for different deployment scenarios)
+    const possiblePaths = [
+      path.join(__dirname, '../../../data/canonical_question_bank.json'), // backend/data/ (Railway deployment)
+      path.join(__dirname, '../../../mobile/assets/data/canonical_question_bank.json'), // mobile/assets/data/ (local dev)
+      path.join(process.cwd(), 'data/canonical_question_bank.json'), // root/data/ (alternative)
+      '/app/data/canonical_question_bank.json', // Direct Railway path
+    ];
+    
+    let canonicalBankPath = null;
+    for (const testPath of possiblePaths) {
+      try {
+        fs.readFileSync(testPath, 'utf8'); // Test if file exists
+        canonicalBankPath = testPath;
+        console.log(`[CANONICAL-BANK] ✅ Found canonical bank file at: ${canonicalBankPath}`);
+        break;
+      } catch (err) {
+        // File doesn't exist at this path, try next
+        continue;
+      }
+    }
+    
+    if (!canonicalBankPath) {
+      console.warn(`[CANONICAL-BANK] Canonical bank file not found. Tried paths:`, possiblePaths);
+      return null; // Return null instead of throwing - allows fallback logic
+    }
+    
     const canonicalBankData = JSON.parse(fs.readFileSync(canonicalBankPath, 'utf8'));
     canonicalBankCache = canonicalBankData;
     

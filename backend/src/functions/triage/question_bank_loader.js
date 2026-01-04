@@ -29,7 +29,32 @@ export function loadQuestionBank() {
   }
   
   try {
-    const questionBankPath = path.join(__dirname, '../../../mobile/assets/data/question_bank_master.json');
+    // Try multiple possible paths (for different deployment scenarios)
+    const possiblePaths = [
+      path.join(__dirname, '../../../data/question_bank_master.json'), // backend/data/ (Railway deployment)
+      path.join(__dirname, '../../../mobile/assets/data/question_bank_master.json'), // mobile/assets/data/ (local dev)
+      path.join(process.cwd(), 'data/question_bank_master.json'), // root/data/ (alternative)
+      '/app/data/question_bank_master.json', // Direct Railway path
+    ];
+    
+    let questionBankPath = null;
+    for (const testPath of possiblePaths) {
+      try {
+        fs.readFileSync(testPath, 'utf8'); // Test if file exists
+        questionBankPath = testPath;
+        console.log(`[QUESTION_BANK] ✅ Found question bank file at: ${questionBankPath}`);
+        break;
+      } catch (err) {
+        // File doesn't exist at this path, try next
+        continue;
+      }
+    }
+    
+    if (!questionBankPath) {
+      console.warn(`[QUESTION_BANK] Question bank file not found. Tried paths:`, possiblePaths);
+      return null; // Return null instead of throwing - allows fallback logic
+    }
+    
     const questionBankData = JSON.parse(fs.readFileSync(questionBankPath, 'utf8'));
     questionBankCache = questionBankData;
     

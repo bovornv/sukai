@@ -1,0 +1,55 @@
+symptom_group,medicine_name,english_name,form,first_line,second_line,alternative,adult_only,key_notes,contraindications
+Fever/Pain,พาราเซตามอล,Paracetamol,oral,true,false,false,false,ลดไข้บรรเทาปวดหลัก,โรคตับรุนแรง
+Fever/Pain,พาราเซตามอล+คาเฟอีน,Paracetamol+Caffeine,oral,false,false,true,false,เพิ่มฤทธิ์ลดปวด,ใจสั่น
+Fever/Pain,ไอบูโพรเฟน,Ibuprofen,oral,false,true,false,false,NSAID ลดอักเสบ,โรคกระเพาะ ไต
+Fever/Pain,นาโพรเซน,Naproxen,oral,false,true,false,false,NSAID ออกฤทธิ์ยาว,แผลกระเพาะ
+Fever/Pain,แอสไพริน,Aspirin,oral,false,false,true,true,ผู้ใหญ่เท่านั้น,เด็ก ไข้เลือดออก
+Fever/Pain,ไดโคลฟีแนค,Diclofenac,oral,false,true,false,false,NSAID,ไต กระเพาะ
+Fever/Pain,ไดโคลฟีแนคเจล,Diclofenac Gel,topical,false,false,true,false,ลดปวดเฉพาะที่,ผิวหนังอักเสบ
+Fever/Pain,เคโตโพรเฟน,Ketoprofen,topical,false,false,true,false,ปวดกล้ามเนื้อ,ผิวแพ้
+Fever/Pain,เมเฟนามิก,Mefenamic Acid,oral,false,true,false,false,ปวดประจำเดือน,กระเพาะ
+Pain-Neuro,อะมิทริปไทลีน,Amitriptyline,oral,false,false,true,true,ปวดเส้นประสาท,หัวใจ
+Pain-Neuro,วิตามินบีรวม,B-Complex,oral,false,false,true,false,เสริมเส้นประสาท,—
+Pain-Neuro,เมโคบาลามิน,Mecobalamin,oral,false,false,true,false,ชาปลายมือเท้า,—
+Respiratory-Nasal,ลอราทาดีน,Loratadine,oral,true,false,false,false,ไม่ง่วง,—
+Respiratory-Nasal,เซทิริซีน,Cetirizine,oral,true,false,false,false,อาจง่วงเล็กน้อย,—
+Respiratory-Nasal,เฟกโซเฟนาดีน,Fexofenadine,oral,true,false,false,false,ไม่ง่วง,—
+Respiratory-Nasal,เดสลอราทาดีน,Desloratadine,oral,true,false,false,false,แพ้เรื้อรัง,—
+Respiratory-Nasal,คลอร์เฟนิรามีน,Chlorpheniramine,oral,false,false,true,false,ง่วง,ต้อหิน
+Respiratory-Nasal,ซูโดเอฟีดรีน,Pseudoephedrine,oral,false,true,false,false,ลดคัดจมูก,ความดัน
+Respiratory-Nasal,ฟีนิลเอฟรีน,Phenylephrine,oral,false,true,false,false,ลดคัดจมูก,หัวใจ
+Respiratory-Nasal,น้ำเกลือล้างจมูก,Normal Saline,nasal,true,false,false,false,ปลอดภัยสูง,—
+Respiratory-Nasal,สเปรย์น้ำทะเล,Sea Water Spray,nasal,true,false,false,false,ใช้ระยะยาว,—
+Cough/Throat,เดกซ์โทรเมทอร์แฟน,Dextromethorphan,oral,true,false,false,false,ไอแห้ง,—
+Cough/Throat,กวายเฟนีซิน,Guaifenesin,oral,true,false,false,false,ไอมีเสมหะ,—
+Cough/Throat,บรอมเฮกซีน,Bromhexine,oral,false,true,false,false,ละลายเสมหะ,—
+Cough/Throat,อะเซทิลซิสเทอีน,Acetylcysteine,oral,false,true,false,false,เสมหะเหนียว,—
+Cough/Throat,ยาอมแก้เจ็บคอ,Throat Lozenges,oral,true,false,false,false,บรรเทาเฉพาะที่,—
+Cough/Throat,เบนโซเคนสเปรย์,Benzocaine Spray,topical,false,false,true,false,ชาเฉพาะที่,แพ้ยา
+GI-Diarrhea,ORS,Oral Rehydration Salts,oral,true,false,false,false,ป้องกันขาดน้ำ,—
+GI-Diarrhea,โลเพอราไมด์,Loperamide,oral,false,true,false,false,ท้องเสียไม่ติดเชื้อ,ถ่ายเป็นเลือด
+GI-Diarrhea,บิสมุท,Bismuth,oral,false,true,false,false,ท้องเสียเล็กน้อย,—
+GI-Diarrhea,โพรไบโอติก,Probiotics,oral,false,false,true,false,ฟื้นฟูลำไส้,—
+GI-Bloating,ไซเมทิโคน,Simethicone,oral,true,false,false,false,ลดแน่นท้อง,—
+GI-Bloating,ดอมเพอริโดน,Domperidone,oral,false,true,false,false,คลื่นไส้,หัวใจ
+GI-Nausea,ไดเมนไฮดริเนต,Dimenhydrinate,oral,false,false,true,false,คลื่นไส้ เมารถ,ง่วง
+GI-Reflux,ยาลดกรด,Antacids,oral,true,false,false,false,กรดไหลย้อน,—
+GI-Reflux,ฟาโมทิดีน,Famotidine,oral,false,true,false,false,H2 blocker,—
+GI-Reflux,ไซเมทิดีน,Cimetidine,oral,false,true,false,false,H2 blocker,—
+GI-Reflux,โอเมพราโซล,Omeprazole,oral,false,true,false,false,PPI ระยะสั้น,—
+Skin-Allergy,ไฮโดรคอร์ติโซน1%,Hydrocortisone 1%,topical,true,false,false,false,ผื่นแพ้เล็กน้อย,แผลเปิด
+Skin-Allergy,คาลาไมน์,Calamine,topical,false,false,true,false,ลดคัน,—
+Skin-Allergy,เมนทอล,Menthol,topical,false,false,true,false,เย็น ลดคัน,—
+Skin-Fungal,คลอไตรมาโซล,Clotrimazole,topical,true,false,false,false,เชื้อรา,—
+Skin-Fungal,คีโตโคนาโซล,Ketoconazole,topical,false,true,false,false,เชื้อราดื้อ,—
+Skin-Fungal,ไมโคนาโซล,Miconazole,topical,false,true,false,false,เชื้อรา,—
+Skin-Bacterial,ฟูซิดิกแอซิด,Fusidic Acid,topical,false,true,false,false,ติดเชื้อแบคทีเรีย,—
+Urinary,ฟีนาโซไพริดีน,Phenazopyridine,oral,false,false,true,false,แสบขัด,โรคไต
+Urinary,แครนเบอร์รี่,Cranberry Extract,oral,false,false,true,false,UTI ระยะแรก,—
+Eye,น้ำตาเทียม,Artificial Tears,eye,true,false,false,false,ตาแห้ง,—
+Eye,โซเดียมโครโมไกลเคต,Sodium Cromoglycate,eye,false,true,false,false,แพ้ตา,—
+Ear,กลีเซอรีน,Glycerin,ear,false,false,true,false,ขี้หูแห้ง,—
+Muscle,เมทิลซาลิไซเลต,Methyl Salicylate,topical,false,false,true,false,คลายกล้ามเนื้อ,ผิวแพ้
+Muscle,แคปไซซิน,Capsaicin,topical,false,false,true,false,ปวดเรื้อรัง,ผิวอักเสบ
+Sleep,เมลาโทนิน,Melatonin,oral,false,false,true,true,นอนไม่หลับ,—
+Anxiety,วาเลอเรียน,Valerian,oral,false,false,true,true,คลายกังวล,—

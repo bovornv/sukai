@@ -1,0 +1,473 @@
+{
+  "version": "1.0",
+  "language": [
+    "th",
+    "en"
+  ],
+  "intents": [
+    {
+      "intent_id": "HEADACHE_001",
+      "primary_symptom": "ปวดหัว",
+      "display": {
+        "th": "ปวดหัวข้างเดียว",
+        "en": "One-sided headache"
+      },
+      "body_system": "neurology",
+      "clinical_context": {
+        "severity": "moderate",
+        "time_course": "acute",
+        "location": "one_side",
+        "trigger": null,
+        "associated_symptoms": []
+      },
+      "red_flag": {
+        "question": {
+          "th": "มีอาการอ่อนแรง แขนขาชา หรือพูดไม่ชัดร่วมด้วยไหมคะ?",
+          "en": "Do you have weakness, numbness, or slurred speech?"
+        },
+        "if_yes": {
+          "emergency": true,
+          "level": "urgent"
+        }
+      },
+      "triage": {
+        "if_no": null
+      },
+      "confidence": {
+        "weight": 0.13
+      },
+      "recommendation_mapping": {
+        "otc_group": [],
+        "self_care_group": [
+          "rest_hydration"
+        ]
+      },
+      "safety": {
+        "contraindications": [],
+        "age_range": {
+          "min": 18,
+          "max": 99
+        },
+        "requires_health_profile": true
+      },
+      "metadata": {
+        "notes_medical": "Possible migraine vs stroke red flag",
+        "status": "active"
+      }
+    },
+    {
+      "intent_id": "HEADACHE_003",
+      "primary_symptom": "ปวดหัว",
+      "display": {
+        "th": "ปวดหัวรุนแรงทันที",
+        "en": "Sudden severe headache"
+      },
+      "body_system": "neurology",
+      "clinical_context": {
+        "severity": "severe",
+        "time_course": "acute",
+        "location": "whole_head",
+        "trigger": null,
+        "associated_symptoms": []
+      },
+      "red_flag": {
+        "question": {
+          "th": "ปวดหัวรุนแรงที่สุดในชีวิตหรือเกิดขึ้นทันทีไหมคะ?",
+          "en": "Is this the worst headache of your life or sudden onset?"
+        },
+        "if_yes": {
+          "emergency": true,
+          "level": "immediate"
+        }
+      },
+      "triage": {
+        "if_no": null
+      },
+      "confidence": {
+        "weight": 0.15
+      },
+      "recommendation_mapping": {
+        "otc_group": [],
+        "self_care_group": [
+          "rest_hydration"
+        ]
+      },
+      "safety": {
+        "contraindications": [],
+        "age_range": {
+          "min": 18,
+          "max": 99
+        },
+        "requires_health_profile": true
+      },
+      "metadata": {
+        "notes_medical": "Thunderclap headache red flag",
+        "status": "active"
+      }
+    },
+    {
+      "intent_id": "HEADACHE_005",
+      "primary_symptom": "ปวดหัว",
+      "display": {
+        "th": "ปวดหัวทุกวัน",
+        "en": "Daily headache"
+      },
+      "body_system": "neurology",
+      "clinical_context": {
+        "severity": "mild",
+        "time_course": "chronic",
+        "location": "whole_head",
+        "trigger": null,
+        "associated_symptoms": []
+      },
+      "red_flag": {
+        "question": {
+          "th": "ปวดหัวรุนแรงที่สุดในชีวิตหรือเกิดขึ้นทันทีไหมคะ?",
+          "en": "Is this the worst headache of your life or sudden onset?"
+        },
+        "if_yes": {
+          "emergency": false,
+          "level": "none"
+        }
+      },
+      "triage": {
+        "if_no": "gp"
+      },
+      "confidence": {
+        "weight": 0.05
+      },
+      "recommendation_mapping": {
+        "otc_group": [
+          "analgesic_basic"
+        ],
+        "self_care_group": [
+          "rest_hydration"
+        ]
+      },
+      "safety": {
+        "contraindications": [],
+        "age_range": {
+          "min": 18,
+          "max": 99
+        },
+        "requires_health_profile": false
+      },
+      "metadata": {
+        "notes_medical": "Chronic daily headache",
+        "status": "active"
+      }
+    },
+    {
+      "intent_id": "HEADACHE_002",
+      "primary_symptom": "ปวดหัว",
+      "display_text_th": "ปวดหัวสองข้าง",
+      "display_text_en": "Bilateral headache",
+      "body_system": "neurology",
+      "severity_level": "moderate",
+      "time_course": "acute",
+      "location": null,
+      "trigger": null,
+      "associated_symptoms": "",
+      "red_flag_question_th": "ปวดหัวรุนแรงที่สุดในชีวิตหรือเกิดขึ้นทันทีไหมคะ?",
+      "red_flag_question_en": "Is this the worst headache of your life or sudden onset?",
+      "red_flag_if_yes": false,
+      "emergency_level": "none",
+      "triage_if_no": "gp",
+      "confidence_weight": 0.05,
+      "otc_group": "",
+      "self_care_group": "rest_hydration",
+      "contraindications": "",
+      "age_min": 18,
+      "age_max": 99,
+      "requires_health_profile": false,
+      "notes_medical": "Generated intent for ปวดหัว",
+      "status": "active"
+    },
+    {
+      "intent_id": "HEADACHE_004",
+      "primary_symptom": "ปวดหัว",
+      "display_text_th": "ปวดหัวมากขึ้นเรื่อย ๆ",
+      "display_text_en": "Worsening headache",
+      "body_system": "neurology",
+      "severity_level": "moderate",
+      "time_course": "progressive",
+      "location": null,
+      "trigger": null,
+      "associated_symptoms": "",
+      "red_flag_question_th": "ปวดหัวรุนแรงที่สุดในชีวิตหรือเกิดขึ้นทันทีไหมคะ?",
+      "red_flag_question_en": "Is this the worst headache of your life or sudden onset?",
+      "red_flag_if_yes": false,
+      "emergency_level": "none",
+      "triage_if_no": "gp",
+      "confidence_weight": 0.05,
+      "otc_group": "",
+      "self_care_group": "rest_hydration",
+      "contraindications": "",
+      "age_min": 18,
+      "age_max": 99,
+      "requires_health_profile": false,
+      "notes_medical": "Generated intent for ปวดหัว",
+      "status": "active"
+    },
+    {
+      "intent_id": "HEADACHE_006",
+      "primary_symptom": "ปวดหัว",
+      "display_text_th": "ปวดหัวมา ๆ หาย ๆ",
+      "display_text_en": "Recurrent headache",
+      "body_system": "neurology",
+      "severity_level": "moderate",
+      "time_course": "acute",
+      "location": null,
+      "trigger": null,
+      "associated_symptoms": "",
+      "red_flag_question_th": "ปวดหัวรุนแรงที่สุดในชีวิตหรือเกิดขึ้นทันทีไหมคะ?",
+      "red_flag_question_en": "Is this the worst headache of your life or sudden onset?",
+      "red_flag_if_yes": false,
+      "emergency_level": "none",
+      "triage_if_no": "gp",
+      "confidence_weight": 0.05,
+      "otc_group": "",
+      "self_care_group": "rest_hydration",
+      "contraindications": "",
+      "age_min": 18,
+      "age_max": 99,
+      "requires_health_profile": false,
+      "notes_medical": "Generated intent for ปวดหัว",
+      "status": "active"
+    },
+    {
+      "intent_id": "HEADACHE_007",
+      "primary_symptom": "ปวดหัว",
+      "display_text_th": "ปวดหัวตอนเช้า",
+      "display_text_en": "Morning headache",
+      "body_system": "neurology",
+      "severity_level": "moderate",
+      "time_course": "acute",
+      "location": null,
+      "trigger": null,
+      "associated_symptoms": "",
+      "red_flag_question_th": "ปวดหัวรุนแรงที่สุดในชีวิตหรือเกิดขึ้นทันทีไหมคะ?",
+      "red_flag_question_en": "Is this the worst headache of your life or sudden onset?",
+      "red_flag_if_yes": false,
+      "emergency_level": "none",
+      "triage_if_no": "gp",
+      "confidence_weight": 0.05,
+      "otc_group": "",
+      "self_care_group": "rest_hydration",
+      "contraindications": "",
+      "age_min": 18,
+      "age_max": 99,
+      "requires_health_profile": false,
+      "notes_medical": "Generated intent for ปวดหัว",
+      "status": "active"
+    },
+    {
+      "intent_id": "HEADACHE_008",
+      "primary_symptom": "ปวดหัว",
+      "display_text_th": "ปวดหัวหลังอดนอน",
+      "display_text_en": "Sleep-deprived headache",
+      "body_system": "neurology",
+      "severity_level": "moderate",
+      "time_course": "acute",
+      "location": null,
+      "trigger": null,
+      "associated_symptoms": "",
+      "red_flag_question_th": "ปวดหัวรุนแรงที่สุดในชีวิตหรือเกิดขึ้นทันทีไหมคะ?",
+      "red_flag_question_en": "Is this the worst headache of your life or sudden onset?",
+      "red_flag_if_yes": false,
+      "emergency_level": "none",
+      "triage_if_no": "gp",
+      "confidence_weight": 0.05,
+      "otc_group": "",
+      "self_care_group": "rest_hydration",
+      "contraindications": "",
+      "age_min": 18,
+      "age_max": 99,
+      "requires_health_profile": false,
+      "notes_medical": "Generated intent for ปวดหัว",
+      "status": "active"
+    },
+    {
+      "intent_id": "HEADACHE_009",
+      "primary_symptom": "ปวดหัว",
+      "display_text_th": "ปวดหัวหลังดื่มแอลกอฮอล์",
+      "display_text_en": "Alcohol-induced headache",
+      "body_system": "neurology",
+      "severity_level": "moderate",
+      "time_course": "acute",
+      "location": null,
+      "trigger": null,
+      "associated_symptoms": "",
+      "red_flag_question_th": "ปวดหัวรุนแรงที่สุดในชีวิตหรือเกิดขึ้นทันทีไหมคะ?",
+      "red_flag_question_en": "Is this the worst headache of your life or sudden onset?",
+      "red_flag_if_yes": false,
+      "emergency_level": "none",
+      "triage_if_no": "gp",
+      "confidence_weight": 0.05,
+      "otc_group": "",
+      "self_care_group": "rest_hydration",
+      "contraindications": "",
+      "age_min": 18,
+      "age_max": 99,
+      "requires_health_profile": false,
+      "notes_medical": "Generated intent for ปวดหัว",
+      "status": "active"
+    },
+    {
+      "intent_id": "HEADACHE_010",
+      "primary_symptom": "ปวดหัว",
+      "display_text_th": "ปวดหัวร่วมกับอาเจียน",
+      "display_text_en": "Headache with vomiting",
+      "body_system": "neurology",
+      "severity_level": "moderate",
+      "time_course": "acute",
+      "location": null,
+      "trigger": null,
+      "associated_symptoms": "",
+      "red_flag_question_th": "ปวดหัวรุนแรงที่สุดในชีวิตหรือเกิดขึ้นทันทีไหมคะ?",
+      "red_flag_question_en": "Is this the worst headache of your life or sudden onset?",
+      "red_flag_if_yes": false,
+      "emergency_level": "none",
+      "triage_if_no": "gp",
+      "confidence_weight": 0.05,
+      "otc_group": "",
+      "self_care_group": "rest_hydration",
+      "contraindications": "",
+      "age_min": 18,
+      "age_max": 99,
+      "requires_health_profile": false,
+      "notes_medical": "Generated intent for ปวดหัว",
+      "status": "active"
+    },
+    {
+      "intent_id": "HEADACHE_011",
+      "primary_symptom": "ปวดหัว",
+      "display_text_th": "ปวดหัวร่วมกับตาพร่า",
+      "display_text_en": "Headache with blurred vision",
+      "body_system": "neurology",
+      "severity_level": "moderate",
+      "time_course": "acute",
+      "location": null,
+      "trigger": null,
+      "associated_symptoms": "",
+      "red_flag_question_th": "ปวดหัวรุนแรงที่สุดในชีวิตหรือเกิดขึ้นทันทีไหมคะ?",
+      "red_flag_question_en": "Is this the worst headache of your life or sudden onset?",
+      "red_flag_if_yes": false,
+      "emergency_level": "none",
+      "triage_if_no": "gp",
+      "confidence_weight": 0.05,
+      "otc_group": "",
+      "self_care_group": "rest_hydration",
+      "contraindications": "",
+      "age_min": 18,
+      "age_max": 99,
+      "requires_health_profile": false,
+      "notes_medical": "Generated intent for ปวดหัว",
+      "status": "active"
+    },
+    {
+      "intent_id": "HEADACHE_012",
+      "primary_symptom": "ปวดหัว",
+      "display_text_th": "ปวดหัวร่วมกับคอแข็ง",
+      "display_text_en": "Headache with neck stiffness",
+      "body_system": "neurology",
+      "severity_level": "moderate",
+      "time_course": "acute",
+      "location": null,
+      "trigger": null,
+      "associated_symptoms": "",
+      "red_flag_question_th": "ปวดหัวรุนแรงที่สุดในชีวิตหรือเกิดขึ้นทันทีไหมคะ?",
+      "red_flag_question_en": "Is this the worst headache of your life or sudden onset?",
+      "red_flag_if_yes": false,
+      "emergency_level": "none",
+      "triage_if_no": "gp",
+      "confidence_weight": 0.05,
+      "otc_group": "",
+      "self_care_group": "rest_hydration",
+      "contraindications": "",
+      "age_min": 18,
+      "age_max": 99,
+      "requires_health_profile": false,
+      "notes_medical": "Generated intent for ปวดหัว",
+      "status": "active"
+    },
+    {
+      "intent_id": "HEADACHE_013",
+      "primary_symptom": "ปวดหัว",
+      "display_text_th": "ปวดหัวร่วมกับไข้",
+      "display_text_en": "Headache with fever",
+      "body_system": "neurology",
+      "severity_level": "moderate",
+      "time_course": "acute",
+      "location": null,
+      "trigger": null,
+      "associated_symptoms": "",
+      "red_flag_question_th": "ปวดหัวรุนแรงที่สุดในชีวิตหรือเกิดขึ้นทันทีไหมคะ?",
+      "red_flag_question_en": "Is this the worst headache of your life or sudden onset?",
+      "red_flag_if_yes": false,
+      "emergency_level": "none",
+      "triage_if_no": "gp",
+      "confidence_weight": 0.05,
+      "otc_group": "",
+      "self_care_group": "rest_hydration",
+      "contraindications": "",
+      "age_min": 18,
+      "age_max": 99,
+      "requires_health_profile": false,
+      "notes_medical": "Generated intent for ปวดหัว",
+      "status": "active"
+    },
+    {
+      "intent_id": "HEADACHE_014",
+      "primary_symptom": "ปวดหัว",
+      "display_text_th": "ปวดหัวหลังบาดเจ็บ",
+      "display_text_en": "Post-traumatic headache",
+      "body_system": "neurology",
+      "severity_level": "moderate",
+      "time_course": "acute",
+      "location": null,
+      "trigger": null,
+      "associated_symptoms": "",
+      "red_flag_question_th": "ปวดหัวรุนแรงที่สุดในชีวิตหรือเกิดขึ้นทันทีไหมคะ?",
+      "red_flag_question_en": "Is this the worst headache of your life or sudden onset?",
+      "red_flag_if_yes": false,
+      "emergency_level": "none",
+      "triage_if_no": "gp",
+      "confidence_weight": 0.05,
+      "otc_group": "",
+      "self_care_group": "rest_hydration",
+      "contraindications": "",
+      "age_min": 18,
+      "age_max": 99,
+      "requires_health_profile": false,
+      "notes_medical": "Generated intent for ปวดหัว",
+      "status": "active"
+    },
+    {
+      "intent_id": "HEADACHE_015",
+      "primary_symptom": "ปวดหัว",
+      "display_text_th": "ปวดหัวร้าวไปคอ",
+      "display_text_en": "Headache radiating to neck",
+      "body_system": "neurology",
+      "severity_level": "moderate",
+      "time_course": "acute",
+      "location": null,
+      "trigger": null,
+      "associated_symptoms": "",
+      "red_flag_question_th": "ปวดหัวรุนแรงที่สุดในชีวิตหรือเกิดขึ้นทันทีไหมคะ?",
+      "red_flag_question_en": "Is this the worst headache of your life or sudden onset?",
+      "red_flag_if_yes": false,
+      "emergency_level": "none",
+      "triage_if_no": "gp",
+      "confidence_weight": 0.05,
+      "otc_group": "",
+      "self_care_group": "rest_hydration",
+      "contraindications": "",
+      "age_min": 18,
+      "age_max": 99,
+      "requires_health_profile": false,
+      "notes_medical": "Generated intent for ปวดหัว",
+      "status": "active"
+    }
+  ]
+}

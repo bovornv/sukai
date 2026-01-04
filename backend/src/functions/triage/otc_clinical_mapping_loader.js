@@ -25,7 +25,32 @@ export function loadClinicalMappingTable() {
   }
   
   try {
-    const mappingTablePath = path.join(__dirname, '../../../mobile/assets/data/otc_clinical_mapping.json');
+    // Try multiple possible paths (for different deployment scenarios)
+    const possiblePaths = [
+      path.join(__dirname, '../../../data/otc_clinical_mapping.json'), // backend/data/ (Railway deployment)
+      path.join(__dirname, '../../../mobile/assets/data/otc_clinical_mapping.json'), // mobile/assets/data/ (local dev)
+      path.join(process.cwd(), 'data/otc_clinical_mapping.json'), // root/data/ (alternative)
+      '/app/data/otc_clinical_mapping.json', // Direct Railway path
+    ];
+    
+    let mappingTablePath = null;
+    for (const testPath of possiblePaths) {
+      try {
+        fs.readFileSync(testPath, 'utf8'); // Test if file exists
+        mappingTablePath = testPath;
+        console.log(`[OTC_CLINICAL_MAPPING] ✅ Found mapping file at: ${mappingTablePath}`);
+        break;
+      } catch (err) {
+        // File doesn't exist at this path, try next
+        continue;
+      }
+    }
+    
+    if (!mappingTablePath) {
+      console.warn(`[OTC_CLINICAL_MAPPING] Mapping file not found. Tried paths:`, possiblePaths);
+      return null; // Return null instead of throwing - allows fallback logic
+    }
+    
     const mappingTableData = JSON.parse(fs.readFileSync(mappingTablePath, 'utf8'));
     mappingTableCache = mappingTableData;
     return mappingTableData;
